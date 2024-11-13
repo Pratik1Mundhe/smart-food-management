@@ -1,0 +1,44 @@
+export enum FoodItemCategories {
+  RICE = "RICE",
+  PAN_CAKE = "PANCAKE",
+}
+
+export enum MealTypeEnum {
+  BREAKFAST = "breakfast",
+  LUNCH = "lunch",
+  DINNER = "dinner",
+}
+
+export enum PageRoutesEnum {
+  HOME_PAGE = "/",
+  ADMIN_HOME_PAGE = "/admin",
+  LOGIN_PAGE = "/login",
+  WEEKLY_MENU_PAGE = "/weekly-menu",
+}
+
+export interface FoodItemResponseType {
+  id: number;
+  name: string;
+  // __typename: string
+}
+
+export interface foodItemType {
+  id: number;
+  name: string;
+  fullMealQuantity: number;
+  halfMealQuantity: number;
+}
+
+export interface MealFoodDataType {
+  breakfast: foodItemType[];
+  dinner: foodItemType[];
+  lunch: foodItemType[];
+}
+
+export interface VoidFunctionType {
+  (): void;
+}
+
+export interface ReactElementType {
+  (): React.ReactElement;
+}

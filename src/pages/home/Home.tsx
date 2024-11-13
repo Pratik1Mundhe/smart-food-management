@@ -1,0 +1,17 @@
+import React from "react";
+import UserMealCard from "../../components/userMealCard/UserMealCard";
+import { MealTypeEnum } from "../../types";
+
+const Home: React.FC = () => {
+  return (
+    <div>
+      <div className="flex justify-center items-center gap-4">
+        <UserMealCard type={MealTypeEnum.BREAKFAST} mealTime="7:00 - 10:00" />
+        <UserMealCard type={MealTypeEnum.LUNCH} mealTime="13:00 - 15:00" />
+        <UserMealCard type={MealTypeEnum.DINNER} mealTime="20:00 - 22:00" />
+      </div>
+    </div>
+  );
+};
+
+export default Home;
