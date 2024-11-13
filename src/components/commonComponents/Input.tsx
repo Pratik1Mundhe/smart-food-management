@@ -11,7 +11,7 @@ interface InputProp {
   onChangeFunction: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = (prop: InputProp) => {
+const Input: React.FC<InputProp> = (prop) => {
   const { label, id, style, inputType, value, isError, onChangeFunction } =
     prop;
   return (

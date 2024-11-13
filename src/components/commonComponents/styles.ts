@@ -1,6 +1,6 @@
 //rewriting same styles
 export const mealTypes =
-  "text-xs w-fit cursor-pointer border-[1px] border-gray-300 flex flex-row mt-3 rounded";
+  "text-sm w-fit cursor-pointer border-[1px] border-gray-300 flex flex-row rounded";
 export const fullMealTab = "text-black bg-white";
 export const halfMealTab =
   " border-x-[1px] border-gray-300 px-3 py-2 transition-all duration-500";

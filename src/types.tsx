@@ -9,6 +9,12 @@ export enum MealTypeEnum {
   DINNER = "dinner",
 }
 
+export enum MealQuantityEnum {
+  FULL = "full",
+  HALF = "half",
+  CUSTOM = "custom",
+}
+
 export enum PageRoutesEnum {
   HOME_PAGE = "/",
   ADMIN_HOME_PAGE = "/admin",

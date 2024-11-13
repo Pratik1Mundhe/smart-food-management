@@ -15,7 +15,7 @@ const AdminNavbar: React.FC = () => {
       <li className="flex items-center gap-2">
         <LuUserCircle className="h-5 w-5" />
         <h1 className="text-general text-sm font-medium">Sai</h1>
-        <FaChevronDown className="text-sm" />
+        <FaChevronDown className="text-sm cursor-pointer" />
       </li>
     );
   };
@@ -25,13 +25,13 @@ const AdminNavbar: React.FC = () => {
       <img
         onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
         src={globalLogo}
-        className="h-[60px] w-[60px]"
+        className="h-[60px] w-[60px] cursor-pointer"
       />
 
       <ul className="flex justify-between items-center gap-10">
         <li
           onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
-          className={`text-general text-sm font-medium ${
+          className={`text-general cursor-pointer text-sm font-medium ${
             path === PageRoutesEnum.HOME_PAGE ? "text-primary" : "text-general"
           }`}
         >

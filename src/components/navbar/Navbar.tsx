@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
       <li className="flex items-center gap-2">
         <LuUserCircle className="h-5 w-5" />
         <h1 className="text-general text-sm font-medium">Sai</h1>
-        <FaChevronDown className="text-sm" />
+        <FaChevronDown className="text-sm cursor-pointer" />
       </li>
     );
   };
@@ -34,14 +34,14 @@ const Navbar: React.FC = () => {
       <img
         onClick={() => navigate("/")}
         src={globalLogo}
-        className="h-[60px] w-[60px]"
+        className="h-[60px] w-[60px] cursor-pointer"
       />
 
       <ul className="flex justify-between items-center gap-4 w-[40%]">
         {renderCampusToggleButton()}
         <li
           onClick={() => navigate("/")}
-          className={`text-general text-sm font-medium ${
+          className={`text-general text-sm font-medium cursor-pointer ${
             path === "/" ? "text-primary" : "text-general"
           }`}
         >
@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
         </li>
         <li
           onClick={() => navigate("/weekly-menu")}
-          className={`text-general text-sm font-medium ${
+          className={`text-general text-sm font-medium cursor-pointer ${
             path === "/weekly-menu" ? "text-primary" : "text-general"
           }`}
         >
