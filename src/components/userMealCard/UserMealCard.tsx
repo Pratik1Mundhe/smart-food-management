@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from "react";
 import { CiClock1 } from "react-icons/ci";
-import { useState, useEffect } from "react";
+import { v4 } from "uuid";
 
 import calculateCutoffTime from "../../utils/calculateCutoffTime";
-import MealPreferenceModal from "../userPreferenceModal/MealPreferenceModal";
+import MealPreferenceModal from "../MealPreferenceModal/MealPreferenceModal";
 import {
   buttonContent,
   cardContainer,
@@ -16,8 +17,6 @@ import {
   timeDetailsContainer,
 } from "./styles";
 import ModalStore from "../../store/ModalStore";
-
-import { v4 } from "uuid";
 import { MealTypeEnum } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 
@@ -28,7 +27,7 @@ interface MealCardProps {
 
 const itemsList = ["idly", "Marsala Rice", "Maggie", "rice", "Biryani"];
 
-const UserMealCard = (props: MealCardProps) => {
+const UserMealCard: React.FC<MealCardProps> = (props) => {
   const { type, mealTime } = props;
   const [isEditable, setIsEditable] = useState(true);
 
