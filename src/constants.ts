@@ -14,6 +14,10 @@ export const GLOBAL_LOGO_ALT = "LOGO";
 export const FOOD_URL = "foodPreparing.png";
 export const DATE_FORMAT = "DD MMM, YYYY";
 
+export const LOGIN_METHOD = "POST";
+export const INVALID_USERNAME_RESPONSE = "INVALID_USERNAME";
+export const INVALID_PASSWORD_RESPONSE = "INVALID_PASSWORD";
+
 export const MEAL_TYPES: MealTypeEnum[] = [
   MealTypeEnum.BREAKFAST,
   MealTypeEnum.LUNCH,
