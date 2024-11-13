@@ -3,7 +3,7 @@ import { CiClock1 } from "react-icons/ci";
 import { v4 } from "uuid";
 
 import calculateCutoffTime from "../../utils/calculateCutoffTime";
-import MealPreferenceModal from "../MealPreferenceModal.tsx/MealPreferenceModal";
+import MealPreferenceModal from "../MealPreferenceModal/MealPreferenceModal";
 import {
   buttonContent,
   cardContainer,
