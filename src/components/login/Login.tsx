@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Input from "../commonComponents/Input";
 import {
   button,
@@ -32,7 +31,8 @@ const Login = () => {
     isUsernameInvalid: false,
     isPasswordInvalid: false,
   });
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   function handleLoginDetails(
     updatingValue: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -43,18 +43,13 @@ const Login = () => {
       [updatingValue]: newValue,
     }));
 
-    const isValidUsername =
-      updatingValue === USERNAME && newValue !== USERNAME_INITIAL_VALUE;
-    const isValidPassword =
-      updatingValue === PASSWORD && newValue !== PASSWORD_INITIAL_VALUE;
-
-    if (isValidUsername) {
+    if (updatingValue === USERNAME && newValue.trim() !== "") {
       setIsLoginDetailsInvalid((prev) => ({
         ...prev,
         isUsernameInvalid: false,
       }));
     }
-    if (isValidPassword) {
+    if (updatingValue === PASSWORD && newValue.trim() !== "") {
       setIsLoginDetailsInvalid((prev) => ({
         ...prev,
         isPasswordInvalid: false,
@@ -62,7 +57,7 @@ const Login = () => {
     }
   }
 
-  function handleLogin() {
+  async function handleLogin() {
     const isUserNameEmpty = loginDetails.username.trim() === "";
     const isPasswordEmpty = loginDetails.password.trim() === "";
 
@@ -70,7 +65,47 @@ const Login = () => {
       isUsernameInvalid: isUserNameEmpty,
       isPasswordInvalid: isPasswordEmpty,
     });
+
+    if (isUserNameEmpty || isPasswordEmpty) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    const data = {
+      username: loginDetails.username,
+      password: loginDetails.password,
+    };
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(
+        "https://great-clouds-rule.loca.lt/api/meals/login/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Login failed. Please check your credentials.");
+      }
+
+      const result = await response.json();
+      console.log("Login successful:", result);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "An error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   }
+
   const headerSection = () => {
     return (
       <>
@@ -82,6 +117,7 @@ const Login = () => {
       </>
     );
   };
+
   const inputsSection = () => {
     return (
       <>
@@ -112,8 +148,9 @@ const Login = () => {
       <div className={loginContainer}>
         {headerSection()}
         {inputsSection()}
-        <button className={button} onClick={handleLogin}>
-          Login
+        {error && <p className="text-red-500 text-[12px]">{error}</p>}{" "}
+        <button className={button} onClick={handleLogin} disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
         </button>
       </div>
     </div>
