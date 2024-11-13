@@ -124,7 +124,6 @@ const MealPreferenceModal: React.FC = () => {
             activeTab={activeTab}
             handelActiveTab={handleActiveTab}
           />
-          <MealDate />
         </div>
         <div className={mealsDetailsContainer}>
           <Meals meals={meals} activeTab={activeTab} />
