@@ -9,7 +9,7 @@ interface ModalProp {
   children: React.ReactNode;
 }
 
-const Modal = (props: ModalProp) => {
+const Modal: React.FC<ModalProp> = (props) => {
   const { children } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -29,7 +29,7 @@ const Modal = (props: ModalProp) => {
   }
 
   return createPortal(
-    <dialog ref={dialogRef} className="mx-auto mt-auto mb-[4%] modal">
+    <dialog ref={dialogRef} className="mx-auto my-auto rounded">
       {children}
     </dialog>,
     modalRenderContainer

@@ -1,5 +1,5 @@
 export const cardContainer =
-  "bg-white w-[360px] border-2 p-5 m-2 h-[300px] shadow-xl";
+  "bg-white w-[360px] border-2 p-5 m-2 h-[300px] shadow-xl rounded";
 export const header = "flex flex-row justify-between ";
 export const timeDetailsContainer = "flex flex-row gap-2 items-start";
 export const image = "w-[45px] border-2 p-1";

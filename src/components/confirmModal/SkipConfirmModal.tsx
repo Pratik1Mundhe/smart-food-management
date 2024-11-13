@@ -1,37 +1,28 @@
 import React from "react";
 
 import Modal from "../modal/Modal";
-import { foodItemType, ReactElementType, VoidFunctionType } from "../../types";
+import { ReactElementType, VoidFunctionType } from "../../types";
 
 interface ConfirmModalPropsType {
-  foodItem: foodItemType;
-  handleCloseConfirmModal: VoidFunctionType;
-  removeFoodItem: (id: number) => void;
+  closeModal: VoidFunctionType;
+  action: VoidFunctionType;
 }
 
-const ConfirmModal: React.FC<ConfirmModalPropsType> = ({
-  foodItem,
-  handleCloseConfirmModal,
-  removeFoodItem,
+const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
+  closeModal,
+  action,
 }) => {
-  const { name, id } = foodItem;
-
-  const handleClickDelete: VoidFunctionType = () => {
-    handleCloseConfirmModal();
-    removeFoodItem(id);
-  };
-
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">
         <button
-          onClick={handleClickDelete}
+          onClick={action}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          Delete
+          Skip
         </button>
         <button
-          onClick={handleCloseConfirmModal}
+          onClick={closeModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
           Cancel
@@ -41,10 +32,10 @@ const ConfirmModal: React.FC<ConfirmModalPropsType> = ({
   };
 
   return (
-    <Modal close={handleCloseConfirmModal}>
+    <Modal close={closeModal}>
       <div className="flex flex-col gap-12">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
-          Are you sure you want to delete {name}
+          Are you sure you want to skip?
         </h1>
         {renderButtons()}
       </div>
@@ -52,4 +43,4 @@ const ConfirmModal: React.FC<ConfirmModalPropsType> = ({
   );
 };
 
-export default ConfirmModal;
+export default SkipConfirmModal;

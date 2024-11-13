@@ -13,7 +13,8 @@ import MealTabs from "../mealTabs/MealTabs";
 import foodStore from "../../store/FoodStore";
 import ScheduleFoodItem from "../scheduleFoodItem/ScheduleFoodItem";
 import FoodItemsModal from "../foodItemsModal/FoodItemsModal";
-import ConfirmModal from "../confirmModal/ConfirmModal";
+import DeleteConfirmModal from "../confirmModal/DeleteConfirmModal";
+import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 
 const data = [
   { id: 1, name: "Pancakes" },
@@ -33,6 +34,9 @@ const ScheduleMeal: React.FC = observer(() => {
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [showFoodItemsModal, setShowFoodItemsModal] = useState<boolean>(false);
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+  const [showSaveConfirmModal, setShowSaveConfirmModal] =
+    useState<boolean>(false);
+
   const [deleteFoodItemId, setDeleteFoodItemId] = useState<number | null>(null);
   const [foodData, setFoodData] = useState<MealFoodDataType>({
     breakfast: [],
@@ -153,7 +157,7 @@ const ScheduleMeal: React.FC = observer(() => {
       };
       const foodItem = getFoodItem();
       return (
-        <ConfirmModal
+        <DeleteConfirmModal
           removeFoodItem={removeFoodItem}
           handleCloseConfirmModal={handleCloseConfirmModal}
           foodItem={foodItem}
@@ -163,13 +167,31 @@ const ScheduleMeal: React.FC = observer(() => {
     return <></>;
   };
 
+  const handleSaveMealSchedule = () => {
+    //set mutation for saving meal schedule
+  };
+
+  const renderSaveConfirmModal = () => {
+    if (showSaveConfirmModal) {
+      return (
+        <SaveConfirmModal
+          action={handleSaveMealSchedule}
+          closeModal={() => setShowSaveConfirmModal(false)}
+        />
+      );
+    }
+  };
+
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center gap-4 self-end">
         <button className="rounded text-sm py-2 px-5 text-general font-semibold border-2">
           Back
         </button>
-        <button className="bg-success text-sm text-white px-5 py-2 rounded font-semibold">
+        <button
+          onClick={() => setShowSaveConfirmModal(true)}
+          className="bg-success text-sm text-white px-5 py-2 rounded font-semibold"
+        >
           Save
         </button>
       </div>
@@ -204,6 +226,7 @@ const ScheduleMeal: React.FC = observer(() => {
       {renderButtons()}
       {renderFoodItemModel()}
       {renderConfirmModal()}
+      {renderSaveConfirmModal()}
     </div>
   );
 });
