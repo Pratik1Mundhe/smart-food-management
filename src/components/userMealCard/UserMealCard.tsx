@@ -31,15 +31,15 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
   const { type, mealTime } = props;
   const [isEditable, setIsEditable] = useState(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const cutoff = calculateCutoffTime(mealTime.split("-")[0].trim());
-      setIsEditable(now < cutoff);
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const now = new Date();
+  //     const cutoff = calculateCutoffTime(mealTime.split("-")[0].trim());
+  //     setIsEditable(now < cutoff);
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const mealTypeAndTime = () => {
     return (

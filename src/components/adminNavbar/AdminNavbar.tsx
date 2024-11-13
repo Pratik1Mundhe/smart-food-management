@@ -23,16 +23,18 @@ const AdminNavbar: React.FC = () => {
   return (
     <div className="flex items-center justify-between px-10 shadow-xl">
       <img
-        onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
+        onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
         src={globalLogo}
         className="h-[60px] w-[60px] cursor-pointer"
       />
 
       <ul className="flex justify-between items-center gap-10">
         <li
-          onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
+          onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
           className={`text-general cursor-pointer text-sm font-medium ${
-            path === PageRoutesEnum.HOME_PAGE ? "text-primary" : "text-general"
+            path === PageRoutesEnum.ADMIN_HOME_PAGE
+              ? "text-primary"
+              : "text-general"
           }`}
         >
           Home
