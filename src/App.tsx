@@ -7,7 +7,7 @@ import WeeklyMenu from "./pages/weeklyMenu/WeeklyMenu";
 import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
 import { PageRoutesEnum } from "./types";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/loginPage/LoginPage";
 
 const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,

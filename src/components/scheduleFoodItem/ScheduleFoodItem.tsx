@@ -1,7 +1,8 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { IoIosCloseCircle } from "react-icons/io";
 
-import { foodItemType } from "../../types";
+import { foodItemType, VoidFunctionType } from "../../types";
 import QuantityCounter from "../quantityCounter/QuantityCounter";
 
 interface ScheduleFoodItemPropsType {
@@ -20,15 +21,15 @@ const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
 }) => {
   const { name, id } = food;
 
-  const handleClickCloseButton = () => {
+  const handleClickCloseButton: VoidFunctionType = () => {
     handleOpenConfirmModal(id);
   };
 
-  const handleFullMealQuantity = (quantity: number) => {
+  const handleFullMealQuantity = (quantity: number): void => {
     updateFullMealQuantity(id, quantity);
   };
 
-  const handleHalfMealQuantity = (quantity: number) => {
+  const handleHalfMealQuantity = (quantity: number): void => {
     updateHalfMealQuantity(id, quantity);
   };
 
@@ -52,4 +53,4 @@ const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
   );
 };
 
-export default ScheduleFoodItem;
+export default observer(ScheduleFoodItem);

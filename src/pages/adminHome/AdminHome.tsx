@@ -1,5 +1,6 @@
 import React from "react";
 import ScheduleMeal from "../../components/scheduleMeal/ScheduleMeal";
+import { observer } from "mobx-react-lite";
 
 const AdminHome: React.FC = () => {
   return (
@@ -15,4 +16,4 @@ const AdminHome: React.FC = () => {
   );
 };
 
-export default AdminHome;
+export default observer(AdminHome);

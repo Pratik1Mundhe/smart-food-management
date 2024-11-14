@@ -1,19 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { LuUserCircle } from "react-icons/lu";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import globalLogo from "../../assets/global-logo.png";
 import ToggleSwitch from "../toggleButton/ToggleButton";
 import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
+import { PageRoutesEnum, ReactElementType } from "../../types";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
   const [showLogout, setShowLogout] = useState(false);
 
-  const renderCampusToggleButton = () => {
+  const renderCampusToggleButton: ReactElementType = () => {
     return (
       <li className="flex items-center gap-6">
         <p className="text-general text-sm font-medium">In Campus</p>
@@ -59,7 +60,7 @@ const Navbar: React.FC = () => {
   return (
     <div className="flex items-center justify-between px-10 border-b-[1px]">
       <img
-        onClick={() => navigate("/")}
+        onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
         src={globalLogo}
         className="h-[60px] w-[60px] cursor-pointer"
       />
@@ -67,17 +68,19 @@ const Navbar: React.FC = () => {
       <ul className="flex justify-between items-center gap-4 w-[40%]">
         {renderCampusToggleButton()}
         <li
-          onClick={() => navigate("/")}
+          onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
           className={`text-general text-sm font-medium cursor-pointer ${
-            path === "/" ? "text-primary" : "text-general"
+            path === PageRoutesEnum.HOME_PAGE ? "text-primary" : "text-general"
           }`}
         >
           Home
         </li>
         <li
-          onClick={() => navigate("/weekly-menu")}
+          onClick={() => navigate(PageRoutesEnum.WEEKLY_MENU_PAGE)}
           className={`text-general text-sm font-medium cursor-pointer ${
-            path === "/weekly-menu" ? "text-primary" : "text-general"
+            path === PageRoutesEnum.WEEKLY_MENU_PAGE
+              ? "text-primary"
+              : "text-general"
           }`}
         >
           Weekly Menu

@@ -20,7 +20,11 @@ import { FOOD_URL } from "../../constants";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import CloseConfirmModal from "../confirmModal/CloseConfirmModal";
 import SkipConfirmModal from "../confirmModal/SkipConfirmModal";
-import { MealPreferenceEnum } from "../../types";
+import {
+  MealPreferenceEnum,
+  ReactElementType,
+  VoidFunctionType,
+} from "../../types";
 
 const meals = [
   { item: "Poori", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
@@ -42,82 +46,92 @@ const MealPreferenceModal: React.FC = () => {
     setActiveTab(activeType);
   }
 
-  const headerSection = () => {
+  const handleOpenSkipConfirmModal: VoidFunctionType = () => {
+    setShowSkipConfirmModal(true);
+    ModalStore.openConfirmModal();
+  };
+
+  const headerSection: ReactElementType = () => {
     return (
       <div className={headerContainer}>
         <h1 className={mealTypeHeading}>{ModalStore.typeOfMeal}</h1>
-        <button
-          onClick={() => setShowSkipConfirmModal(true)}
-          className={skipMealButton}
-        >
+        <button onClick={handleOpenSkipConfirmModal} className={skipMealButton}>
           Skip Meals
         </button>
       </div>
     );
   };
 
-  const handleMealPreferenceSave = () => {
-    //mutation
+  const handleMealPreferenceSave: VoidFunctionType = () => {
+    //mutation for saving user meal preference
     setShowSaveConfirmModal(false);
   };
 
-  const handleClickBack = () => {
+  const handleClickBack: VoidFunctionType = () => {
     setShowBackConfirmModal(true);
     ModalStore.openConfirmModal();
   };
 
-  const buttonsSection = () => {
+  const handleClickSave: VoidFunctionType = () => {
+    setShowSaveConfirmModal(true);
+    ModalStore.openConfirmModal();
+  };
+
+  const buttonsSection: ReactElementType = () => {
     return (
       <p className={buttonContainer}>
         <button className={backButton} onClick={handleClickBack}>
           Back
         </button>
-        <button
-          onClick={() => setShowSaveConfirmModal(true)}
-          className={saveButton}
-        >
+        <button onClick={handleClickSave} className={saveButton}>
           Save
         </button>
       </p>
     );
   };
 
-  const renderSaveConfirmModal = () => {
-    if (showSaveConfirmModal) {
-      return (
-        <SaveConfirmModal
-          action={handleMealPreferenceSave}
-          closeModal={() => setShowSaveConfirmModal(false)}
-        />
-      );
-    }
-    return <></>;
-  };
-
-  const handleCloseConfirmModal = () => {
+  const handleCloseMealPreferenceModal: VoidFunctionType = () => {
     ModalStore.closeConfirmModal();
     setShowBackConfirmModal(false);
     ModalStore.closeModal();
   };
 
-  const renderBackConfirmModal = () => {
-    if (showBackConfirmModal) {
-      return <CloseConfirmModal closeModal={handleCloseConfirmModal} />;
-    }
-    return <></>;
+  const handleCloseConfirmModal: VoidFunctionType = () => {
+    ModalStore.closeConfirmModal();
+    setShowBackConfirmModal(false);
   };
 
-  const handleSkipMealPreference = () => {
+  const handleSkipMealPreference: VoidFunctionType = () => {
     // req will be send to change status as meal is skipped
     setShowSkipConfirmModal(false);
   };
 
-  const renderSkipConfirmModal = () => {
+  const handleCloseSkipConfirmModal: VoidFunctionType = () => {
+    setShowSkipConfirmModal(false);
+    ModalStore.closeConfirmModal();
+  };
+
+  const renderConfirmModal: ReactElementType = () => {
+    console.log(showSaveConfirmModal);
     if (showSkipConfirmModal) {
       return (
         <SkipConfirmModal
-          closeModal={() => setShowSkipConfirmModal(false)}
+          closeModal={handleCloseSkipConfirmModal}
           action={handleSkipMealPreference}
+        />
+      );
+    } else if (showBackConfirmModal) {
+      return (
+        <CloseConfirmModal
+          closeModal={handleCloseMealPreferenceModal}
+          closeConfirmModal={handleCloseConfirmModal}
+        />
+      );
+    } else if (showSaveConfirmModal) {
+      return (
+        <SaveConfirmModal
+          action={handleMealPreferenceSave}
+          closeModal={() => setShowSaveConfirmModal(false)}
         />
       );
     }
@@ -142,9 +156,7 @@ const MealPreferenceModal: React.FC = () => {
         </div>
         {buttonsSection()}
       </div>
-      {renderSaveConfirmModal()}
-      {renderBackConfirmModal()}
-      {renderSkipConfirmModal()}
+      {renderConfirmModal()}
     </Modal>
   );
 };

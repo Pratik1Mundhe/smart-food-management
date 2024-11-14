@@ -29,7 +29,7 @@ const Modal: React.FC<ModalProp> = (props) => {
   }
 
   return createPortal(
-    <dialog ref={dialogRef} className="mx-auto my-auto rounded">
+    <dialog ref={dialogRef} className="mx-auto my-auto rounded modal">
       {children}
     </dialog>,
     modalRenderContainer

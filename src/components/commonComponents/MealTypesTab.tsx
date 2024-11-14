@@ -9,6 +9,7 @@ import {
   activeMealTabHalf,
   activeMealTabCustom,
 } from "./styles";
+import { observer } from "mobx-react-lite";
 
 interface MealTabProp {
   activeTab: string;
@@ -51,4 +52,4 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
   );
 };
 
-export default MealTypesTab;
+export default observer(MealTypesTab);

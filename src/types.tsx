@@ -27,6 +27,7 @@ export enum MealPreferenceEnum {
   FULL = "full",
   HALF = "half",
   CUSTOM = "custom",
+  SKIP = "skip",
 }
 
 export enum MealStatusEnum {

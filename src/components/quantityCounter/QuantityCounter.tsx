@@ -1,6 +1,8 @@
 import React from "react";
 import { IoAdd } from "react-icons/io5";
 import { FiMinus } from "react-icons/fi";
+import { observer } from "mobx-react-lite";
+import { VoidFunctionType } from "../../types";
 
 interface QuantityCounterPropsType {
   setQuantity: (quantity: number) => void;
@@ -11,14 +13,14 @@ const QuantityCounter: React.FC<QuantityCounterPropsType> = ({
   setQuantity,
   quantity,
 }) => {
-  const handleIncreaseCount = () => {
+  const handleIncreaseCount: VoidFunctionType = () => {
     if (quantity >= 100) {
       return;
     }
     setQuantity(quantity + 1);
   };
 
-  const handleDecreaseCount = () => {
+  const handleDecreaseCount: VoidFunctionType = () => {
     if (quantity === 0) {
       return;
     }
@@ -49,4 +51,4 @@ const QuantityCounter: React.FC<QuantityCounterPropsType> = ({
   );
 };
 
-export default QuantityCounter;
+export default observer(QuantityCounter);

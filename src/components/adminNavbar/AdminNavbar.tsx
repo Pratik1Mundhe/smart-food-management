@@ -5,6 +5,7 @@ import { FaChevronDown } from "react-icons/fa";
 
 import globalLogo from "../../assets/global-logo.png";
 import { PageRoutesEnum } from "../../types";
+import { observer } from "mobx-react-lite";
 
 const AdminNavbar: React.FC = () => {
   const navigate = useNavigate();
@@ -45,4 +46,4 @@ const AdminNavbar: React.FC = () => {
   );
 };
 
-export default AdminNavbar;
+export default observer(AdminNavbar);
