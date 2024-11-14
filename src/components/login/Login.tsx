@@ -67,7 +67,8 @@ const Login = () => {
     }
   }
 
-  async function handleLogin() {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     const isUserNameEmpty = loginDetails.username.trim() === "";
     const isPasswordEmpty = loginDetails.password.trim() === "";
 
@@ -172,7 +173,7 @@ const Login = () => {
   );
 
   return (
-    <div className={loginPage}>
+    <form onSubmit={handleLogin} className={loginPage}>
       <div className={loginContainer}>
         {headerSection()}
         {inputsSection()}
@@ -183,11 +184,11 @@ const Login = () => {
         ) : (
           ""
         )}
-        <button className={button} onClick={handleLogin} disabled={loading}>
+        <button type="submit" className={button} disabled={loading}>
           {loading ? <Loader /> : "Login"}
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

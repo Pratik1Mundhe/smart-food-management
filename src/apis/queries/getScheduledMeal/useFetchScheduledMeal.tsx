@@ -1,15 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { GET_SCHEDULE_MEAL } from "./query";
 
-const useFetchScheduledMeal = (date: string, mealType: string) => {
+const useFetchScheduledMeal = () => {
   const { loading, error } = useQuery(GET_SCHEDULE_MEAL, {
     onCompleted: (data) => {
       console.log(data);
     },
     variables: {
       params: {
-        date: date,
-        mealType: mealType,
+        date: "2024-11-16 17:48:15",
+        mealType: "BREAKFAST",
       },
     },
   });
