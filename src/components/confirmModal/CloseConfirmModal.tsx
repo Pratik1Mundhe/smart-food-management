@@ -1,8 +1,7 @@
 import React from "react";
 
-import Modal from "../modal/Modal";
+import Modal from "../commonComponents/Modal";
 import { ReactElementType, VoidFunctionType } from "../../types";
-import ModalStore from "../../store/ModalStore";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
@@ -10,7 +9,7 @@ interface ConfirmModalPropsType {
 
 const CloseConfirmModal: React.FC<ConfirmModalPropsType> = ({ closeModal }) => {
   const handleMealPreferenceModalClose = () => {
-    ModalStore.closeModal();
+    closeModal();
   };
 
   const renderButtons: ReactElementType = () => {
@@ -33,8 +32,8 @@ const CloseConfirmModal: React.FC<ConfirmModalPropsType> = ({ closeModal }) => {
   };
 
   return (
-    <Modal close={closeModal}>
-      <div className="flex flex-col gap-12">
+    <Modal>
+      <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
           Are you sure you want to close?
         </h1>
