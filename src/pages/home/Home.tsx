@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import UserMealCard from "../../components/userMealCard/UserMealCard";
 import { MealTypeEnum, PageRoutesEnum } from "../../types";
@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import { ACCESS_TOKEN } from "../../constants";
 
 const Home: React.FC = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem("admin");
 
@@ -19,7 +20,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col py-4">
       <div className="mx-auto mb-4">
-        <MealDate />
+        <MealDate currentDate={currentDate} setCurrentDate={setCurrentDate} />
       </div>
       <div className="flex justify-center items-center gap-4">
         <UserMealCard type={MealTypeEnum.BREAKFAST} mealTime="5:00 - 06:00" />

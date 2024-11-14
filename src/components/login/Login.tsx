@@ -27,6 +27,7 @@ import {
 } from "../../constants";
 import Loader from "../loader/Loader";
 import { PageRoutesEnum } from "../../types";
+import UserMealStore from "../../store/UserMealStore";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -108,6 +109,7 @@ const Login = () => {
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );
+          UserMealStore.setUserId(result.response.user_id);
           navigate(PageRoutesEnum.HOME_PAGE);
         }
       }

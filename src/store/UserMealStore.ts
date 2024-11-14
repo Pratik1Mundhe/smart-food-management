@@ -3,11 +3,13 @@ import MealDetailsModel from "../models/MealDetailsModel";
 import { MealDetailsType } from "../types";
 
 class _UserMealStore {
+  userId: string;
   data: string;
   mealsDetails: MealDetailsModel[];
   constructor() {
     this.data = "Today";
     this.mealsDetails = [];
+    this.userId = "";
     makeAutoObservable(this, {}, { autoBind: true });
   }
   setMealDetails(mealData: MealDetailsType[]) {
@@ -17,6 +19,9 @@ class _UserMealStore {
   }
   setDate(newDate: string) {
     this.data = newDate;
+  }
+  setUserId(user: string) {
+    this.userId = user;
   }
 }
 
