@@ -17,6 +17,7 @@ export const DATE_FORMAT = "DD MMM, YYYY";
 export const LOGIN_METHOD = "POST";
 export const INVALID_USERNAME_RESPONSE = "INVALID_USERNAME";
 export const INVALID_PASSWORD_RESPONSE = "INVALID_PASSWORD";
+export const ACCESS_TOKEN = "accessToken";
 
 export const MEAL_TYPES: MealTypeEnum[] = [
   MealTypeEnum.BREAKFAST,

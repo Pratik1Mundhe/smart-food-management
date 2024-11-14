@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Input from "../commonComponents/Input";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   button,
   errorInput,
@@ -22,8 +24,10 @@ import {
   LOGIN_METHOD,
   INVALID_USERNAME_RESPONSE,
   INVALID_PASSWORD_RESPONSE,
+  ACCESS_TOKEN,
 } from "../../constants";
 import Loader from "../loader/Loader";
+import { PageRoutesEnum } from "../../types";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -35,6 +39,7 @@ const Login = () => {
     isPasswordInvalid: false,
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function handleLoginDetails(
     updatingValue: string,
@@ -80,7 +85,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://calm-poets-hang.loca.lt/api/meals/login/",
+        "https://cruel-emus-rule.loca.lt/api/meals/login/",
         {
           method: LOGIN_METHOD,
           headers: {
@@ -90,8 +95,14 @@ const Login = () => {
         }
       );
       const result = await response.json();
-
-      if (result.res_code !== 200) {
+      if (result.status_code === 200) {
+        localStorage.setItem(
+          ACCESS_TOKEN,
+          JSON.stringify(result.response.access_token)
+        );
+        navigate(PageRoutesEnum.HOME_PAGE);
+      }
+      if (result.status_code !== 200) {
         throw new Error(result.res_status);
       }
     } catch (err: unknown) {

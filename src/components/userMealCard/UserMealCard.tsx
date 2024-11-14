@@ -19,6 +19,7 @@ import {
 import ModalStore from "../../store/ModalStore";
 import { MealTypeEnum } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
+import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 
 interface MealCardProps {
   type: MealTypeEnum;
@@ -30,22 +31,29 @@ const itemsList = ["idly", "Marsala Rice", "Maggie", "rice", "Biryani"];
 const UserMealCard: React.FC<MealCardProps> = (props) => {
   const { type, mealTime } = props;
   const [isEditable, setIsEditable] = useState(true);
+  const [isMealAteStatus, setIsMealStatus] = useState(false);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const now = new Date();
-  //     const cutoff = calculateCutoffTime(mealTime.split("-")[0].trim());
-  //     setIsEditable(now < cutoff);
-  //   }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const cutoff = calculateCutoffTime(mealTime.split("-")[0].trim());
+      const mealCompleteTime = calculateMealCompleteTime(
+        mealTime.split("-")[1].trim()
+      );
+      setIsEditable(now < cutoff);
+      setIsMealStatus(now > mealCompleteTime);
+    }, 1000);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   const mealTypeAndTime = () => {
     return (
       <div className={header}>
         <div className={timeDetailsContainer}>
-          <IconMeal mealType={type} />
+          <div className="border-2 p-2 rounded-sm">
+            <IconMeal mealType={type} />
+          </div>
           <p className="flex flex-col">
             <span className="text-lg first-letter:capitalize">{type}</span>
             <span className={time}>{mealTime}</span>
@@ -73,7 +81,19 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     );
   };
 
-  const editButtonContainer = () => {
+  const mealStatusButtons = () => {
+    if (isMealAteStatus) {
+      return (
+        <p className="flex flex-row gap-3 justify-around">
+          <button className="w-[125px] h-[35px] bg-blue-600 rounded-sm text-white font-normal hover:bg-blue-700 mt-8">
+            I Ate it
+          </button>
+          <button className="w-[125px] text-[12px] h-[35px] border-2 border-gray-300  rounded hover:bg-gray-100 tex-[12px] font-normal mt-8">
+            I Skipped
+          </button>
+        </p>
+      );
+    }
     return (
       <button
         className={isEditable ? editButton : disableEditButton}
@@ -97,7 +117,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       <MealPreferenceModal />
       {mealTypeAndTime()}
       {meals()}
-      {editButtonContainer()}
+      {mealStatusButtons()}
     </div>
   );
 };
