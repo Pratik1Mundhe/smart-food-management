@@ -1,13 +1,19 @@
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import { DATE_FORMAT } from "../../constants";
 import { VoidFunctionType } from "../../types";
 
-const MealDate: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+interface MealDatePropsType {
+  currentDate: Date;
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+}
 
+const MealDate: React.FC<MealDatePropsType> = ({
+  currentDate,
+  setCurrentDate,
+}) => {
   const handleNextDate: VoidFunctionType = () => {
     const nextDate = new Date(currentDate);
     nextDate.setDate(currentDate.getDate() + 1);
