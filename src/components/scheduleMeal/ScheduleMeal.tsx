@@ -17,7 +17,7 @@ import FoodItemsModal from "../foodItemsModal/FoodItemsModal";
 import DeleteConfirmModal from "../confirmModal/DeleteConfirmModal";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import ModalStore from "../../store/ModalStore";
-import useScheduleMeal from "../../apis/mutations/adminSchedule/useMutateScheduleMeal";
+import useScheduleMeal from "../../apis/mutations/scheduleMeal/useMutateScheduleMeal";
 import { formatDate } from "../../utils/formatDate";
 import { successToast } from "../../utils/toastUtils/successToast";
 import { failureToast } from "../../utils/toastUtils/failureToast";
