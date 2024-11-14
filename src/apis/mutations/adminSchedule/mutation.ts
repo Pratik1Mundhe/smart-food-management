@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 const SET_SCHEDULE_MEAL = gql`
-  mutation ScheduleMeal($params: ScheduleMealParams!) {
+  mutation Mutation($params: ScheduleMealParams!) {
     scheduleMeal(params: $params) {
       ... on ScheduleMealSuccess {
         mealId
@@ -13,3 +13,13 @@ const SET_SCHEDULE_MEAL = gql`
   }
 `;
 export default SET_SCHEDULE_MEAL;
+
+// {
+//   "params": {
+//     "itemIds": null,
+//     "fullMealQuantities": null,
+//     "halfMealQuantities": null,
+//     "date": null,
+//     "mealType": null
+//   }
+// }
