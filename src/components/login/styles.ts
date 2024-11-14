@@ -8,4 +8,4 @@ export const loginContainer =
 export const logo = "h-[90px] w-[90px]";
 export const heading = "text-[32px] font-normal text-center";
 export const button =
-  "bg-blue-600 h-[35px] w-[300px] text-white font-medium hover:bg-blue-700 mt-6";
+  "bg-blue-600 flex flex-row justify-center items-center  h-[35px] w-[300px] text-white font-medium hover:bg-blue-700 mt-4";

@@ -15,6 +15,9 @@
   margin: auto;
   transition: all 0.5 ease;
 }
+.modal::backdrop{
+  background-color: rgba(0, 0, 0, 0.3)
+}
 
 @keyframes fade-slide-up {
   from {
