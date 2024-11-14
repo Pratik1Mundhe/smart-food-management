@@ -100,12 +100,6 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
               <span className="font-thin text-sm">Left</span>
             </>
           )}
-          <span className="text-sm">Edit</span>
-          <CiClock1
-            className="text-xl
-          "
-          />
-          <span className="font-light text-sm">Left</span>
         </p>
       </button>
     );

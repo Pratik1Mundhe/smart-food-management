@@ -54,6 +54,8 @@ export interface MealDetailsType {
 export interface MealFoodItemType {
   id: string;
   name: string;
+  fullMealQuantity: number;
+  halfMealQuantity: number;
 }
 export interface FoodItemResponseType {
   id: number;

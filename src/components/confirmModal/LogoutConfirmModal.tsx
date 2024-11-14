@@ -1,17 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Modal from "../commonComponents/Modal";
-import { ReactElementType } from "../../types";
+import ConfirmModal from "../commonComponents/ConfirmModal";
+import { PageRoutesEnum, ReactElementType } from "../../types";
 import ModalStore from "../../store/ModalStore";
 import { ACCESS_TOKEN } from "../../constants";
+import Loader from "../loader/Loader";
 
 const LogoutConfirmModal: React.FC = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   function handleLogoutModal() {
-    localStorage.removeItem(ACCESS_TOKEN);
-    navigate("/login");
-    ModalStore.closeConfirmModal;
+    const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
+    async function logout() {
+      setLoading(true);
+      const response = await fetch(
+        "https://cruel-emus-rule.loca.lt/api/meals/logout/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (response.ok) {
+        localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem("admin");
+        ModalStore.closeConfirmModal();
+        navigate(PageRoutesEnum.LOGIN_PAGE);
+      }
+      setLoading(false);
+    }
+    logout();
   }
   const renderButtons: ReactElementType = () => {
     return (
@@ -20,10 +40,10 @@ const LogoutConfirmModal: React.FC = () => {
           onClick={handleLogoutModal}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          Logout
+          {!loading ? "Logout" : <Loader />}
         </button>
         <button
-          onClick={ModalStore.closeModal}
+          onClick={ModalStore.closeConfirmModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
           Cancel
@@ -33,14 +53,14 @@ const LogoutConfirmModal: React.FC = () => {
   };
 
   return (
-    <Modal>
-      <div className="flex flex-col gap-12">
+    <ConfirmModal>
+      <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
-          Are you sure you want to Logout
+          Are you sure you want to close?
         </h1>
         {renderButtons()}
       </div>
-    </Modal>
+    </ConfirmModal>
   );
 };
 

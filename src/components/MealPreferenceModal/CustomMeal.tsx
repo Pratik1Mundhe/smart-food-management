@@ -1,12 +1,16 @@
 import { v4 } from "uuid";
 import { useState } from "react";
-import { mealContainer, mealItem, mealType, mealQuantity } from "./styles";
+import { mealContainer, mealItem } from "./styles";
+import MealDetailsModel from "../../models/MealDetailsModel";
 
 interface CustomMealProp {
-  eachMeal: any;
+  eachMeal: MealDetailsModel;
+  index: number;
 }
 
-const CustomMeal = ({ eachMeal }: CustomMealProp) => {
+const CustomMeal = (props: CustomMealProp) => {
+  const { eachMeal, index } = props;
+
   const [mealQuantity, setMealQuantity] = useState(0);
 
   function handelIncreaseQuantity() {
@@ -19,9 +23,8 @@ const CustomMeal = ({ eachMeal }: CustomMealProp) => {
   return (
     <li key={v4()} className={mealContainer}>
       <p className={mealItem}>
-        {eachMeal.item}
+        {eachMeal.foodItem[index].name}
         <br />
-        <span className={mealType}>{eachMeal.itemType}</span>
       </p>
       <div className={`flex flex-row gap-2${mealQuantity}`}>
         <p>

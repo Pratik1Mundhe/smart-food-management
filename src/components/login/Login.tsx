@@ -38,6 +38,7 @@ const Login = () => {
     isPasswordInvalid: false,
   });
   const [loading, setLoading] = useState(false);
+  const [networkError, setNetworkError] = useState(false);
   const navigate = useNavigate();
 
   function handleLoginDetails(
@@ -95,14 +96,26 @@ const Login = () => {
       );
       const result = await response.json();
       if (result.status_code === 200) {
-        localStorage.setItem(
-          ACCESS_TOKEN,
-          JSON.stringify(result.response.access_token)
-        );
-        navigate(PageRoutesEnum.HOME_PAGE);
+        if (result.response.is_admin) {
+          localStorage.setItem("admin", result.response.is_admin);
+          localStorage.setItem(
+            ACCESS_TOKEN,
+            JSON.stringify(result.response.access_token)
+          );
+          navigate(PageRoutesEnum.ADMIN_HOME_PAGE);
+        } else {
+          localStorage.setItem(
+            ACCESS_TOKEN,
+            JSON.stringify(result.response.access_token)
+          );
+          navigate(PageRoutesEnum.HOME_PAGE);
+        }
       }
       if (result.status_code !== 200) {
         throw new Error(result.res_status);
+      }
+      if (response.status === 502) {
+        setNetworkError(true);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -161,6 +174,13 @@ const Login = () => {
       <div className={loginContainer}>
         {headerSection()}
         {inputsSection()}
+        {networkError ? (
+          <p className="text-red-500 text-[12px]">
+            Failed to Login please try Agin
+          </p>
+        ) : (
+          ""
+        )}
         <button className={button} onClick={handleLogin} disabled={loading}>
           {loading ? <Loader /> : "Login"}
         </button>

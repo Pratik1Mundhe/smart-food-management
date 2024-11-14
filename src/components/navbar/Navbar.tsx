@@ -8,6 +8,7 @@ import globalLogo from "../../assets/global-logo.png";
 import ToggleSwitch from "../toggleButton/ToggleButton";
 import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
 import { PageRoutesEnum, ReactElementType } from "../../types";
+import ModalStore from "../../store/ModalStore";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -32,7 +33,10 @@ const Navbar: React.FC = () => {
             onClick={() => setShowLogout((preVal) => !preVal)}
           />
           <div className="absolute top-12 right-10">
-            <button className="bg-red-500 text-white text-[12px] hover:bg-red-600 p-2 rounded-md">
+            <button
+              className="bg-red-500 text-white text-[12px] hover:bg-red-600 p-2 rounded-md"
+              onClick={ModalStore.openConfirmModal}
+            >
               Logout
             </button>
           </div>

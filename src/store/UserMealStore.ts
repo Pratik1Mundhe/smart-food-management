@@ -4,14 +4,14 @@ import { MealDetailsType } from "../types";
 
 class _UserMealStore {
   data: string;
-  mealDetails: MealDetailsModel[];
+  mealsDetails: MealDetailsModel[];
   constructor() {
     this.data = "Today";
-    this.mealDetails = [];
+    this.mealsDetails = [];
     makeAutoObservable(this, {}, { autoBind: true });
   }
   setMealDetails(mealData: MealDetailsType[]) {
-    this.mealDetails = mealData.map(
+    this.mealsDetails = mealData.map(
       (eachMeal) => new MealDetailsModel(eachMeal)
     );
   }
