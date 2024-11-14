@@ -1,19 +1,23 @@
 import { useQuery } from "@apollo/client";
-import { GET_SCHEDULE_MEAL } from "./query";
 
-const useFetchScheduledMeal = () => {
-  const { loading, error } = useQuery(GET_SCHEDULE_MEAL, {
+import { GET_SCHEDULE_MEAL } from "./query";
+import scheduledMealStore from "../../../store/ScheduledMealStore";
+
+const useFetchScheduledMeal = (date: string, mealType: string) => {
+  const { loading, error, data } = useQuery(GET_SCHEDULE_MEAL, {
     onCompleted: (data) => {
-      console.log(data);
+      const { date, mealType, items } = data;
+      scheduledMealStore.setScheduledMeal(date, mealType, items);
     },
+
     variables: {
       params: {
-        date: "2024-11-16 17:48:15",
-        mealType: "BREAKFAST",
+        date: date,
+        mealType: mealType,
       },
     },
   });
 
-  return { mealsLoading: loading, error };
+  return { mealsLoading: loading, error, data };
 };
 export default useFetchScheduledMeal;

@@ -8,12 +8,12 @@ import { PageRoutesEnum } from "../../types";
 const AdminHome: React.FC = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem("admin");
-  if (accessToken === null) {
-    return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
-  }
-  if (!isAdmin) {
-    return <Navigate to={PageRoutesEnum.HOME_PAGE} replace />;
-  }
+  // if (accessToken === null) {
+  //   return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
+  // }
+  // if (!isAdmin) {
+  //   return <Navigate to={PageRoutesEnum.HOME_PAGE} replace />;
+  // }
   return (
     <div className="max-w-[1000px] mx-auto mt-10 pb-6">
       <div className="flex items-center gap-2">
