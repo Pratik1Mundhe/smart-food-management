@@ -11,6 +11,10 @@ export enum BaseSizeUnitEnum {
   LITTERS = "litters",
 }
 
+export enum SuccessTypenamesEnum {
+  SCHEDULE_MEAL = "ScheduleMealSuccess",
+}
+
 export enum ServingSizeUnitEnum {
   PISCES = "pisces",
   LADDLE = "laddle",
@@ -64,7 +68,7 @@ export interface FoodItemResponseType {
 }
 
 export interface foodItemType {
-  id: number;
+  id: string;
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;

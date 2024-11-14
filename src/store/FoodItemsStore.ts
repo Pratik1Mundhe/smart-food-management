@@ -23,6 +23,14 @@ class FoodItemsStore {
     });
     this.foodItems = foodItemInstances;
   }
+
+  getFoodItem(foodId: string) {
+    return this.foodItems.find((item) => item.id === foodId);
+  }
+
+  getFoodItems() {
+    return this.foodItems;
+  }
 }
 
 const foodItemsStore = new FoodItemsStore();

@@ -8,6 +8,7 @@ import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
 import { PageRoutesEnum } from "./types";
 import LoginPage from "./pages/loginPage/LoginPage";
+import { Toaster } from "react-hot-toast";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           }
         />
       </Routes>
+      <Toaster position="bottom-center" reverseOrder={true} />
     </BrowserRouter>
   );
 };

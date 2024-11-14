@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 interface ConfirmModalPropsType {
   foodItem: foodItemType;
   handleCloseDeleteConfirmModal: VoidFunctionType;
-  removeFoodItem: (id: number) => void;
+  removeFoodItem: (id: string) => void;
 }
 
 const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({
