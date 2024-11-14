@@ -4,53 +4,38 @@ import {
   mealsCustomContainer,
   mealsContainer,
   mealItem,
-  mealType,
   mealQuantity,
 } from "./styles";
+import CustomMeal from "./CustomMeal";
+import UserMealStore from "../../store/UserMealStore";
 
-const Meals = ({ meals, activeTab }) => {
+interface MealsType {
+  activeTab: string;
+}
+
+const Meals = (prop: MealsType) => {
+  const { activeTab } = prop;
   if (activeTab === "custom") {
     return (
       <ul className={mealsCustomContainer}>
-        {meals.map((eachMeal) => {
-          const quantity = eachMeal.custom;
-          return (
-            <li key={v4()} className={mealContainer}>
-              <p className={mealItem}>
-                {eachMeal.item}
-                <br />
-                <span className={mealType}>{eachMeal.itemType}</span>
-              </p>
-              <div className={`flex flex-row gap-2${mealQuantity}`}>
-                <p>
-                  <span className="p-2 border-[1px] text-gray-400 cursor-pointer">
-                    -
-                  </span>
-                  <span className="p-2 border-[1px] text-gray-400">
-                    {quantity}
-                  </span>
-                  <span className="p-2 border-[1px] text-gray-400 cursor-pointer">
-                    +
-                  </span>
-                </p>
-                <span className="text-gray-300 text-[12px] ml-3">quantity</span>
-              </div>
-            </li>
-          );
+        {UserMealStore.mealsDetails.map((eachMeal, index) => {
+          return <CustomMeal eachMeal={eachMeal} index={index} />;
         })}
       </ul>
     );
   }
   return (
     <ul className={mealsContainer}>
-      {meals.map((eachMeal) => {
-        const quantity = activeTab === "full" ? eachMeal.full : eachMeal.half;
+      {UserMealStore.mealsDetails.map((eachMeal, index) => {
+        const quantity =
+          activeTab === "full"
+            ? eachMeal.foodItem[index].fullMealQuantity
+            : eachMeal.foodItem[index].halfMealQuantity;
         return (
           <li key={v4()} className={mealContainer}>
             <p className={mealItem}>
-              {eachMeal.item}
+              {eachMeal.foodItem[index].name}
               <br />
-              <span className={mealType}>{eachMeal.itemType}</span>
             </p>
             <p className={mealQuantity}>{quantity} quantity</p>
           </li>

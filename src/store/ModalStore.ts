@@ -10,8 +10,10 @@ class _ModalStore {
     this.isConfirmModalOpen = false;
     makeAutoObservable(this, {}, { autoBind: true });
   }
-  openModal(type: string) {
-    this.typeOfMeal = type;
+  openModal(type?: string) {
+    if (type) {
+      this.typeOfMeal = type;
+    }
     this.isModalOpen = true;
   }
   closeModal() {

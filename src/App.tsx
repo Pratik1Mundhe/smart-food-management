@@ -10,7 +10,7 @@ import { PageRoutesEnum } from "./types";
 import LoginPage from "./pages/loginPage/LoginPage";
 import { Toaster } from "react-hot-toast";
 
-const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
+export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
 }) => {
   return (
@@ -21,9 +21,9 @@ const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   );
 };
 
-const AdminComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
-  children,
-}) => {
+export const AdminComponentWrapper: React.FC<{
+  children: React.ReactElement;
+}> = ({ children }) => {
   return (
     <>
       <AdminNavbar />

@@ -1,3 +1,4 @@
+import MealFoodItemModel from "./models/MealFoodItemModel";
 export enum FoodItemCategoryEnum {
   RICE = "rice",
   PAN_CAKE = "pancake",
@@ -33,6 +34,12 @@ export enum MealPreferenceEnum {
   SKIP = "skip",
 }
 
+export enum MealStatusEnum {
+  NULL = "null",
+  ATE = "ate",
+  SKIP = "skipped",
+}
+
 export enum PageRoutesEnum {
   HOME_PAGE = "/",
   ADMIN_HOME_PAGE = "/admin",
@@ -40,6 +47,20 @@ export enum PageRoutesEnum {
   WEEKLY_MENU_PAGE = "/weekly-menu",
 }
 
+export interface MealDetailsType {
+  mealType: MealTypeEnum;
+  mealId: string;
+  mealPreference: MealPreferenceEnum;
+  mealStatus: MealStatusEnum;
+  foodItem: MealFoodItemModel[];
+}
+
+export interface MealFoodItemType {
+  id: string;
+  name: string;
+  fullMealQuantity: number;
+  halfMealQuantity: number;
+}
 export interface FoodItemResponseType {
   id: number;
   name: string;
