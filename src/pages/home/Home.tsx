@@ -20,12 +20,24 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col py-4">
       <div className="mx-auto mb-4">
-        <MealDate currentDate={currentDate} setCurrentDate={setCurrentDate} />
+        <MealDate setCurrentDate={setCurrentDate} currentDate={currentDate} />
       </div>
       <div className="flex justify-center items-center gap-4">
-        <UserMealCard type={MealTypeEnum.BREAKFAST} mealTime="5:00 - 06:00" />
-        <UserMealCard type={MealTypeEnum.LUNCH} mealTime="13:00 - 15:00" />
-        <UserMealCard type={MealTypeEnum.DINNER} mealTime="20:00 - 22:00" />
+        <UserMealCard
+          currentDate={currentDate}
+          type={MealTypeEnum.BREAKFAST}
+          mealTime="5:00 - 06:00"
+        />
+        <UserMealCard
+          currentDate={currentDate}
+          type={MealTypeEnum.LUNCH}
+          mealTime="13:00 - 15:00"
+        />
+        <UserMealCard
+          currentDate={currentDate}
+          type={MealTypeEnum.DINNER}
+          mealTime="20:00 - 22:00"
+        />
       </div>
     </div>
   );

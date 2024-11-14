@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Input from "../commonComponents/Input";
 import { useNavigate } from "react-router-dom";
+
+import Input from "../commonComponents/Input";
 import {
   button,
   errorInput,
@@ -28,6 +29,7 @@ import {
 import Loader from "../loader/Loader";
 import { PageRoutesEnum } from "../../types";
 import UserMealStore from "../../store/UserMealStore";
+import { addItemLocalStorage } from "../../utils/localStorageUtils/addItem";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -98,14 +100,14 @@ const Login = () => {
       const result = await response.json();
       if (result.status_code === 200) {
         if (result.response.is_admin) {
-          localStorage.setItem("admin", result.response.is_admin);
-          localStorage.setItem(
+          addItemLocalStorage("admin", result.response.is_admin);
+          addItemLocalStorage(
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );
           navigate(PageRoutesEnum.ADMIN_HOME_PAGE);
         } else {
-          localStorage.setItem(
+          addItemLocalStorage(
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );

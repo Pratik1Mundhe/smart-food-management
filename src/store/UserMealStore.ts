@@ -6,6 +6,7 @@ class _UserMealStore {
   userId: string;
   data: string;
   mealsDetails: MealDetailsModel[];
+
   constructor() {
     this.data = "Today";
     this.mealsDetails = [];
