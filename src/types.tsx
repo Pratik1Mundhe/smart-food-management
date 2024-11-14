@@ -1,6 +1,19 @@
-export enum FoodItemCategories {
-  RICE = "RICE",
-  PAN_CAKE = "PANCAKE",
+export enum FoodItemCategoryEnum {
+  RICE = "rice",
+  PAN_CAKE = "pancake",
+  BEVERAGES = "beverages",
+}
+
+export enum BaseSizeUnitEnum {
+  KG = "kg",
+  PISCES = "pisces",
+  LITTERS = "litters",
+}
+
+export enum ServingSizeUnitEnum {
+  PISCES = "pisces",
+  LADDLE = "laddle",
+  GLASS = "glass",
 }
 
 export enum MealTypeEnum {
@@ -47,4 +60,13 @@ export interface VoidFunctionType {
 
 export interface ReactElementType {
   (): React.ReactElement;
+}
+
+export interface FoodItemsResponseType {
+  id: string;
+  name: string;
+  category: FoodItemCategoryEnum;
+  baseSizeUnit: BaseSizeUnitEnum;
+  servingSizeUnit: ServingSizeUnitEnum;
+  __typename: string;
 }
