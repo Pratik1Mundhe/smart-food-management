@@ -2,27 +2,28 @@ import React from "react";
 
 import ConfirmModal from "../commonComponents/Modal";
 import { ReactElementType, VoidFunctionType } from "../../types";
+import { observer } from "mobx-react-lite";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
+  closeConfirmModal: VoidFunctionType;
 }
 
-const CloseConfirmModal: React.FC<ConfirmModalPropsType> = ({ closeModal }) => {
-  const handleMealPreferenceModalClose = () => {
-    closeModal();
-  };
-
+const CloseConfirmModal: React.FC<ConfirmModalPropsType> = ({
+  closeModal,
+  closeConfirmModal,
+}) => {
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">
         <button
-          onClick={handleMealPreferenceModalClose}
+          onClick={closeModal}
           className="bg-warning text-sm text-white px-5 py-2 rounded font-semibold"
         >
           Back
         </button>
         <button
-          onClick={closeModal}
+          onClick={closeConfirmModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
           Cancel
@@ -43,4 +44,4 @@ const CloseConfirmModal: React.FC<ConfirmModalPropsType> = ({ closeModal }) => {
   );
 };
 
-export default CloseConfirmModal;
+export default observer(CloseConfirmModal);

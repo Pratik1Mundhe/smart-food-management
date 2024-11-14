@@ -7,6 +7,7 @@ import {
   MealFoodDataType,
   MealTypeEnum,
   ReactElementType,
+  VoidFunctionType,
 } from "../../types";
 import MealDate from "../mealDate/MealDate";
 import MealTabs from "../mealTabs/MealTabs";
@@ -31,7 +32,7 @@ const data = [
 ];
 foodStore.addFoods(data);
 
-const ScheduleMeal: React.FC = observer(() => {
+const ScheduleMeal: React.FC = () => {
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [showFoodItemsModal, setShowFoodItemsModal] = useState<boolean>(false);
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
@@ -45,7 +46,7 @@ const ScheduleMeal: React.FC = observer(() => {
     dinner: [],
   });
 
-  const addFoodItem = (food: foodItemType) => {
+  const addFoodItem = (food: foodItemType): void => {
     const isFoodExist = foodData[currentMealTab].some(
       (item) => item.id === food.id
     );
@@ -62,7 +63,7 @@ const ScheduleMeal: React.FC = observer(() => {
     setFoodData({ ...foodData, [currentMealTab]: filteredFoods });
   };
 
-  const handleTabChange = (meal: MealTypeEnum) => {
+  const handleTabChange = (meal: MealTypeEnum): void => {
     setCurrentMealTab(meal);
   };
 
@@ -92,13 +93,13 @@ const ScheduleMeal: React.FC = observer(() => {
     setFoodData({ ...foodData, [currentMealTab]: updatedFoods });
   };
 
-  const handleOpenDeleteConfirmModal = (foodId: number) => {
+  const handleOpenDeleteConfirmModal = (foodId: number): void => {
     setDeleteFoodItemId(foodId);
     setShowConfirmModal(true);
     ModalStore.openConfirmModal();
   };
 
-  const handleCloseDeleteConfirmModal = () => {
+  const handleCloseDeleteConfirmModal: VoidFunctionType = () => {
     setShowConfirmModal(false);
     setDeleteFoodItemId(null);
     ModalStore.closeConfirmModal();
@@ -170,16 +171,16 @@ const ScheduleMeal: React.FC = observer(() => {
     return <></>;
   };
 
-  const handleSaveMealSchedule = () => {
+  const handleSaveMealSchedule: VoidFunctionType = () => {
     //set mutation for saving meal schedule
   };
 
-  const handleCloseSaveConfirmModal = () => {
+  const handleCloseSaveConfirmModal: VoidFunctionType = () => {
     setShowSaveConfirmModal(false);
     ModalStore.closeConfirmModal();
   };
 
-  const renderSaveConfirmModal = () => {
+  const renderSaveConfirmModal: ReactElementType = () => {
     if (showSaveConfirmModal) {
       return (
         <SaveConfirmModal
@@ -188,9 +189,10 @@ const ScheduleMeal: React.FC = observer(() => {
         />
       );
     }
+    return <></>;
   };
 
-  const handleOpenSaveConfirmModal = () => {
+  const handleOpenSaveConfirmModal: VoidFunctionType = () => {
     setShowSaveConfirmModal(true);
     ModalStore.openConfirmModal();
   };
@@ -211,7 +213,7 @@ const ScheduleMeal: React.FC = observer(() => {
     );
   };
 
-  const renderFoodItemModel = () => {
+  const renderFoodItemModel: ReactElementType = () => {
     if (showFoodItemsModal) {
       return (
         <FoodItemsModal
@@ -221,6 +223,7 @@ const ScheduleMeal: React.FC = observer(() => {
         />
       );
     }
+    return <></>;
   };
 
   return (
@@ -242,6 +245,6 @@ const ScheduleMeal: React.FC = observer(() => {
       {renderSaveConfirmModal()}
     </div>
   );
-});
+};
 
-export default ScheduleMeal;
+export default observer(ScheduleMeal);

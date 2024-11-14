@@ -22,10 +22,11 @@ export enum MealTypeEnum {
   DINNER = "dinner",
 }
 
-export enum MealQuantityEnum {
+export enum MealPreferenceEnum {
   FULL = "full",
   HALF = "half",
   CUSTOM = "custom",
+  SKIP = "skip",
 }
 
 export enum PageRoutesEnum {

@@ -2,6 +2,7 @@ import React from "react";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import { ReactElementType, VoidFunctionType } from "../../types";
+import { observer } from "mobx-react-lite";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
@@ -47,4 +48,4 @@ const SaveConfirmModal: React.FC<ConfirmModalPropsType> = ({
   );
 };
 
-export default SaveConfirmModal;
+export default observer(SaveConfirmModal);

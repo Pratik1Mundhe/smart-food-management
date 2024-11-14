@@ -81,19 +81,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     );
   };
 
-  const mealStatusButtons = () => {
-    if (isMealAteStatus) {
-      return (
-        <p className="flex flex-row gap-3 justify-around">
-          <button className="w-[125px] h-[35px] bg-blue-600 rounded-sm text-white font-normal hover:bg-blue-700 mt-8">
-            I Ate it
-          </button>
-          <button className="w-[125px] text-[12px] h-[35px] border-2 border-gray-300  rounded hover:bg-gray-100 tex-[12px] font-normal mt-8">
-            I Skipped
-          </button>
-        </p>
-      );
-    }
+  const renderEditButton = () => {
     return (
       <button
         className={isEditable ? editButton : disableEditButton}
@@ -101,15 +89,31 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
         disabled={!isEditable}
       >
         <p className={buttonContent}>
-          <span>Edit</span>{" "}
+          <span className="text-sm">Edit</span>
           <CiClock1
-            className="text-sm
+            className="text-xl
           "
-          />{" "}
-          <span className="font-thin text-[14px]">Left</span>
+          />
+          <span className="font-light text-sm">Left</span>
         </p>
       </button>
     );
+  };
+
+  const mealStatusButtons = () => {
+    if (isMealAteStatus) {
+      return (
+        <p className="flex self-center gap-6">
+          <button className="text-sm px-5 py-2 bg-blue-600 rounded-sm text-white  hover:bg-blue-700 mt-8">
+            I Ate it
+          </button>
+          <button className="text-sm px-5 py-2 border-2 border-gray-300  rounded hover:bg-gray-100  mt-8">
+            I Skipped
+          </button>
+        </p>
+      );
+    }
+    return renderEditButton();
   };
 
   return (

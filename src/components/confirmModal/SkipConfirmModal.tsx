@@ -2,6 +2,7 @@ import React from "react";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import { ReactElementType, VoidFunctionType } from "../../types";
+import { observer } from "mobx-react-lite";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
@@ -43,4 +44,4 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
   );
 };
 
-export default SkipConfirmModal;
+export default observer(SkipConfirmModal);
