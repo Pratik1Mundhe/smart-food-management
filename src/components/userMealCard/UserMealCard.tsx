@@ -20,6 +20,7 @@ import ModalStore from "../../store/ModalStore";
 import { MealTypeEnum } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
+import Loader from "../loader/Loader";
 
 interface MealCardProps {
   type: MealTypeEnum;
@@ -32,6 +33,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
   const { type, mealTime } = props;
   const [isEditable, setIsEditable] = useState(true);
   const [isMealAteStatus, setIsMealStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,8 +44,8 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       );
       setIsEditable(now < cutoff);
       setIsMealStatus(now > mealCompleteTime);
+      setLoading(false);
     }, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -101,12 +103,15 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
         disabled={!isEditable}
       >
         <p className={buttonContent}>
-          <span>Edit</span>{" "}
-          <CiClock1
-            className="text-sm
-          "
-          />{" "}
-          <span className="font-thin text-[14px]">Left</span>
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <span>Edit</span>
+              <CiClock1 className="text-sm" />
+              <span className="font-thin text-[14px]">Left</span>
+            </>
+          )}
         </p>
       </button>
     );

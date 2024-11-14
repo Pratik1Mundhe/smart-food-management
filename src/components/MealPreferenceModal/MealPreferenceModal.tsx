@@ -20,7 +20,7 @@ import { FOOD_URL } from "../../constants";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import CloseConfirmModal from "../confirmModal/CloseConfirmModal";
 import SkipConfirmModal from "../confirmModal/SkipConfirmModal";
-import { MealQuantityEnum } from "../../types";
+import { MealPreferenceEnum } from "../../types";
 
 const meals = [
   { item: "Poori", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
@@ -30,7 +30,7 @@ const meals = [
 ];
 
 const MealPreferenceModal: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(MealQuantityEnum.FULL);
+  const [activeTab, setActiveTab] = useState(MealPreferenceEnum.FULL);
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
     useState<boolean>(false);
   const [showBackConfirmModal, setShowBackConfirmModal] =
@@ -38,7 +38,7 @@ const MealPreferenceModal: React.FC = () => {
   const [showSkipConfirmModal, setShowSkipConfirmModal] =
     useState<boolean>(false);
 
-  function handleActiveTab(activeType: MealQuantityEnum): void {
+  function handleActiveTab(activeType: MealPreferenceEnum): void {
     setActiveTab(activeType);
   }
 

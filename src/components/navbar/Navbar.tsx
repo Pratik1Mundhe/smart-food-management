@@ -1,14 +1,17 @@
 import React from "react";
 import { LuUserCircle } from "react-icons/lu";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import globalLogo from "../../assets/global-logo.png";
 import ToggleSwitch from "../toggleButton/ToggleButton";
-import { useNavigate } from "react-router-dom";
+import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
+  const [showLogout, setShowLogout] = useState(false);
 
   const renderCampusToggleButton = () => {
     return (
@@ -19,12 +22,36 @@ const Navbar: React.FC = () => {
     );
   };
 
+  const renderLogout = () => {
+    if (showLogout) {
+      return (
+        <>
+          <FaChevronUp
+            className="text-sm cursor-pointer"
+            onClick={() => setShowLogout((preVal) => !preVal)}
+          />
+          <div className="absolute top-12 right-10">
+            <button className="bg-red-500 text-white text-[12px] hover:bg-red-600 p-2 rounded-md">
+              Logout
+            </button>
+          </div>
+        </>
+      );
+    }
+    return (
+      <FaChevronDown
+        className="text-sm cursor-pointer"
+        onClick={() => setShowLogout((preVal) => !preVal)}
+      />
+    );
+  };
+
   const renderUserProfile = () => {
     return (
       <li className="flex items-center gap-2">
         <LuUserCircle className="h-5 w-5" />
         <h1 className="text-general text-sm font-medium">Sai</h1>
-        <FaChevronDown className="text-sm cursor-pointer" />
+        {renderLogout()}
       </li>
     );
   };
@@ -57,6 +84,7 @@ const Navbar: React.FC = () => {
         </li>
         {renderUserProfile()}
       </ul>
+      <LogoutConfirmModal />
     </div>
   );
 };

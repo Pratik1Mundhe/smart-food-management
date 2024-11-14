@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Input from "../commonComponents/Input";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   button,

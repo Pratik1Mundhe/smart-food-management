@@ -5,8 +5,9 @@ import { PageRoutesEnum } from "../types";
 
 const LoginPage = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  console.log(accessToken);
 
-  if (accessToken === undefined) {
+  if (accessToken === null) {
     console.log(accessToken);
     return <Login />;
   }
