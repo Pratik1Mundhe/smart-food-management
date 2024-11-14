@@ -96,3 +96,11 @@ export interface FoodItemsResponseType {
   servingSizeUnit: ServingSizeUnitEnum;
   __typename: string;
 }
+
+export interface MealFoodItemResponseType {
+  id: string;
+  name: string;
+  fullMealQuantity: number;
+  halfMealQuantity: number;
+  __typename: string;
+}

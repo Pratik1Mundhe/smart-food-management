@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { v4 } from "uuid";
 
@@ -21,6 +21,9 @@ import useScheduleMeal from "../../apis/mutations/scheduleMeal/useMutateSchedule
 import { formatDate } from "../../utils/formatDate";
 import { successToast } from "../../utils/toastUtils/successToast";
 import { failureToast } from "../../utils/toastUtils/failureToast";
+import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
+import Loader from "../loader/Loader";
+import scheduledMealStore from "../../store/ScheduledMealStore";
 
 const ScheduleMeal: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -35,6 +38,20 @@ const ScheduleMeal: React.FC = () => {
     lunch: [],
     dinner: [],
   });
+  const { mealsLoading } = useFetchScheduledMeal(
+    formatDate(currentDate),
+    currentMealTab
+  );
+
+  useEffect(() => {
+    if (!scheduledMealStore.getMealData(currentMealTab)) {
+      return;
+    }
+    const { date, mealType, items } =
+      scheduledMealStore.getMealData(currentMealTab)!;
+    foodData[currentMealTab] = items;
+  }, [mealsLoading]);
+
   const { loading, error, setSchedule } = useScheduleMeal();
 
   const addFoodItem = (food: foodItemType): void => {
@@ -129,9 +146,16 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const renderMealFoods: ReactElementType = () => {
+    if (mealsLoading) {
+      return (
+        <div className="min-h-[300px] flex items-center justify-center">
+          <Loader color="#0B69FF" height={40} width={40} radius={4} />
+        </div>
+      );
+    }
     if (error) {
       return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center min-h-[300px]">
           <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
         </div>
       );
@@ -179,11 +203,6 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const handleSaveMealSchedule: VoidFunctionType = () => {
-    const handleMealSaveFailure: VoidFunctionType = () => {
-      failureToast("Quantities can't be zero");
-      validation = false;
-      handleCloseSaveConfirmModal();
-    };
     const handleMealSaveSuccess: VoidFunctionType = () => {
       successToast("Meal Added");
       handleCloseSaveConfirmModal();
@@ -197,7 +216,8 @@ const ScheduleMeal: React.FC = () => {
     foodData[currentMealTab].forEach((meal) => {
       const { id, fullMealQuantity, halfMealQuantity } = meal;
       if (fullMealQuantity === 0 || halfMealQuantity === 0) {
-        handleMealSaveFailure();
+        failureToast("Quantities can't be zero");
+        validation = false;
         return;
       }
       itemIds.push(id);
@@ -221,7 +241,8 @@ const ScheduleMeal: React.FC = () => {
         if (scheduleMeal.__typename === SuccessTypenamesEnum.SCHEDULE_MEAL) {
           handleMealSaveSuccess();
         } else if (scheduleMeal.__typename === "ScheduleMealFailure") {
-          handleMealSaveFailure();
+          failureToast("Something went wrong !!!");
+          handleCloseSaveConfirmModal();
         }
       });
     }
@@ -247,7 +268,7 @@ const ScheduleMeal: React.FC = () => {
   const renderButtons: ReactElementType = () => {
     const renderButtonLoader = (): JSX.Element | string => {
       if (loading) {
-        return <p>Loading...</p>;
+        return <Loader />;
       }
       return "Save";
     };

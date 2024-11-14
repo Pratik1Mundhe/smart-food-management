@@ -14,10 +14,10 @@ const CustomMeal = (props: CustomMealProp) => {
   const [mealQuantity, setMealQuantity] = useState(0);
 
   function handelIncreaseQuantity() {
-    setMealQuantity((prvVal) => prvVal + 1);
+    setMealQuantity((prev) => prev + 1);
   }
   function handelDecreaseQuantity() {
-    setMealQuantity((prvVal) => prvVal - 1);
+    setMealQuantity((prev) => prev - 1);
   }
 
   return (
