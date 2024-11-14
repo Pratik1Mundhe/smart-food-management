@@ -220,6 +220,8 @@ const ScheduleMeal: React.FC = () => {
         const { scheduleMeal } = data;
         if (scheduleMeal.__typename === SuccessTypenamesEnum.SCHEDULE_MEAL) {
           handleMealSaveSuccess();
+        } else if (scheduleMeal.__typename === "ScheduleMealFailure") {
+          handleMealSaveFailure();
         }
       });
     }

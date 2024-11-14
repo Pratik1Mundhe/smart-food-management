@@ -13,13 +13,3 @@ const SET_SCHEDULE_MEAL = gql`
   }
 `;
 export default SET_SCHEDULE_MEAL;
-
-// {
-//   "params": {
-//     "itemIds": null,
-//     "fullMealQuantities": null,
-//     "halfMealQuantities": null,
-//     "date": null,
-//     "mealType": null
-//   }
-// }

@@ -5,6 +5,7 @@ import { MealDetailsType } from "../types";
 class _UserMealStore {
   data: string;
   mealsDetails: MealDetailsModel[];
+
   constructor() {
     this.data = "Today";
     this.mealsDetails = [];
