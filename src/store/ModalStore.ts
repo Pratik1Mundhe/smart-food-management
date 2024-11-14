@@ -2,9 +2,12 @@ import { makeAutoObservable } from "mobx";
 class _ModalStore {
   isModalOpen: boolean;
   typeOfMeal: string;
+  isConfirmModalOpen: boolean;
+
   constructor() {
     this.isModalOpen = false;
     this.typeOfMeal = "";
+    this.isConfirmModalOpen = false;
     makeAutoObservable(this, {}, { autoBind: true });
   }
   openModal(type: string) {
@@ -13,6 +16,14 @@ class _ModalStore {
   }
   closeModal() {
     this.isModalOpen = false;
+  }
+
+  openConfirmModal() {
+    this.isConfirmModalOpen = true;
+  }
+
+  closeConfirmModal() {
+    this.isConfirmModalOpen = false;
   }
 }
 

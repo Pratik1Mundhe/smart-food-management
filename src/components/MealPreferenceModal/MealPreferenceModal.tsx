@@ -16,7 +16,7 @@ import {
 } from "./styles";
 import ModalStore from "../../store/ModalStore";
 import { FOOD_URL } from "../../constants";
-import MealDate from "../mealDate/MealDate";
+// import MealDate from "../mealDate/MealDate";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import CloseConfirmModal from "../confirmModal/CloseConfirmModal";
 import SkipConfirmModal from "../confirmModal/SkipConfirmModal";
@@ -61,13 +61,15 @@ const MealPreferenceModal: React.FC = () => {
     setShowSaveConfirmModal(false);
   };
 
+  const handleClickBack = () => {
+    setShowBackConfirmModal(true);
+    ModalStore.openConfirmModal();
+  };
+
   const buttonsSection = () => {
     return (
       <p className={buttonContainer}>
-        <button
-          className={backButton}
-          onClick={() => setShowBackConfirmModal(true)}
-        >
+        <button className={backButton} onClick={handleClickBack}>
           Back
         </button>
         <button
@@ -89,14 +91,20 @@ const MealPreferenceModal: React.FC = () => {
         />
       );
     }
+    return <></>;
+  };
+
+  const handleCloseConfirmModal = () => {
+    ModalStore.closeConfirmModal();
+    setShowBackConfirmModal(false);
+    ModalStore.closeModal();
   };
 
   const renderBackConfirmModal = () => {
     if (showBackConfirmModal) {
-      return (
-        <CloseConfirmModal closeModal={() => setShowBackConfirmModal(false)} />
-      );
+      return <CloseConfirmModal closeModal={handleCloseConfirmModal} />;
     }
+    return <></>;
   };
 
   const handleSkipMealPreference = () => {
@@ -113,6 +121,7 @@ const MealPreferenceModal: React.FC = () => {
         />
       );
     }
+    return <></>;
   };
 
   return (
@@ -139,4 +148,5 @@ const MealPreferenceModal: React.FC = () => {
     </Modal>
   );
 };
+
 export default observer(MealPreferenceModal);
