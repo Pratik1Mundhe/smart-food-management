@@ -21,7 +21,8 @@ import { MealTypeEnum } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
-import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
+import foodItemsStore from "../../store/FoodItemsStore";
+import { observer } from "mobx-react";
 import { formatDate } from "../../utils/formatDate";
 
 interface MealCardProps {
@@ -95,11 +96,14 @@ const UserMealCard: React.FC<MealCardProps> = ({
       </ul>
     );
   };
-
   const renderEditButton = () => {
     return (
       <button
-        className={isEditable ? editButton : disableEditButton}
+        className={
+          isEditable && foodItemsStore.inCampusStatus
+            ? editButton
+            : disableEditButton
+        }
         onClick={() => ModalStore.openModal(type)}
         disabled={!isEditable}
       >
@@ -119,7 +123,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   };
 
   const mealStatusButtons = () => {
-    if (isMealAteStatus) {
+    if (isMealAteStatus && foodItemsStore.inCampusStatus) {
       return (
         <p className="flex self-center gap-6">
           <button className="text-sm px-5 py-2 bg-blue-600 rounded-sm text-white  hover:bg-blue-700 mt-8">
@@ -144,4 +148,4 @@ const UserMealCard: React.FC<MealCardProps> = ({
   );
 };
 
-export default UserMealCard;
+export default observer(UserMealCard);

@@ -4,9 +4,11 @@ import FoodItemModal from "../models/FoodItemModel";
 import { FoodItemsResponseType } from "../types";
 
 class FoodItemsStore {
+  inCampusStatus: boolean;
   foodItems: FoodItemModal[] = [];
 
   constructor() {
+    this.inCampusStatus = true;
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
@@ -30,6 +32,9 @@ class FoodItemsStore {
 
   getFoodItems() {
     return this.foodItems;
+  }
+  setInCampusStatus() {
+    this.inCampusStatus = !this.inCampusStatus;
   }
 }
 

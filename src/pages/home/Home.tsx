@@ -8,7 +8,6 @@ import { ACCESS_TOKEN } from "../../constants";
 
 const Home: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem("admin");
 
