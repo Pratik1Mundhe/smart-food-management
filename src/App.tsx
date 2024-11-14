@@ -7,7 +7,7 @@ import WeeklyMenu from "./pages/weeklyMenu/WeeklyMenu";
 import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
 import { PageRoutesEnum } from "./types";
-import Login from "./components/login/Login";
+import LoginPage from "./pages/LoginPage";
 
 const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -51,7 +51,7 @@ const App: React.FC = () => {
             </AdminComponentWrapper>
           }
         />
-        <Route path={PageRoutesEnum.LOGIN_PAGE} element={<Login />} />
+        <Route path={PageRoutesEnum.LOGIN_PAGE} element={<LoginPage />} />
         <Route
           path={PageRoutesEnum.WEEKLY_MENU_PAGE}
           element={

@@ -11,8 +11,8 @@ const IconMeal: React.FC<IconMealPropsType> = ({ mealType }) => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="30"
-        height="30"
+        width="21"
+        height="21"
         viewBox="0 0 21 20"
         fill="none"
       >
@@ -38,8 +38,8 @@ const IconMeal: React.FC<IconMealPropsType> = ({ mealType }) => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="30"
-        height="30"
+        width="21"
+        height="21"
         viewBox="0 0 21 20"
         fill="none"
       >
@@ -64,8 +64,8 @@ const IconMeal: React.FC<IconMealPropsType> = ({ mealType }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="30"
+      width="21"
+      height="21"
       viewBox="0 0 21 15"
       fill="none"
     >
