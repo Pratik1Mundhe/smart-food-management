@@ -4,6 +4,7 @@ import SET_SCHEDULE_MEAL from "./mutation";
 function useScheduleMeal() {
   const [setSchedule, { data, loading, error }] =
     useMutation(SET_SCHEDULE_MEAL);
+
   function triggerScheduleMeal() {
     setSchedule();
   }

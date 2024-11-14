@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 
 import { MEAL_TYPES } from "../../constants";
 import { MealTypeEnum } from "../../types";
+import { tabStyle } from "./styles";
 
 interface MealTabsPropsType {
   currentMealTab: string;
@@ -20,7 +21,7 @@ const MealTabs: React.FC<MealTabsPropsType> = ({
           <li
             onClick={() => handleTabChange(meal)}
             key={v4()}
-            className={`px-6 py-2 text-sm border-r-2 font-semibold text-general last:border-0 first-letter:capitalize cursor-pointer last:rounded-r first:rounded-l ${
+            className={`${tabStyle} ${
               currentMealTab === meal
                 ? `bg-primary text-white`
                 : "bg-transparent text-black"

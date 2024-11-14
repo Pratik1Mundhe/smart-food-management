@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
 import Modal from "../modal/Modal";
-import { foodItemType, MealTypeEnum } from "../../types";
+import { foodItemType, MealTypeEnum, VoidFunctionType } from "../../types";
 import foodStore from "../../store/FoodStore";
 
 interface FoodItemsModal {
@@ -23,13 +23,13 @@ const FoodItemsModal: React.FC<FoodItemsModal> = ({
   const currentMealType =
     currentMealTab[0].toUpperCase() + currentMealTab.slice(1);
 
-  const handleFoodSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFoodSelect = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const foodItemId = parseInt(e.target.value);
     const foodObject = foodStore.getFoodItemWithQuantities(foodItemId)!;
     setSelectedFoodItem(foodObject);
   };
 
-  const handleAddFoodItem = () => {
+  const handleAddFoodItem: VoidFunctionType = () => {
     if (!selectedFoodItem) {
       return;
     }

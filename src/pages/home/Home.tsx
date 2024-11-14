@@ -2,6 +2,7 @@ import React from "react";
 import UserMealCard from "../../components/userMealCard/UserMealCard";
 import { MealTypeEnum } from "../../types";
 import MealDate from "../../components/mealDate/MealDate";
+import { observer } from "mobx-react-lite";
 
 const Home: React.FC = () => {
   return (
@@ -19,4 +20,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default observer(Home);
