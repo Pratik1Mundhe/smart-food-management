@@ -43,11 +43,6 @@ const UserMealCard: React.FC<MealCardProps> = ({
   const [loading, setLoading] = useState(true);
 
   const date = formatDate(currentDate);
-  // const { mealsLoading, error } = useFetchScheduledMeal(date, type);
-
-  // if (mealsLoading) {
-  //   return <Loader />;
-  // }
 
   useEffect(() => {
     const interval = setInterval(() => {
