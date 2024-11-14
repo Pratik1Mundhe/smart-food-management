@@ -17,7 +17,7 @@ const Input: React.FC<InputProp> = (prop) => {
   return (
     <>
       <div className="flex flex-col">
-        <label htmlFor={id} className="text-gray-300 text-[14px]">
+        <label htmlFor={id} className="text-gray-600 text-sm">
           {label}
         </label>
         <div className="flex mt-1">
@@ -30,14 +30,14 @@ const Input: React.FC<InputProp> = (prop) => {
           />
           {isError ? (
             <div className={errorIcon}>
-              <img src={ERROR_ICON} className="h-[16px] w-[16px] " />
+              <img src={ERROR_ICON} className="h-4 w-4 " />
             </div>
           ) : (
             ""
           )}
         </div>
         {isError ? (
-          <p className="text-red-500 mt-1 text-[12px]">
+          <p className="text-red-500 mt-1 text-sm">
             {inputType === "text" ? "Invalid Username" : "Invalid Password"}
           </p>
         ) : (

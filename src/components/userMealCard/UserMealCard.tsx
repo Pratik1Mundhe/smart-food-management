@@ -21,19 +21,32 @@ import { MealTypeEnum } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
+import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
+import { formatDate } from "../../utils/formatDate";
 
 interface MealCardProps {
   type: MealTypeEnum;
   mealTime: string;
+  currentDate: Date;
 }
 
 const itemsList = ["idly", "Marsala Rice", "Maggie", "rice", "Biryani"];
 
-const UserMealCard: React.FC<MealCardProps> = (props) => {
-  const { type, mealTime } = props;
+const UserMealCard: React.FC<MealCardProps> = ({
+  type,
+  mealTime,
+  currentDate,
+}) => {
   const [isEditable, setIsEditable] = useState(true);
   const [isMealAteStatus, setIsMealStatus] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const date = formatDate(currentDate);
+  // const { mealsLoading, error } = useFetchScheduledMeal(date, type);
+
+  // if (mealsLoading) {
+  //   return <Loader />;
+  // }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -90,7 +103,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
         onClick={() => ModalStore.openModal(type)}
         disabled={!isEditable}
       >
-        <p className={buttonContent}>
+        <div className={buttonContent}>
           {loading ? (
             <Loader />
           ) : (
@@ -100,7 +113,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
               <span className="font-thin text-sm">Left</span>
             </>
           )}
-        </p>
+        </div>
       </button>
     );
   };
