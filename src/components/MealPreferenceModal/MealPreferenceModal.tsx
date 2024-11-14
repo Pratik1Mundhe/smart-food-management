@@ -42,14 +42,16 @@ const MealPreferenceModal: React.FC = () => {
     setActiveTab(activeType);
   }
 
+  const handleOpenSkipConfirmModal = () => {
+    setShowSkipConfirmModal(true);
+    ModalStore.openConfirmModal();
+  };
+
   const headerSection = () => {
     return (
       <div className={headerContainer}>
         <h1 className={mealTypeHeading}>{ModalStore.typeOfMeal}</h1>
-        <button
-          onClick={() => setShowSkipConfirmModal(true)}
-          className={skipMealButton}
-        >
+        <button onClick={handleOpenSkipConfirmModal} className={skipMealButton}>
           Skip Meals
         </button>
       </div>
@@ -112,11 +114,16 @@ const MealPreferenceModal: React.FC = () => {
     setShowSkipConfirmModal(false);
   };
 
+  const handleCloseSkipConfirmModal = () => {
+    setShowSkipConfirmModal(false);
+    ModalStore.closeConfirmModal();
+  };
+
   const renderSkipConfirmModal = () => {
     if (showSkipConfirmModal) {
       return (
         <SkipConfirmModal
-          closeModal={() => setShowSkipConfirmModal(false)}
+          closeModal={handleCloseSkipConfirmModal}
           action={handleSkipMealPreference}
         />
       );

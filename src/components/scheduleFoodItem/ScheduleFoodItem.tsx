@@ -3,6 +3,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 
 import { foodItemType } from "../../types";
 import QuantityCounter from "../quantityCounter/QuantityCounter";
+import { observer } from "mobx-react-lite";
 
 interface ScheduleFoodItemPropsType {
   food: foodItemType;
@@ -52,4 +53,4 @@ const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
   );
 };
 
-export default ScheduleFoodItem;
+export default observer(ScheduleFoodItem);

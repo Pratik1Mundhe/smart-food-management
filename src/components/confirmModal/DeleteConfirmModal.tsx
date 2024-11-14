@@ -1,26 +1,26 @@
 import React from "react";
 
-import Modal from "../modal/Modal";
+import ConfirmModal from "../commonComponents/ConfirmModal";
 import { foodItemType, ReactElementType, VoidFunctionType } from "../../types";
+import { observer } from "mobx-react-lite";
 
 interface ConfirmModalPropsType {
   foodItem: foodItemType;
-  handleCloseConfirmModal: VoidFunctionType;
+  handleCloseDeleteConfirmModal: VoidFunctionType;
   removeFoodItem: (id: number) => void;
 }
 
 const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({
   foodItem,
-  handleCloseConfirmModal,
+  handleCloseDeleteConfirmModal,
   removeFoodItem,
 }) => {
   const { name, id } = foodItem;
 
   const handleClickDelete: VoidFunctionType = () => {
-    handleCloseConfirmModal();
+    handleCloseDeleteConfirmModal();
     removeFoodItem(id);
   };
-
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">
@@ -31,7 +31,7 @@ const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({
           Delete
         </button>
         <button
-          onClick={handleCloseConfirmModal}
+          onClick={handleCloseDeleteConfirmModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
           Cancel
@@ -39,17 +39,16 @@ const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({
       </div>
     );
   };
-
   return (
-    <Modal close={handleCloseConfirmModal}>
-      <div className="flex flex-col gap-12">
+    <ConfirmModal>
+      <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
           Are you sure you want to delete {name}
         </h1>
         {renderButtons()}
       </div>
-    </Modal>
+    </ConfirmModal>
   );
 };
 
-export default DeleteConfirmModal;
+export default observer(DeleteConfirmModal);

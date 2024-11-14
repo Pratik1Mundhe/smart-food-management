@@ -1,6 +1,6 @@
 import React from "react";
 
-import Modal from "../commonComponents/Modal";
+import ConfirmModal from "../commonComponents/Modal";
 import { ReactElementType, VoidFunctionType } from "../../types";
 
 interface ConfirmModalPropsType {
@@ -32,14 +32,14 @@ const CloseConfirmModal: React.FC<ConfirmModalPropsType> = ({ closeModal }) => {
   };
 
   return (
-    <Modal>
+    <ConfirmModal>
       <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
           Are you sure you want to close?
         </h1>
         {renderButtons()}
       </div>
-    </Modal>
+    </ConfirmModal>
   );
 };
 

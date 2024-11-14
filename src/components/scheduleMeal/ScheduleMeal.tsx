@@ -15,6 +15,7 @@ import ScheduleFoodItem from "../scheduleFoodItem/ScheduleFoodItem";
 import FoodItemsModal from "../foodItemsModal/FoodItemsModal";
 import DeleteConfirmModal from "../confirmModal/DeleteConfirmModal";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
+import ModalStore from "../../store/ModalStore";
 
 const data = [
   { id: 1, name: "Pancakes" },
@@ -91,14 +92,16 @@ const ScheduleMeal: React.FC = observer(() => {
     setFoodData({ ...foodData, [currentMealTab]: updatedFoods });
   };
 
-  const handleOpenConfirmModal = (foodId: number) => {
+  const handleOpenDeleteConfirmModal = (foodId: number) => {
     setDeleteFoodItemId(foodId);
     setShowConfirmModal(true);
+    ModalStore.openConfirmModal();
   };
 
-  const handleCloseConfirmModal = () => {
+  const handleCloseDeleteConfirmModal = () => {
     setShowConfirmModal(false);
     setDeleteFoodItemId(null);
+    ModalStore.closeConfirmModal();
   };
 
   const renderMealFoods: ReactElementType = () => {
@@ -131,7 +134,7 @@ const ScheduleMeal: React.FC = observer(() => {
                 key={v4()}
                 food={food}
                 updateHalfMealQuantity={updateHalfMealQuantity}
-                handleOpenConfirmModal={handleOpenConfirmModal}
+                handleOpenConfirmModal={handleOpenDeleteConfirmModal}
                 removeFoodItem={removeFoodItem}
                 updateFullMealQuantity={updateFullMealQuantity}
               />
@@ -159,7 +162,7 @@ const ScheduleMeal: React.FC = observer(() => {
       return (
         <DeleteConfirmModal
           removeFoodItem={removeFoodItem}
-          handleCloseConfirmModal={handleCloseConfirmModal}
+          handleCloseDeleteConfirmModal={handleCloseDeleteConfirmModal}
           foodItem={foodItem}
         />
       );
@@ -171,15 +174,25 @@ const ScheduleMeal: React.FC = observer(() => {
     //set mutation for saving meal schedule
   };
 
+  const handleCloseSaveConfirmModal = () => {
+    setShowSaveConfirmModal(false);
+    ModalStore.closeConfirmModal();
+  };
+
   const renderSaveConfirmModal = () => {
     if (showSaveConfirmModal) {
       return (
         <SaveConfirmModal
           action={handleSaveMealSchedule}
-          closeModal={() => setShowSaveConfirmModal(false)}
+          closeModal={handleCloseSaveConfirmModal}
         />
       );
     }
+  };
+
+  const handleOpenSaveConfirmModal = () => {
+    setShowSaveConfirmModal(true);
+    ModalStore.openConfirmModal();
   };
 
   const renderButtons: ReactElementType = () => {
@@ -189,7 +202,7 @@ const ScheduleMeal: React.FC = observer(() => {
           Back
         </button>
         <button
-          onClick={() => setShowSaveConfirmModal(true)}
+          onClick={handleOpenSaveConfirmModal}
           className="bg-success text-sm text-white px-5 py-2 rounded font-semibold"
         >
           Save
