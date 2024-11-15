@@ -1,12 +1,11 @@
 import { makeAutoObservable } from "mobx";
-import { FoodItemType, MealFoodDataType } from "../types";
+import { FoodItemType } from "../types";
 
 class MealFoodItemModel {
   id: string;
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;
-  customMealQuantity: number;
 
   constructor(mealItem: FoodItemType) {
     makeAutoObservable(this, {}, { autoBind: true });
@@ -14,13 +13,6 @@ class MealFoodItemModel {
     this.name = mealItem.name;
     this.fullMealQuantity = mealItem.fullMealQuantity;
     this.halfMealQuantity = mealItem.halfMealQuantity;
-    this.customMealQuantity = 0;
-  }
-  add() {
-    this.customMealQuantity = this.customMealQuantity + 1;
-  }
-  sub() {
-    this.customMealQuantity = this.customMealQuantity - 1;
   }
 }
 

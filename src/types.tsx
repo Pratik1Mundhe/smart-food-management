@@ -75,9 +75,9 @@ export interface FoodItemType {
 }
 
 export interface MealFoodDataType {
-  breakfast: foodItemType[];
-  dinner: foodItemType[];
-  lunch: foodItemType[];
+  breakfast: FoodItemType[];
+  dinner: FoodItemType[];
+  lunch: FoodItemType[];
 }
 
 export interface VoidFunctionType {
