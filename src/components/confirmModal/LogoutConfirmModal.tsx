@@ -7,7 +7,7 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-import ModalStore from "../../store/ModalStore";
+
 import { ACCESS_TOKEN } from "../../constants";
 import Loader from "../loader/Loader";
 

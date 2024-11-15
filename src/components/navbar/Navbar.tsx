@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
     return (
       <li className="flex items-center gap-2">
         <LuUserCircle className="h-5 w-5" />
-        <h1 className="text-general text-sm font-medium">Sai</h1>
+        <h1 className="text-general text-sm font-medium">User</h1>
         {renderLogout()}
       </li>
     );

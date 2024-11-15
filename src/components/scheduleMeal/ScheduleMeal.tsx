@@ -45,13 +45,17 @@ const ScheduleMeal: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!scheduledMealStore.getMealData(currentMealTab)) {
+    const scheduledMealItems = scheduledMealStore.getMealData(
+      currentMealTab,
+      formatDate(currentDate)
+    );
+    if (!scheduledMealItems) {
       return;
     }
-    const { date, mealType, items } =
-      scheduledMealStore.getMealData(currentMealTab)!;
+    const { date, mealType, items } = scheduledMealItems;
+    console.log(items);
     foodData[currentMealTab] = items;
-  }, [mealsLoading]);
+  }, [mealsLoading, currentDate]);
 
   const { loading, error, setSchedule } = useScheduleMeal();
 
@@ -207,9 +211,9 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const handleSaveMealSchedule: VoidFunctionType = () => {
+    handleCloseSaveConfirmModal();
     const handleMealSaveSuccess: VoidFunctionType = () => {
       successToast("Meal Added");
-      handleCloseSaveConfirmModal();
     };
     const itemIds: string[] = [];
     const fullMealQuantities: number[] = [];
