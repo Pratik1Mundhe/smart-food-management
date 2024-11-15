@@ -41,12 +41,12 @@ class ScheduledMealStore {
   ) {
     const itemInstances = items.map((item) => {
       const { id, name, fullMealQuantity, halfMealQuantity } = item;
-      return new MealFoodItemModel(
+      return new MealFoodItemModel({
         id,
         name,
         fullMealQuantity,
-        halfMealQuantity
-      );
+        halfMealQuantity,
+      });
     });
     this.mealData[mealType] = new ScheduledMealModel(
       date,

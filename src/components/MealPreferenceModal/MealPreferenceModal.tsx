@@ -16,7 +16,6 @@ import {
 } from "./styles";
 import ModalStore from "../../store/ModalStore";
 import { FOOD_URL } from "../../constants";
-// import MealDate from "../mealDate/MealDate";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import CloseConfirmModal from "../confirmModal/CloseConfirmModal";
 import SkipConfirmModal from "../confirmModal/SkipConfirmModal";
@@ -25,13 +24,6 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-
-// const meals = [
-//   { item: "Poori", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
-//   { item: "Fired Rice", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
-//   { item: "Rice", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
-//   { item: "Aloo", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
-// ];
 
 const MealPreferenceModal: React.FC = () => {
   const [activeTab, setActiveTab] = useState(MealPreferenceEnum.FULL);
