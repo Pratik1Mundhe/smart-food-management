@@ -1,16 +1,16 @@
 import UserMealItemModel from "./UserMealItemModel";
 
-interface UserPreferredType {
+interface UserPreferredMealType {
   mealId: string;
   items: UserMealItemModel[];
 }
-class UserPreferredModel {
+class UserPreferredMealModel {
   mealId: string;
   items: UserMealItemModel[];
-  constructor(userPreferred: UserPreferredType) {
+  constructor(userPreferred: UserPreferredMealType) {
     this.mealId = userPreferred.mealId;
     this.items = userPreferred.items;
   }
 }
 
-export default UserPreferredModel;
+export default UserPreferredMealModel;

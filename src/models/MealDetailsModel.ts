@@ -6,8 +6,8 @@ import { MealDetailsType } from "../types";
 class MealDetailsModel {
   mealType: MealTypeEnum;
   mealId: string;
-  mealPreference: MealPreferenceEnum;
-  mealStatus: MealStatusEnum;
+  mealPreference: MealPreferenceEnum | null;
+  mealStatus: MealStatusEnum | null;
   foodItem: MealFoodItemModel[];
 
   constructor(mealDetails: MealDetailsType) {
