@@ -67,7 +67,7 @@ export interface FoodItemResponseType {
   // __typename: string
 }
 
-export interface foodItemType {
+export interface FoodItemType {
   id: string;
   name: string;
   fullMealQuantity: number;
