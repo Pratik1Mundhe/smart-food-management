@@ -6,6 +6,7 @@ class MealFoodItemModel {
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;
+  customMealQuantity: number;
 
   constructor(mealItem: MealFoodItemType) {
     makeAutoObservable(this, {}, { autoBind: true });
@@ -13,6 +14,13 @@ class MealFoodItemModel {
     this.name = mealItem.name;
     this.fullMealQuantity = mealItem.fullMealQuantity;
     this.halfMealQuantity = mealItem.halfMealQuantity;
+    this.customMealQuantity = 0;
+  }
+  add() {
+    this.customMealQuantity = this.customMealQuantity + 1;
+  }
+  sub() {
+    this.customMealQuantity = this.customMealQuantity - 1;
   }
 }
 
