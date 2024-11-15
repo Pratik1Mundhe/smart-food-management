@@ -67,7 +67,7 @@ export interface FoodItemResponseType {
   // __typename: string
 }
 
-export interface foodItemType {
+export interface FoodItemType {
   id: string;
   name: string;
   fullMealQuantity: number;
@@ -75,9 +75,9 @@ export interface foodItemType {
 }
 
 export interface MealFoodDataType {
-  breakfast: foodItemType[];
-  dinner: foodItemType[];
-  lunch: foodItemType[];
+  breakfast: FoodItemType[];
+  dinner: FoodItemType[];
+  lunch: FoodItemType[];
 }
 
 export interface VoidFunctionType {
@@ -103,4 +103,9 @@ export interface MealFoodItemResponseType {
   fullMealQuantity: number;
   halfMealQuantity: number;
   __typename: string;
+}
+export interface UserMealItemModelType {
+  id: string;
+  name: string;
+  quantity: number;
 }

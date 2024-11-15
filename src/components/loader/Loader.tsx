@@ -22,14 +22,7 @@ const Loader = ({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100%",
-      }}
-    >
+    <div className="flex flex-row justify-center items-center h-[100%]">
       <div style={loaderStyle}></div>
     </div>
   );
