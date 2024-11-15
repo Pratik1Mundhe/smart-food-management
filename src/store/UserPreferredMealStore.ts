@@ -1,20 +1,29 @@
 import { makeAutoObservable } from "mobx";
-import UserPreferredModel from "../models/UserPreferredmodel";
+import { MealTypeEnum, UserPreferredMealPlanType } from "../types";
+import UserPreferredMealModel from "../models/UserPreferredMealModel";
 
 class _UserPreferredMealStore {
-  date: string;
-  breakfastMealPlan: UserPreferredModel[];
-  lunchMealPlan: UserPreferredModel[];
-  dinnerMealPlan: UserPreferredModel[];
-
+  date: Date | null = null;
+  mealPlan: UserPreferredMealPlanType = {
+    breakfast: null,
+    lunch: null,
+    dinner: null,
+  };
   constructor() {
-    this.date = "Today";
-    this.breakfastMealPlan = [];
-    this.lunchMealPlan = [];
-    this.dinnerMealPlan = [];
     makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  setMealPlan(
+    mealType: MealTypeEnum,
+    userPreferredMeal: UserPreferredMealModel
+  ) {
+    this.mealPlan[mealType] = userPreferredMeal;
+  }
+
+  getUserPreferredMealPlan(mealType: MealTypeEnum) {
+    return this.mealPlan[mealType];
   }
 }
 
-const UserPreferredMealStore = new _UserPreferredMealStore();
-export default UserPreferredMealStore;
+const userPreferredMealStore = new _UserPreferredMealStore();
+export default userPreferredMealStore;

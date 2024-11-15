@@ -5,15 +5,15 @@ import scheduledMealStore from "../../../store/ScheduledMealStore";
 
 const useFetchScheduledMeal = (date: string, mealType: string) => {
   const { loading, error, data } = useQuery(GET_SCHEDULE_MEAL, {
-    onCompleted: (data) => {
-      const { date, mealType, items } = data;
+    onCompleted: ({ getScheduledMealByAdmin }) => {
+      const { date, mealType, items } = getScheduledMealByAdmin;
       scheduledMealStore.setScheduledMeal(date, mealType, items);
     },
 
     variables: {
       params: {
         date: date,
-        mealType: mealType,
+        mealType: mealType.toUpperCase(),
       },
     },
   });

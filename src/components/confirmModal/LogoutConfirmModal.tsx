@@ -7,7 +7,7 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-import ModalStore from "../../store/ModalStore";
+
 import { ACCESS_TOKEN } from "../../constants";
 import Loader from "../loader/Loader";
 
@@ -26,7 +26,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     async function logout() {
       setLoading(true);
       const response = await fetch(
-        "https://cruel-emus-rule.loca.lt/api/meals/logout/",
+        "https://slow-bars-smoke.loca.lt/api/meals/logout/",
         {
           method: "POST",
           headers: {

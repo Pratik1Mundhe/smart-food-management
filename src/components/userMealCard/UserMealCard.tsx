@@ -42,7 +42,10 @@ const UserMealCard: React.FC<MealCardProps> = ({
   const [isMealAteStatus, setIsMealStatus] = useState(false);
   const [loading, setLoading] = useState(true);
   const date = formatDate(currentDate);
-  const { mealsLoading, error } = useFetchScheduledMeal(date, type);
+  const { mealsLoading, error } = useFetchScheduledMeal(
+    date,
+    type.toUpperCase()
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {

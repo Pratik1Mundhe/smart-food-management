@@ -1,13 +1,11 @@
-import { UserMealItemModelType } from "../types";
-
 class UserMealItemModel {
   id: string;
   name: string;
   quantity: number;
-  constructor(mealItems: UserMealItemModelType) {
-    this.id = mealItems.id;
-    this.name = mealItems.name;
-    this.quantity = mealItems.quantity;
+  constructor(id: string, name: string, quantity: number) {
+    this.id = id;
+    this.name = name;
+    this.quantity = quantity;
   }
 }
 export default UserMealItemModel;
