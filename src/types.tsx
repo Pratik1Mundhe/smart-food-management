@@ -1,4 +1,5 @@
 import MealFoodItemModel from "./models/MealFoodItemModel";
+import ScheduledMealModel from "./models/ScheduledMealModel";
 export enum FoodItemCategoryEnum {
   RICE = "rice",
   PAN_CAKE = "pancake",
@@ -103,4 +104,22 @@ export interface MealFoodItemResponseType {
   fullMealQuantity: number;
   halfMealQuantity: number;
   __typename: string;
+}
+
+export interface MealScheduledDataType {
+  breakfast: ScheduledMealModel | null;
+  lunch: ScheduledMealModel | null;
+  dinner: ScheduledMealModel | null;
+}
+
+export interface UserMealPreferenceType {
+  breakfast: null | MealPreferenceEnum;
+  lunch: null | MealPreferenceEnum;
+  dinner: null | MealPreferenceEnum;
+}
+
+export interface UserMealStatusType {
+  breakfast: null | MealStatusEnum;
+  lunch: null | MealStatusEnum;
+  dinner: null | MealStatusEnum;
 }

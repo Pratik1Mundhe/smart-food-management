@@ -5,27 +5,12 @@ import MealFoodItemModel from "../models/MealFoodItemModel";
 import {
   MealFoodItemResponseType,
   MealPreferenceEnum,
+  MealScheduledDataType,
   MealStatusEnum,
   MealTypeEnum,
+  UserMealPreferenceType,
+  UserMealStatusType,
 } from "../types";
-
-interface MealScheduledDataType {
-  breakfast: ScheduledMealModel | null;
-  lunch: ScheduledMealModel | null;
-  dinner: ScheduledMealModel | null;
-}
-
-interface UserMealPreferenceType {
-  breakfast: null | MealPreferenceEnum;
-  lunch: null | MealPreferenceEnum;
-  dinner: null | MealPreferenceEnum;
-}
-
-interface UserMealStatusType {
-  breakfast: null | MealStatusEnum;
-  lunch: null | MealStatusEnum;
-  dinner: null | MealStatusEnum;
-}
 
 class ScheduledMealStore {
   date: string | null = null;

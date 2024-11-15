@@ -5,7 +5,6 @@ class MealFoodItemModel {
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;
-
   constructor(
     id: string,
     name: string,

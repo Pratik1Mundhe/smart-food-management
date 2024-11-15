@@ -9,7 +9,7 @@ interface ModalProp {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProp> = (props) => {
+const ConfirmModal: React.FC<ModalProp> = (props) => {
   const { children } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -36,4 +36,4 @@ const Modal: React.FC<ModalProp> = (props) => {
   );
 };
 
-export default observer(Modal);
+export default observer(ConfirmModal);

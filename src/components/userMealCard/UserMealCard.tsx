@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CiClock1 } from "react-icons/ci";
-import { v4 } from "uuid";
+import { observer } from "mobx-react";
 
 import calculateCutoffTime from "../../utils/calculateCutoffTime";
 import MealPreferenceModal from "../MealPreferenceModal/MealPreferenceModal";
@@ -22,16 +22,16 @@ import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
 import foodItemsStore from "../../store/FoodItemsStore";
-import { observer } from "mobx-react";
+
 import { formatDate } from "../../utils/formatDate";
+import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
+import scheduledMealStore from "../../store/ScheduledMealStore";
 
 interface MealCardProps {
   type: MealTypeEnum;
   mealTime: string;
   currentDate: Date;
 }
-
-const itemsList = ["idly", "Marsala Rice", "Maggie", "rice", "Biryani"];
 
 const UserMealCard: React.FC<MealCardProps> = ({
   type,
@@ -41,8 +41,8 @@ const UserMealCard: React.FC<MealCardProps> = ({
   const [isEditable, setIsEditable] = useState(true);
   const [isMealAteStatus, setIsMealStatus] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const date = formatDate(currentDate);
+  const { mealsLoading, error } = useFetchScheduledMeal(date, type);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,18 +76,29 @@ const UserMealCard: React.FC<MealCardProps> = ({
   };
 
   const meals = () => {
+    const mealItems = scheduledMealStore.getMealData(type)?.items;
+    if (!mealItems) {
+      return (
+        <div className="flex items-center justify-center my-auto">
+          <h1 className="font-semibold text-slate-800">Meal plan is empty</h1>
+        </div>
+      );
+    }
     return (
       <ul className={foodItems}>
-        {itemsList.map((each, index) => (
-          <li
-            key={v4()}
-            className={`first-letter:capitalize ${mealItem} ${
-              index % 2 !== 0 ? "text-right" : "text-left"
-            }`}
-          >
-            {each}
-          </li>
-        ))}
+        {mealItems.map((item, index) => {
+          const { id, name } = item;
+          return (
+            <li
+              key={id}
+              className={`first-letter:capitalize ${mealItem} ${
+                index % 2 !== 0 ? "text-right" : "text-left"
+              }`}
+            >
+              {name}
+            </li>
+          );
+        })}
       </ul>
     );
   };
@@ -133,12 +144,27 @@ const UserMealCard: React.FC<MealCardProps> = ({
     return renderEditButton();
   };
 
+  const renderCardContent = () => {
+    if (mealsLoading) {
+      return (
+        <div className="flex items-center justify-center">
+          <Loader />
+        </div>
+      );
+    }
+    return (
+      <>
+        {mealTypeAndTime()}
+        {meals()}
+        {mealStatusButtons()}
+      </>
+    );
+  };
+
   return (
     <div className={cardContainer}>
       <MealPreferenceModal />
-      {mealTypeAndTime()}
-      {meals()}
-      {mealStatusButtons()}
+      {renderCardContent()}
     </div>
   );
 };

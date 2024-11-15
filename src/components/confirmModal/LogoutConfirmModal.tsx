@@ -2,14 +2,25 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
-import { PageRoutesEnum, ReactElementType } from "../../types";
+import {
+  PageRoutesEnum,
+  ReactElementType,
+  VoidFunctionType,
+} from "../../types";
 import ModalStore from "../../store/ModalStore";
 import { ACCESS_TOKEN } from "../../constants";
 import Loader from "../loader/Loader";
 
-const LogoutConfirmModal: React.FC = () => {
+interface LogoutConfirmModalType {
+  handleCloseLogoutConfirmModal: VoidFunctionType;
+}
+
+const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
+  handleCloseLogoutConfirmModal,
+}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
   function handleLogoutModal() {
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
     async function logout() {
@@ -26,7 +37,7 @@ const LogoutConfirmModal: React.FC = () => {
       if (response.ok) {
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem("admin");
-        ModalStore.closeConfirmModal();
+        handleCloseLogoutConfirmModal();
         navigate(PageRoutesEnum.LOGIN_PAGE);
       }
       setLoading(false);
@@ -43,7 +54,7 @@ const LogoutConfirmModal: React.FC = () => {
           {!loading ? "Logout" : <Loader />}
         </button>
         <button
-          onClick={ModalStore.closeConfirmModal}
+          onClick={handleCloseLogoutConfirmModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
           Cancel
