@@ -30,6 +30,8 @@ import Loader from "../loader/Loader";
 import { PageRoutesEnum } from "../../types";
 import UserMealStore from "../../store/UserMealStore";
 import { addItemLocalStorage } from "../../utils/localStorageUtils/addItem";
+import { successToast } from "../../utils/toastUtils/successToast";
+import { failureToast } from "../../utils/toastUtils/failureToast";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -41,7 +43,6 @@ const Login = () => {
     isPasswordInvalid: false,
   });
   const [loading, setLoading] = useState(false);
-  const [networkError, setNetworkError] = useState(false);
   const navigate = useNavigate();
 
   function handleLoginDetails(
@@ -89,7 +90,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://cruel-emus-rule.loca.lt/api/meals/login/",
+        "https://slow-bars-smoke.loca.lt/api/meals/login/",
         {
           method: LOGIN_METHOD,
           headers: {
@@ -114,13 +115,11 @@ const Login = () => {
           );
           UserMealStore.setUserId(result.response.user_id);
           navigate(PageRoutesEnum.HOME_PAGE);
+          successToast("Login Successful");
         }
       }
       if (result.status_code !== 200) {
         throw new Error(result.res_status);
-      }
-      if (response.status === 502) {
-        setNetworkError(true);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -134,6 +133,8 @@ const Login = () => {
             isUsernameInvalid: false,
             isPasswordInvalid: true,
           });
+        } else {
+          failureToast("Failed to Login");
         }
       }
     } finally {
@@ -179,13 +180,6 @@ const Login = () => {
       <div className={loginContainer}>
         {headerSection()}
         {inputsSection()}
-        {networkError ? (
-          <p className="text-red-500 text-[12px]">
-            Failed to Login please try Agin
-          </p>
-        ) : (
-          ""
-        )}
         <button type="submit" className={button} disabled={loading}>
           {loading ? <Loader /> : "Login"}
         </button>

@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { v4 } from "uuid";
 
 import {
-  foodItemType,
+  FoodItemType,
   MealFoodDataType,
   MealTypeEnum,
   ReactElementType,
@@ -55,7 +55,7 @@ const ScheduleMeal: React.FC = () => {
 
   const { loading, error, setSchedule } = useScheduleMeal();
 
-  const addFoodItem = (food: foodItemType): void => {
+  const addFoodItem = (food: FoodItemType): void => {
     const isFoodExist = foodData[currentMealTab].some(
       (item) => item.id === food.id
     );
@@ -184,7 +184,7 @@ const ScheduleMeal: React.FC = () => {
       if (!deleteFoodItemId) {
         return <></>;
       }
-      const getFoodItem = (): foodItemType => {
+      const getFoodItem = (): FoodItemType => {
         return foodData[currentMealTab].find(
           (item) => item.id === deleteFoodItemId
         )!;

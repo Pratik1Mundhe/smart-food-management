@@ -110,7 +110,11 @@ const UserMealCard: React.FC<MealCardProps> = ({
             ? editButton
             : disableEditButton
         }
-        onClick={() => ModalStore.openModal(type)}
+        onClick={() => {
+          if (foodItemsStore.inCampusStatus) {
+            ModalStore.openModal(type);
+          }
+        }}
         disabled={!isEditable}
       >
         <div className={buttonContent}>
@@ -146,11 +150,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
 
   const renderCardContent = () => {
     if (mealsLoading) {
-      return (
-        <div className="flex items-center justify-center">
-          <Loader />
-        </div>
-      );
+      return <Loader color="blue" height={40} width={40} radius={4} />;
     }
     return (
       <>

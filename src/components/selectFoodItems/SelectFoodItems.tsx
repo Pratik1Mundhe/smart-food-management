@@ -1,12 +1,12 @@
 import React from "react";
 
 import foodItemsStore from "../../store/FoodItemsStore";
-import { foodItemType } from "../../types";
+import { FoodItemType } from "../../types";
 import { observer } from "mobx-react-lite";
 
 interface FoodItemOptionPropsType {
   setSelectedFoodItem: React.Dispatch<
-    React.SetStateAction<foodItemType | null>
+    React.SetStateAction<FoodItemType | null>
   >;
 }
 
