@@ -29,7 +29,8 @@ const ScheduleMeal: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [showFoodItemsModal, setShowFoodItemsModal] = useState<boolean>(false);
-  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] =
+    useState<boolean>(false);
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
     useState<boolean>(false);
   const [deleteFoodItemId, setDeleteFoodItemId] = useState<string | null>(null);
@@ -103,12 +104,12 @@ const ScheduleMeal: React.FC = () => {
 
   const handleOpenDeleteConfirmModal = (foodId: string): void => {
     setDeleteFoodItemId(foodId);
-    setShowConfirmModal(true);
+    setShowDeleteConfirmModal(true);
     ModalStore.openConfirmModal();
   };
 
   const handleCloseDeleteConfirmModal: VoidFunctionType = () => {
-    setShowConfirmModal(false);
+    setShowDeleteConfirmModal(false);
     setDeleteFoodItemId(null);
     ModalStore.closeConfirmModal();
   };
@@ -178,8 +179,11 @@ const ScheduleMeal: React.FC = () => {
     return renderScheduleFoodItem();
   };
 
-  const renderConfirmModal: ReactElementType = () => {
-    if (deleteFoodItemId && showConfirmModal) {
+  const renderDeleteConfirmModal: ReactElementType = () => {
+    if (showDeleteConfirmModal) {
+      if (!deleteFoodItemId) {
+        return <></>;
+      }
       const getFoodItem = (): foodItemType => {
         return foodData[currentMealTab].find(
           (item) => item.id === deleteFoodItemId
@@ -316,7 +320,7 @@ const ScheduleMeal: React.FC = () => {
       {renderMealFoods()}
       {renderButtons()}
       {renderFoodItemModel()}
-      {renderConfirmModal()}
+      {renderDeleteConfirmModal()}
       {renderSaveConfirmModal()}
     </div>
   );

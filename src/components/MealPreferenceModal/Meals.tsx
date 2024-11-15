@@ -19,6 +19,7 @@ const Meals = (prop: MealsType) => {
     return (
       <ul className={mealsCustomContainer}>
         {UserMealStore.mealsDetails.map((eachMeal, index) => {
+          console.log(index);
           return <CustomMeal eachMeal={eachMeal} index={index} />;
         })}
       </ul>
@@ -29,8 +30,8 @@ const Meals = (prop: MealsType) => {
       {UserMealStore.mealsDetails.map((eachMeal, index) => {
         const quantity =
           activeTab === "full"
-            ? eachMeal.foodItem[index].fullMealQuantity
-            : eachMeal.foodItem[index].halfMealQuantity;
+            ? eachMeal.mealPreference
+            : eachMeal.mealPreference;
         return (
           <li key={v4()} className={mealContainer}>
             <p className={mealItem}>

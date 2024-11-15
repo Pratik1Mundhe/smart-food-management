@@ -13,6 +13,7 @@ import ModalStore from "../../store/ModalStore";
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
+  const [showLogoutConfirmModal, setLogoutConfirmModal] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
 
   const renderCampusToggleButton: ReactElementType = () => {
@@ -22,6 +23,16 @@ const Navbar: React.FC = () => {
         <ToggleSwitch />
       </li>
     );
+  };
+
+  const handleOpenLogoutConfirmModal = () => {
+    setLogoutConfirmModal(true);
+    ModalStore.openConfirmModal();
+  };
+
+  const handleCloseLogoutConfirmModal = () => {
+    setLogoutConfirmModal(false);
+    ModalStore.closeConfirmModal();
   };
 
   const renderLogout = () => {
@@ -35,7 +46,7 @@ const Navbar: React.FC = () => {
           <div className="absolute top-12 right-10">
             <button
               className="bg-red-500 text-white text-[12px] hover:bg-red-600 p-2 rounded-md"
-              onClick={ModalStore.openConfirmModal}
+              onClick={handleOpenLogoutConfirmModal}
             >
               Logout
             </button>
@@ -59,6 +70,17 @@ const Navbar: React.FC = () => {
         {renderLogout()}
       </li>
     );
+  };
+
+  const renderLogoutConfirmModal = () => {
+    if (showLogoutConfirmModal) {
+      return (
+        <LogoutConfirmModal
+          handleCloseLogoutConfirmModal={handleCloseLogoutConfirmModal}
+        />
+      );
+    }
+    return <></>;
   };
 
   return (
@@ -91,7 +113,7 @@ const Navbar: React.FC = () => {
         </li>
         {renderUserProfile()}
       </ul>
-      <LogoutConfirmModal />
+      {renderLogoutConfirmModal()}
     </div>
   );
 };
