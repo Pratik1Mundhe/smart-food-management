@@ -104,3 +104,8 @@ export interface MealFoodItemResponseType {
   halfMealQuantity: number;
   __typename: string;
 }
+export interface UserMealItemModelType {
+  id: string;
+  name: string;
+  quantity: number;
+}
