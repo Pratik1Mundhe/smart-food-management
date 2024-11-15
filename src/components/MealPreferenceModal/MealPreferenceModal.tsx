@@ -25,6 +25,13 @@ import {
   VoidFunctionType,
 } from "../../types";
 
+const meals = [
+  { item: "Poori", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
+  { item: "Fired Rice", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
+  { item: "Rice", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
+  { item: "Aloo", itemType: "indian Bread", half: 1, full: 2, custom: 0 },
+];
+
 const MealPreferenceModal: React.FC = () => {
   const [activeTab, setActiveTab] = useState(MealPreferenceEnum.FULL);
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
@@ -140,7 +147,7 @@ const MealPreferenceModal: React.FC = () => {
           />
         </div>
         <div className={mealsDetailsContainer}>
-          <Meals activeTab={activeTab} />
+          <Meals meals={meals} activeTab={activeTab} />
           <div>
             <img src={FOOD_URL} className="h-[250px] w-[250px]" />
           </div>

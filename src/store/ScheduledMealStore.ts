@@ -19,6 +19,7 @@ class ScheduledMealStore {
     lunch: null,
     dinner: null,
   };
+
   userMealPreference: UserMealPreferenceType = {
     breakfast: null,
     lunch: null,
@@ -53,10 +54,15 @@ class ScheduledMealStore {
       mealType,
       itemInstances
     );
+
+    console.log(this.mealData[mealType]);
   }
 
-  getMealData(mealType: MealTypeEnum) {
-    return this.mealData[mealType];
+  getMealData(mealType: MealTypeEnum, date: string) {
+    if (date === this.date) {
+      return this.mealData[mealType];
+    }
+    return null;
   }
 
   setUserMealPreference(

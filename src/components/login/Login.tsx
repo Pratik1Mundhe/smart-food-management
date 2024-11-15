@@ -89,7 +89,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://cruel-emus-rule.loca.lt/api/meals/login/",
+        "https://slow-bars-smoke.loca.lt/api/meals/login/",
         {
           method: LOGIN_METHOD,
           headers: {

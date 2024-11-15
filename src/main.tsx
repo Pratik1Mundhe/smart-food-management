@@ -15,7 +15,7 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: "https://slow-bars-smoke.loca.lt/graphql",
     headers: {
-      Authorization: `Bearer b8a79ca9-9ab8-4323-829c-93e4b6d32149`,
+      Authorization: `Bearer 0787031c-d9a2-487c-b6b4-94fdab089f7d`,
     },
   }),
   cache,
