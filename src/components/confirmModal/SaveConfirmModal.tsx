@@ -15,6 +15,7 @@ const SaveConfirmModal: React.FC<ConfirmModalPropsType> = ({
 }) => {
   const handleClickSave: VoidFunctionType = () => {
     action();
+    closeModal();
   };
 
   const renderButtons: ReactElementType = () => {

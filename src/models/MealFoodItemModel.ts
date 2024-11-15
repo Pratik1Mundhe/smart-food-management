@@ -6,7 +6,6 @@ class MealFoodItemModel {
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;
-
   constructor(mealItem: FoodItemType) {
     makeAutoObservable(this, {}, { autoBind: true });
     this.id = mealItem.id;

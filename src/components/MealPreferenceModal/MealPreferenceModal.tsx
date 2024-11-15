@@ -29,7 +29,7 @@ const MealPreferenceModal: React.FC = () => {
   const [activeTab, setActiveTab] = useState(MealPreferenceEnum.FULL);
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
     useState<boolean>(false);
-  const [showBackConfirmModal, setShowBackConfirmModal] =
+  const [showCloseConfirmModal, setShowBackConfirmModal] =
     useState<boolean>(false);
   const [showSkipConfirmModal, setShowSkipConfirmModal] =
     useState<boolean>(false);
@@ -111,7 +111,7 @@ const MealPreferenceModal: React.FC = () => {
           action={handleSkipMealPreference}
         />
       );
-    } else if (showBackConfirmModal) {
+    } else if (showCloseConfirmModal) {
       return (
         <CloseConfirmModal
           closeModal={handleCloseMealPreferenceModal}

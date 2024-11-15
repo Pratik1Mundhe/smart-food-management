@@ -11,12 +11,12 @@ const Home: React.FC = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem("admin");
 
-  if (accessToken === null && !isAdmin) {
-    return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
-  }
-  if (isAdmin) {
-    return <Navigate to={PageRoutesEnum.ADMIN_HOME_PAGE} replace />;
-  }
+  // if (accessToken === null && !isAdmin) {
+  //   return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
+  // }
+  // if (isAdmin) {
+  //   return <Navigate to={PageRoutesEnum.ADMIN_HOME_PAGE} replace />;
+  // }
   return (
     <div className="flex flex-col py-4">
       <div className="mx-auto mb-4">
