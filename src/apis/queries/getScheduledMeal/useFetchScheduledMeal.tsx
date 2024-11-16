@@ -9,13 +9,13 @@ const useFetchScheduledMeal = (date: string, mealType: string) => {
       const { date, mealType, items } = getScheduledMealByAdmin;
       scheduledMealStore.setScheduledMeal(date, mealType, items);
     },
-
     variables: {
       params: {
         date: date,
         mealType: mealType.toUpperCase(),
       },
     },
+    fetchPolicy: "cache-and-network",
   });
 
   return { mealsLoading: loading, error, data };

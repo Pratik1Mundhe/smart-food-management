@@ -2,15 +2,9 @@ import { v4 } from "uuid";
 import { useState } from "react";
 
 import { mealContainer, mealItem } from "./styles";
-import MealDetailsModel from "../../models/MealDetailsModel";
 
-interface CustomMealProp {
-  eachMeal: MealDetailsModel;
-  index: number;
-}
-
-const CustomMeal = (props: CustomMealProp) => {
-  const { eachMeal, index } = props;
+const CustomMeal = (props) => {
+  const { eachMeal } = props;
 
   const [mealQuantity, setMealQuantity] = useState(0);
 

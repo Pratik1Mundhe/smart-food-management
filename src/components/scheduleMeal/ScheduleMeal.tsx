@@ -49,11 +49,12 @@ const ScheduleMeal: React.FC = () => {
       currentMealTab,
       formatDate(currentDate)
     );
+    console.log(scheduledMealItems);
     if (!scheduledMealItems) {
+      foodData[currentMealTab] = [];
       return;
     }
     const { date, mealType, items } = scheduledMealItems;
-    console.log(items);
     foodData[currentMealTab] = items;
   }, [mealsLoading, currentDate]);
 
@@ -160,8 +161,14 @@ const ScheduleMeal: React.FC = () => {
     }
     if (error) {
       return (
-        <div className="flex items-center justify-center min-h-[300px]">
+        <div className="flex flex-col items-center justify-center min-h-[300px]">
           <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
+          <button
+            onClick={handleSaveMealSchedule}
+            className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
+          >
+            Retry
+          </button>
         </div>
       );
     }
@@ -218,9 +225,7 @@ const ScheduleMeal: React.FC = () => {
     const itemIds: string[] = [];
     const fullMealQuantities: number[] = [];
     const halfMealQuantities: number[] = [];
-
     let validation = true;
-
     foodData[currentMealTab].forEach((meal) => {
       const { id, fullMealQuantity, halfMealQuantity } = meal;
       if (fullMealQuantity === 0 || halfMealQuantity === 0) {
@@ -249,6 +254,9 @@ const ScheduleMeal: React.FC = () => {
         if (scheduleMeal.__typename === SuccessTypenamesEnum.SCHEDULE_MEAL) {
           handleMealSaveSuccess();
         } else if (scheduleMeal.__typename === "ScheduleMealFailure") {
+          //add scheduled items into store even though request is failed
+          // const items = foodData[currentMealTab]
+          // scheduledMealStore.setScheduledMeal(formatDate(currentDate), currentMealTab, items);
           failureToast("Something went wrong !!!");
           handleCloseSaveConfirmModal();
         }
