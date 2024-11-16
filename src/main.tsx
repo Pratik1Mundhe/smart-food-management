@@ -13,7 +13,7 @@ const cache = new InMemoryCache({});
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: "https://slow-bars-smoke.loca.lt/graphql",
+    uri: "https://heavy-suits-beam.loca.lt/graphql",
     headers: {
       Authorization: `Bearer 0787031c-d9a2-487c-b6b4-94fdab089f7d`,
     },

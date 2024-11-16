@@ -6,8 +6,8 @@ function useInCampusStatus() {
   const [setInCampusStatus, { loading }] = useMutation(IN_CAMPUS_STATUS, {
     onCompleted: onSuccessFunction,
   });
-  function triggerCampusStatus() {
-    setInCampusStatus();
+  function triggerCampusStatus(data: any) {
+    setInCampusStatus({ variables: { params: { ...data } } });
   }
   function onSuccessFunction() {
     foodItemsStore.setInCampusStatus();

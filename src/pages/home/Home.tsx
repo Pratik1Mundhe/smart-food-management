@@ -26,7 +26,7 @@ const Home: React.FC = () => {
         <UserMealCard
           currentDate={currentDate}
           type={MealTypeEnum.BREAKFAST}
-          mealTime="5:00 - 06:00"
+          mealTime="8:00 - 10:00"
         />
         <UserMealCard
           currentDate={currentDate}
