@@ -1,13 +1,15 @@
-import { useQuery } from "@apollo/client";
+import { NetworkStatus, useQuery } from "@apollo/client";
+
 import { GET_FOOD_ITEMS } from "./query";
 import { onSuccess } from "./responseHandler";
 
 const useFetchFoodItems = () => {
-  const { loading, error } = useQuery(GET_FOOD_ITEMS, {
+  const { loading, error, refetch, networkStatus } = useQuery(GET_FOOD_ITEMS, {
     onCompleted: ({ getItems }) => {
       const { items } = getItems;
       onSuccess(items);
     },
+    notifyOnNetworkStatusChange: true,
     variables: {
       params: {
         limit: 10,
@@ -16,6 +18,8 @@ const useFetchFoodItems = () => {
     },
   });
 
-  return { loading, error };
+  const refetchloading = NetworkStatus.refetch === networkStatus;
+
+  return { loading, error, refetch, refetchloading };
 };
 export default useFetchFoodItems;

@@ -49,17 +49,20 @@ class ScheduledMealStore {
         halfMealQuantity,
       });
     });
+    this.date = date;
     this.mealData[mealType] = new ScheduledMealModel(
       date,
       mealType,
       itemInstances
     );
-
-    console.log(this.mealData[mealType]);
   }
 
   getMealData(mealType: MealTypeEnum, date: string) {
-    if (date === this.date) {
+    if (!this.date) {
+      return null;
+    }
+    console.log(this.mealData[mealType]);
+    if (new Date(date).getDate() === new Date(this.date).getDate()) {
       return this.mealData[mealType];
     }
     return null;
