@@ -42,6 +42,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   const [isMealAteStatus, setIsMealStatus] = useState(false);
   const [loading, setLoading] = useState(true);
   const date = formatDate(currentDate);
+
   const { mealsLoading, error } = useFetchScheduledMeal(
     date,
     type.toUpperCase()
@@ -79,7 +80,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   };
 
   const meals = () => {
-    const mealItems = scheduledMealStore.getMealData(type)?.items;
+    const mealItems = scheduledMealStore.getMealData(type, date)?.items;
     if (!mealItems) {
       return (
         <div className="flex items-center justify-center my-auto">
@@ -122,7 +123,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
       >
         <div className={buttonContent}>
           {loading ? (
-            <Loader />
+            <Loader color="" />
           ) : (
             <>
               <span>Edit</span>
