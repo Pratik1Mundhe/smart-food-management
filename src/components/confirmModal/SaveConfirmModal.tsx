@@ -1,8 +1,8 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import { ReactElementType, VoidFunctionType } from "../../types";
-import { observer } from "mobx-react-lite";
 import CustomMealModel from "../../models/CustomMealModel";
 import UserMealStore from "../../store/UserMealStore";
 

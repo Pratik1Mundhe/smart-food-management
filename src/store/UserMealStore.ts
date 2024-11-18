@@ -26,9 +26,7 @@ class _UserMealStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  //Write a new method for selected meal data storing
-  //Can add private access modifier if required
-  private setDate(newDate: Date) {
+  setDate(newDate: string): void {
     this.data = newDate;
   }
   private setMealId(newMealId: string) {

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import dayjs from "dayjs";
 
 import {
@@ -9,8 +11,6 @@ import {
 } from "./styles";
 import { MealFoodItemResponseType, MealTypeEnum } from "../../types";
 import useGetCustomUserMeal from "../../apis/queries/getCustomUserMeal/useGetCustomUserMeal";
-import { useEffect } from "react";
-import { observer } from "mobx-react-lite";
 import CustomMealStore from "../../store/CustomMealStore";
 import CustomMeal from "./CustomMeal";
 import ModalStore from "../../store/ModalStore";

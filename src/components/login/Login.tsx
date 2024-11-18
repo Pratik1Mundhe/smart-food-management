@@ -26,7 +26,6 @@ import {
   USERNAME_LABEL,
   USERNAME_ID,
   PASSWORD_LABEL,
-  LOGIN_METHOD,
   INVALID_USERNAME_RESPONSE,
   INVALID_PASSWORD_RESPONSE,
   ACCESS_TOKEN,
@@ -96,7 +95,7 @@ const Login = () => {
 
     try {
       const response = await fetch(`${GRAPHQL_END_POINT}/api/meals/login/`, {
-        method: LOGIN_METHOD,
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

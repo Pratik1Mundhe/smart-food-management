@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { LuUserCircle } from "react-icons/lu";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useState } from "react";
@@ -7,14 +7,25 @@ import { useState } from "react";
 import globalLogo from "../../assets/global-logo.png";
 import ToggleSwitch from "../toggleButton/ToggleButton";
 import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
-import { PageRoutesEnum, ReactElementType } from "../../types";
+import {
+  PageRoutesEnum,
+  ReactElementType,
+  VoidFunctionType,
+} from "../../types";
 import ModalStore from "../../store/ModalStore";
+import {
+  headerContainer,
+  headerMenu,
+  headerMenuOption,
+  redButton,
+} from "./styles";
 
 const Navbar: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const path = window.location.pathname;
-  const [showLogoutConfirmModal, setLogoutConfirmModal] = useState(false);
-  const [showLogout, setShowLogout] = useState(false);
+  const [showLogoutConfirmModal, setLogoutConfirmModal] =
+    useState<boolean>(false);
+  const [showLogout, setShowLogout] = useState<boolean>(false);
 
   const renderCampusToggleButton: ReactElementType = () => {
     return (
@@ -25,17 +36,17 @@ const Navbar: React.FC = () => {
     );
   };
 
-  const handleOpenLogoutConfirmModal = () => {
+  const handleOpenLogoutConfirmModal: VoidFunctionType = () => {
     setLogoutConfirmModal(true);
     ModalStore.openConfirmModal();
   };
 
-  const handleCloseLogoutConfirmModal = () => {
+  const handleCloseLogoutConfirmModal: VoidFunctionType = () => {
     setLogoutConfirmModal(false);
     ModalStore.closeConfirmModal();
   };
 
-  const renderLogout = () => {
+  const renderLogout: ReactElementType = () => {
     if (showLogout) {
       return (
         <>
@@ -45,7 +56,7 @@ const Navbar: React.FC = () => {
           />
           <div className="absolute top-12 right-10">
             <button
-              className="bg-red-500 text-white text-[12px] hover:bg-red-600 p-2 rounded-md"
+              className={redButton}
               onClick={handleOpenLogoutConfirmModal}
             >
               Logout
@@ -62,7 +73,7 @@ const Navbar: React.FC = () => {
     );
   };
 
-  const renderUserProfile = () => {
+  const renderUserProfile: ReactElementType = () => {
     return (
       <li className="flex items-center gap-2">
         <LuUserCircle className="h-5 w-5" />
@@ -72,7 +83,7 @@ const Navbar: React.FC = () => {
     );
   };
 
-  const renderLogoutConfirmModal = () => {
+  const renderLogoutConfirmModal: ReactElementType = () => {
     if (showLogoutConfirmModal) {
       return (
         <LogoutConfirmModal
@@ -84,18 +95,18 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-10 border-b-[1px]">
+    <div className={headerContainer}>
       <img
         onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
         src={globalLogo}
         className="h-[60px] w-[60px] cursor-pointer"
       />
 
-      <ul className="flex justify-between items-center gap-4 w-[40%]">
+      <ul className={headerMenu}>
         {renderCampusToggleButton()}
         <li
           onClick={() => navigate(PageRoutesEnum.HOME_PAGE)}
-          className={`text-general text-sm font-medium cursor-pointer ${
+          className={`${headerMenuOption} ${
             path === PageRoutesEnum.HOME_PAGE ? "text-primary" : "text-general"
           }`}
         >
@@ -103,7 +114,7 @@ const Navbar: React.FC = () => {
         </li>
         <li
           onClick={() => navigate(PageRoutesEnum.WEEKLY_MENU_PAGE)}
-          className={`text-general text-sm font-medium cursor-pointer ${
+          className={`${headerMenuOption} ${
             path === PageRoutesEnum.WEEKLY_MENU_PAGE
               ? "text-primary"
               : "text-general"

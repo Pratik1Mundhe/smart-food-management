@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import {
@@ -7,9 +7,14 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
+<<<<<<< HEAD
 
 import { ACCESS_TOKEN, ADMIN_TOKEN, GRAPHQL_END_POINT } from "../../constants";
+=======
+import { ACCESS_TOKEN, ADMIN_TOKEN, LOGOUT_URL } from "../../constants";
+>>>>>>> 74054534a5307bbf7cb696797b3cd7bdd5ba485d
 import Loader from "../loader/Loader";
+import { removeItemLocalStorage } from "../../utils/localStorageUtils/removeItem";
 
 interface LogoutConfirmModalType {
   handleCloseLogoutConfirmModal: VoidFunctionType;
@@ -18,10 +23,10 @@ interface LogoutConfirmModalType {
 const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
   handleCloseLogoutConfirmModal,
 }) => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const navigate: NavigateFunction = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  function handleLogoutModal() {
+  function handleLogoutModal(): void {
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
     async function logout() {
       setLoading(true);
@@ -32,8 +37,8 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
         },
       });
       if (response.ok) {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(ADMIN_TOKEN);
+        removeItemLocalStorage(ACCESS_TOKEN);
+        removeItemLocalStorage(ADMIN_TOKEN);
         handleCloseLogoutConfirmModal();
         navigate(PageRoutesEnum.LOGIN_PAGE);
       }
@@ -41,6 +46,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     }
     logout();
   }
+
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">

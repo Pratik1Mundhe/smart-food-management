@@ -3,11 +3,14 @@ import { observer } from "mobx-react-lite";
 
 import foodItemsStore from "../../store/FoodItemsStore";
 import { FoodItemsSelectPropsType } from "../../types";
+import { selectInput } from "./styles";
 
 const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
   setSelectedFoodItem,
 }) => {
-  const handleSelectFoodItem = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectFoodItem = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
     const { id, name } = foodItemsStore.getFoodItem(e.target.value)!;
     setSelectedFoodItem({
       id,
@@ -21,7 +24,7 @@ const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
     <select
       disabled={foodItemsStore.getFoodItems().length === 0}
       onChange={handleSelectFoodItem}
-      className="border-2 text-sm px-2 appearance-none rounded-lg h-[46px] text-slate-800 outline-none w-full"
+      className={selectInput}
     >
       <option value="">Select Food Item</option>
       {foodItemsStore.getFoodItems().map((food) => {

@@ -34,3 +34,8 @@ export const MEAL_TYPES: MealTypeEnum[] = [
 ];
 
 export const MEAL_DAY_KEY_FORMAT = "DD/MM/YYYY";
+export const BACKEND_URL = "https://old-melons-cheat.loca.lt/";
+export const GRAPHQL_URL = BACKEND_URL + "graphql";
+export const LOGIN_URL = BACKEND_URL + "api/meals/login/";
+export const LOGOUT_URL = BACKEND_URL + "api/meals/logout/";
+export const TOASTER_POSITION = "top-center";

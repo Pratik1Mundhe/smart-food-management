@@ -1,5 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/home/Home";
@@ -8,7 +9,7 @@ import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
 import { PageRoutesEnum } from "./types";
 import LoginPage from "./pages/loginPage/LoginPage";
-import { Toaster } from "react-hot-toast";
+import { TOASTER_POSITION } from "./constants";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -62,7 +63,7 @@ const App: React.FC = () => {
           }
         />
       </Routes>
-      <Toaster position="bottom-center" reverseOrder={true} />
+      <Toaster position={TOASTER_POSITION} reverseOrder={true} />
     </BrowserRouter>
   );
 };

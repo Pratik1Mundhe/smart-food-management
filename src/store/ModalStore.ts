@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+
 class _ModalStore {
   isModalOpen: boolean;
   typeOfMeal: string;
@@ -10,21 +11,21 @@ class _ModalStore {
     this.isConfirmModalOpen = false;
     makeAutoObservable(this, {}, { autoBind: true });
   }
-  openModal(type?: string) {
+  openModal(type?: string): void {
     if (type) {
       this.typeOfMeal = type;
     }
     this.isModalOpen = true;
   }
-  closeModal() {
+  closeModal(): void {
     this.isModalOpen = false;
   }
 
-  openConfirmModal() {
+  openConfirmModal(): void {
     this.isConfirmModalOpen = true;
   }
 
-  closeConfirmModal() {
+  closeConfirmModal(): void {
     this.isConfirmModalOpen = false;
   }
 }

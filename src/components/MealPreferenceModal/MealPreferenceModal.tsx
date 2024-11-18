@@ -30,7 +30,13 @@ import {
   VoidFunctionType,
 } from "../../types";
 
-const MealPreferenceModal: React.FC = () => {
+interface MealPreferenceModalPropsType {
+  date: string;
+}
+
+const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
+  date,
+}) => {
   const [activeTab, setActiveTab] = useState(MealPreferenceEnum.FULL);
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
     useState<boolean>(false);
@@ -148,8 +154,11 @@ const MealPreferenceModal: React.FC = () => {
     }
     return <></>;
   };
-  if (ModalStore.typeOfMeal && scheduledMealStore.mealData === null) {
-    let mealData = scheduledMealStore.mealData[type as MealTypeEnum];
+
+  const mealItems =
+    scheduledMealStore.getMealDayData(date)[type as MealTypeEnum];
+
+  if (ModalStore.typeOfMeal && mealItems) {
     return (
       <Modal>
         <div className={mealPreferenceContainer}>
@@ -161,7 +170,7 @@ const MealPreferenceModal: React.FC = () => {
             />
           </div>
           <div className={mealsDetailsContainer}>
-            <Meals meals={mealData} activeTab={activeTab} />
+            <Meals meals={mealItems} activeTab={activeTab} />
             <div>
               <img src={FOOD_URL} className="h-[250px] w-[250px]" />
             </div>

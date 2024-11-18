@@ -1,7 +1,8 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
+
 import { IoAdd } from "react-icons/io5";
 import { FiMinus } from "react-icons/fi";
-import { observer } from "mobx-react-lite";
 import { VoidFunctionType } from "../../types";
 
 interface QuantityCounterPropsType {
