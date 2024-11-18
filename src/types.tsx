@@ -105,6 +105,7 @@ export interface MealFoodItemResponseType {
 export interface ScheduledMealResponseType {
   date: string;
   mealType: string;
+  mealId: string;
   items: MealFoodItemResponseType[];
 }
 

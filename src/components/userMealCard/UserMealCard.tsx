@@ -22,7 +22,6 @@ import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
 import foodItemsStore from "../../store/FoodItemsStore";
-import UserMealStore from "../../store/UserMealStore";
 import { MealStatusEnum } from "../../types";
 
 import { formatDate } from "../../utils/formatDate";
@@ -86,7 +85,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   };
 
   const meals = () => {
-    const mealItems = scheduledMealStore.getMealData(type, date)?.items;
+    const mealItems = scheduledMealStore.getMealDayData(date)[type];
     if (!mealItems) {
       return (
         <div className="flex items-center justify-center my-auto">
