@@ -155,7 +155,7 @@ const ScheduleMeal: React.FC = () => {
     );
   };
 
-  const renderErrorView: ReactElementType = () => {
+  const renderMealSaveErrorView: ReactElementType = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[300px]">
         <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
@@ -190,7 +190,7 @@ const ScheduleMeal: React.FC = () => {
       return renderLoadingView();
     }
     if (error) {
-      return renderErrorView();
+      return renderMealSaveErrorView();
     }
     if (foodData[currentMealTab].length === 0) {
       return renderMealsEmptyView();
