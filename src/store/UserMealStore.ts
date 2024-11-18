@@ -1,20 +1,19 @@
 import { makeAutoObservable } from "mobx";
 
 class _UserMealStore {
-  userId: string;
+  userId: string | null = null;
   data: string;
 
   constructor() {
     this.data = "Today";
-    this.userId = "";
 
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  setDate(newDate: string) {
+  setDate(newDate: string): void {
     this.data = newDate;
   }
-  setUserId(user: string) {
+  setUserId(user: string): void {
     this.userId = user;
   }
 }

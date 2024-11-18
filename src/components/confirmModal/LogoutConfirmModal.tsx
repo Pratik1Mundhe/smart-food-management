@@ -7,7 +7,6 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-
 import { ACCESS_TOKEN } from "../../constants";
 import Loader from "../loader/Loader";
 
@@ -44,6 +43,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     }
     logout();
   }
+
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">

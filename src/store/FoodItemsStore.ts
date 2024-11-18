@@ -12,7 +12,7 @@ class FoodItemsStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  addFoodItems(items: FoodItemsResponseType[]) {
+  addFoodItems(items: FoodItemsResponseType[]): void {
     const foodItemInstances = items.map((item) => {
       const { id, name, category, baseSizeUnit, servingSizeUnit } = item;
       return new FoodItemModal(
