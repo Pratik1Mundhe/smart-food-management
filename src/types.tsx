@@ -99,7 +99,7 @@ export interface MealFoodItemResponseType {
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;
-  __typename: string;
+  // __typename: string;
 }
 
 export interface ScheduledMealResponseType {
