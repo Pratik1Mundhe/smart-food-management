@@ -6,8 +6,8 @@ export const onSuccess = (mealData: ScheduledMealResponseType) => {
   scheduledMealStore.setScheduledMeal(
     date,
     MealTypeEnum[mealType as keyof typeof MealTypeEnum],
-    mealId,
-    items
+    items,
+    mealId
   );
 };
 export const onFailure = () => {};
