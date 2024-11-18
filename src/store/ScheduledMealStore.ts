@@ -40,7 +40,8 @@ class ScheduledMealStore {
   setScheduledMeal(
     date: string,
     mealType: MealTypeEnum,
-    items: MealFoodItemResponseType[]
+    items: MealFoodItemResponseType[],
+    mealId: string
   ): void {
     const dateObject = new Date(date);
     const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
@@ -54,7 +55,7 @@ class ScheduledMealStore {
       });
     });
 
-    const mealModel = new ScheduledMealModel(mealType, itemInstances);
+    const mealModel = new ScheduledMealModel(mealId, mealType, itemInstances);
     if (this.mealDayData.has(date)) {
       const mealDataObject = this.mealDayData.get(formattedDate);
       if (!mealDataObject) {

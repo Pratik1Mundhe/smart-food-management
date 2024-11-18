@@ -1,47 +1,37 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { LuUserCircle } from "react-icons/lu";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { useState } from "react";
 
 import globalLogo from "../../assets/global-logo.png";
 import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
-import { PageRoutesEnum } from "../../types";
+import { PageRoutesEnum, ReactElementType } from "../../types";
 import ModalStore from "../../store/ModalStore";
 
 const AdminNavbar: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const path = window.location.pathname;
-  const [showLogoutConfirmModal, setLogoutConfirmModal] = useState(false);
-  const [showLogout, setShowLogout] = useState(false);
+  const [showLogoutConfirmModal, setLogoutConfirmModal] =
+    useState<boolean>(false);
+  const [showLogout, setShowLogout] = useState<boolean>(false);
 
-  const handleOpenLogoutConfirmModal = () => {
+  const handleOpenLogoutConfirmModal = (): void => {
     setLogoutConfirmModal(true);
     ModalStore.openConfirmModal();
   };
 
-  const handleCloseLogoutConfirmModal = () => {
+  const handleCloseLogoutConfirmModal = (): void => {
     setLogoutConfirmModal(false);
     ModalStore.closeConfirmModal();
   };
 
-  const renderLogout = () => {
+  const renderLogout: ReactElementType = () => {
     if (showLogout) {
       return (
-        <>
-          <FaChevronUp
-            className="text-sm cursor-pointer"
-            onClick={() => setShowLogout((prev) => !prev)}
-          />
-          <div className="absolute top-12 right-10">
-            <button
-              className="bg-red-500 text-white text-[12px] hover:bg-red-600 p-2 rounded-md"
-              onClick={handleOpenLogoutConfirmModal}
-            >
-              Logout
-            </button>
-          </div>
-        </>
+        <FaChevronUp
+          className="text-sm cursor-pointer"
+          onClick={() => setShowLogout((prev) => !prev)}
+        />
       );
     }
     return (
@@ -52,17 +42,34 @@ const AdminNavbar: React.FC = () => {
     );
   };
 
-  const renderUserProfile = () => {
+  const renderLogoutButton: ReactElementType = () => {
+    if (showLogout) {
+      return (
+        <div className="absolute top-8 right-0 bg-white">
+          <button
+            className="bg-red-500 text-white text-sm hover:bg-red-600 p-2 rounded-md"
+            onClick={handleOpenLogoutConfirmModal}
+          >
+            Logout
+          </button>
+        </div>
+      );
+    }
+    return <></>;
+  };
+
+  const renderUserProfile: ReactElementType = () => {
     return (
-      <li className="flex items-center gap-2">
+      <li className="flex items-center gap-2 relative">
         <LuUserCircle className="h-5 w-5" />
         <h1 className="text-general text-sm font-medium">Admin</h1>
         {renderLogout()}
+        {renderLogoutButton()}
       </li>
     );
   };
 
-  const renderLogoutConfirmModal = () => {
+  const renderLogoutConfirmModal: ReactElementType = () => {
     if (showLogoutConfirmModal) {
       return (
         <LogoutConfirmModal
@@ -92,7 +99,6 @@ const AdminNavbar: React.FC = () => {
         >
           Home
         </li>
-
         {renderUserProfile()}
       </ul>
       {renderLogoutConfirmModal()}
