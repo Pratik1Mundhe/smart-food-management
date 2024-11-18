@@ -1,5 +1,5 @@
 export const blueButton =
-  "bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4";
+  "bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4 w-fit";
 export const viewContainer =
   "flex flex-col items-center justify-center min-h-[300px]";
 export const greenButton =

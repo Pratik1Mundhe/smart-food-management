@@ -13,7 +13,6 @@ import { MEAL_DAY_KEY_FORMAT } from "../constants";
 
 class ScheduledMealStore {
   mealDayData: Map<string, MealScheduledDataType> = new Map();
-
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
   }

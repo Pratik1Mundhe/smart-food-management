@@ -185,7 +185,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
 
   const renderMealErrorView: ReactElementType = () => {
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center my-auto">
         <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
         <button
           onClick={handleRefetchMeal}
@@ -213,7 +213,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   };
   return (
     <div className={cardContainer}>
-      <MealPreferenceModal />
+      <MealPreferenceModal date={date} />
       {renderCardContent()}
     </div>
   );
