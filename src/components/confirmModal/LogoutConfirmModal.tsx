@@ -7,8 +7,10 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-import { ACCESS_TOKEN } from "../../constants";
+
+import { ACCESS_TOKEN, ADMIN_TOKEN, BACKEND_URL } from "../../constants";
 import Loader from "../loader/Loader";
+import { removeItemLocalStorage } from "../../utils/localStorageUtils/removeItem";
 
 interface LogoutConfirmModalType {
   handleCloseLogoutConfirmModal: VoidFunctionType;
@@ -24,18 +26,15 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
     async function logout() {
       setLoading(true);
-      const response = await fetch(
-        "https://slow-bars-smoke.loca.lt/api/meals/logout/",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       if (response.ok) {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem("admin");
+        removeItemLocalStorage(ACCESS_TOKEN);
+        removeItemLocalStorage(ADMIN_TOKEN);
         handleCloseLogoutConfirmModal();
         navigate(PageRoutesEnum.LOGIN_PAGE);
       }
@@ -51,7 +50,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
           onClick={handleLogoutModal}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          {!loading ? "Logout" : <Loader />}
+          {loading ? <Loader /> : "Logout"}
         </button>
         <button
           onClick={handleCloseLogoutConfirmModal}

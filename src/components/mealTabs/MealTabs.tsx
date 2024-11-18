@@ -23,7 +23,7 @@ const MealTabs: React.FC<MealTabsPropsType> = ({
             key={v4()}
             className={`${tabStyle} ${
               currentMealTab === meal
-                ? `bg-primary text-white`
+                ? "bg-primary text-white"
                 : "bg-transparent text-black"
             }`}
           >

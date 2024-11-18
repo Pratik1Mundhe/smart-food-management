@@ -9,7 +9,9 @@ class UserPreferredMealModel {
   items: UserMealItemModel[];
   constructor(userPreferred: UserPreferredMealType) {
     this.mealId = userPreferred.mealId;
-    this.items = userPreferred.items;
+    this.items = userPreferred.items.map(
+      (each) => new UserMealItemModel(each.id, each.name, each.quantity)
+    );
   }
 }
 

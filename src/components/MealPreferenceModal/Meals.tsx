@@ -1,67 +1,69 @@
-import { v4 } from "uuid";
+import dayjs from "dayjs";
+
 import {
   mealContainer,
   mealsCustomContainer,
   mealsContainer,
   mealItem,
-  mealType,
   mealQuantity,
 } from "./styles";
+import { MealFoodItemResponseType, MealTypeEnum } from "../../types";
+import useGetCustomUserMeal from "../../apis/queries/getCustomUserMeal/useGetCustomUserMeal";
+import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import CustomMealStore from "../../store/CustomMealStore";
+import CustomMeal from "./CustomMeal";
+import ModalStore from "../../store/ModalStore";
+import { DATE_FORMAT } from "../../constants";
 
 interface MealsPropsType {
   meals: {
-    item: string;
-    itemType: string;
-    half: number;
-    full: number;
-    custom: number;
-  }[];
+    date: string;
+    mealType: string;
+    items: MealFoodItemResponseType[];
+  };
   activeTab: string;
 }
 
 const Meals: React.FC<MealsPropsType> = ({ meals, activeTab }) => {
+  const { triggerFetchCustomUser } = useGetCustomUserMeal();
+  useEffect(() => {
+    triggerFetchCustomUser(dayjs(new Date()).format(DATE_FORMAT));
+  }, []);
+  const type = ModalStore.typeOfMeal.toLocaleLowerCase();
+
   if (activeTab === "custom") {
-    return (
-      <ul className={mealsCustomContainer}>
-        {meals.map((eachMeal) => {
-          const quantity = eachMeal.custom;
-          return (
-            <li key={v4()} className={mealContainer}>
-              <p className={mealItem}>
-                {eachMeal.item}
-                <br />
-                <span className={mealType}>{eachMeal.itemType}</span>
-              </p>
-              <div className={`flex flex-row gap-2${mealQuantity}`}>
-                <p>
-                  <span className="p-2 border-[1px] text-gray-400 cursor-pointer">
-                    -
-                  </span>
-                  <span className="p-2 border-[1px] text-gray-400">
-                    {quantity}
-                  </span>
-                  <span className="p-2 border-[1px] text-gray-400 cursor-pointer">
-                    +
-                  </span>
-                </p>
-                <span className="text-gray-300 text-[12px] ml-3">quantity</span>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    );
+    let index;
+    if (type === MealTypeEnum.BREAKFAST) {
+      index = 0;
+    } else if (type === MealTypeEnum.LUNCH) {
+      index = 1;
+    } else if (type === MealTypeEnum.DINNER) {
+      index = 2;
+    }
+
+    if (index) {
+      return (
+        <ul className={mealsCustomContainer}>
+          {CustomMealStore.meals[index].items.map((eachMeal) => (
+            <CustomMeal eachMeal={eachMeal} />
+          ))}
+        </ul>
+      );
+    }
   }
   return (
     <ul className={mealsContainer}>
-      {meals.map((eachMeal) => {
-        const quantity = activeTab === "full" ? eachMeal.full : eachMeal.half;
+      {meals.items.map((eachMeal) => {
+        const quantity =
+          activeTab === "full"
+            ? eachMeal.fullMealQuantity
+            : eachMeal.halfMealQuantity;
         return (
-          <li key={v4()} className={mealContainer}>
+          <li key={eachMeal.id} className={mealContainer}>
             <p className={mealItem}>
-              {eachMeal.item}
+              {eachMeal.name}
               <br />
-              <span className={mealType}>{eachMeal.itemType}</span>
             </p>
             <p className={mealQuantity}>{quantity} quantity</p>
           </li>
@@ -70,4 +72,4 @@ const Meals: React.FC<MealsPropsType> = ({ meals, activeTab }) => {
     </ul>
   );
 };
-export default Meals;
+export default observer(Meals);

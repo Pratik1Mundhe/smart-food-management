@@ -1,39 +1,42 @@
-import { v4 } from "uuid";
-import { useState } from "react";
+import { observer } from "mobx-react-lite";
 
 import { mealContainer, mealItem } from "./styles";
+import CustomMealItemModel from "../../models/CustomMealItemModel";
 
-const CustomMeal = (props) => {
+interface CustomProp {
+  eachMeal: CustomMealItemModel;
+}
+
+const CustomMeal = (props: CustomProp) => {
   const { eachMeal } = props;
-
-  const [mealQuantity, setMealQuantity] = useState(0);
-
   function handelIncreaseQuantity() {
-    setMealQuantity((prev) => prev + 1);
+    eachMeal.increaseCustomMeal();
   }
   function handelDecreaseQuantity() {
-    setMealQuantity((prev) => prev - 1);
+    eachMeal.decreaseCustomMeal();
   }
 
   return (
-    <li key={v4()} className={mealContainer}>
+    <li key={eachMeal.id} className={mealContainer}>
       <p className={mealItem}>
-        {eachMeal.foodItem[index].name}
+        {eachMeal.name}
         <br />
       </p>
-      <div className={`flex flex-row gap-2${mealQuantity}`}>
+      <div className={`flex flex-row gap-2`}>
         <p>
           <button
             className="p-2 border-[1px] text-gray-400"
-            disabled={mealQuantity === 0}
+            disabled={eachMeal.customMealQuantity === 0}
             onClick={handelDecreaseQuantity}
           >
             -
           </button>
-          <span className="p-2 border-[1px] text-gray-400">{mealQuantity}</span>
+          <span className="p-2 border-[1px] text-gray-400">
+            {eachMeal.customMealQuantity}
+          </span>
           <button
             className="p-2 border-[1px] text-gray-400"
-            disabled={mealQuantity >= 5}
+            disabled={eachMeal.customMealQuantity >= 5}
             onClick={handelIncreaseQuantity}
           >
             +
@@ -45,4 +48,4 @@ const CustomMeal = (props) => {
   );
 };
 
-export default CustomMeal;
+export default observer(CustomMeal);
