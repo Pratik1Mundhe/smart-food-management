@@ -7,12 +7,8 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-<<<<<<< HEAD
 
 import { ACCESS_TOKEN, ADMIN_TOKEN, GRAPHQL_END_POINT } from "../../constants";
-=======
-import { ACCESS_TOKEN, ADMIN_TOKEN, LOGOUT_URL } from "../../constants";
->>>>>>> 74054534a5307bbf7cb696797b3cd7bdd5ba485d
 import Loader from "../loader/Loader";
 import { removeItemLocalStorage } from "../../utils/localStorageUtils/removeItem";
 
