@@ -15,9 +15,9 @@ if (accessToken) {
 }
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: "https://free-meals-say.loca.lt/graphql",
+    uri: "http://free-meals-say.loca.lt/graphql",
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer 05f18897-3259-4e91-bdb9-3dc7eb2565f4`,
     },
   }),
   cache: new InMemoryCache(),

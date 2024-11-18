@@ -16,11 +16,13 @@ class _UserPreferredMealStore {
   setMealPlan(
     mealType: MealTypeEnum,
     userPreferredMeal: UserPreferredMealModel
-  ) {
+  ): void {
     this.mealPlan[mealType] = userPreferredMeal;
   }
 
-  getUserPreferredMealPlan(mealType: MealTypeEnum) {
+  getUserPreferredMealPlan(
+    mealType: MealTypeEnum
+  ): UserPreferredMealModel | null {
     return this.mealPlan[mealType];
   }
 }

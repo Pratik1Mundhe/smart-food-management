@@ -9,3 +9,9 @@ export const formatDate = (isoDate: Date): string => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
+
+export const getTomorrowDate = (): Date => {
+  const nextDay = new Date();
+  nextDay.setDate(new Date().getDate() + 1);
+  return nextDay;
+};

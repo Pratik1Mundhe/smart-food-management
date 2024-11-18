@@ -30,3 +30,5 @@ export const MEAL_TYPES: MealTypeEnum[] = [
   MealTypeEnum.LUNCH,
   MealTypeEnum.DINNER,
 ];
+
+export const MEAL_DAY_KEY_FORMAT = "DD/MM/YYYY";

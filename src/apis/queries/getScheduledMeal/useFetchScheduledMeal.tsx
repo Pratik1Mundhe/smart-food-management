@@ -4,12 +4,15 @@ import { GET_SCHEDULE_MEAL } from "./query";
 import scheduledMealStore from "../../../store/ScheduledMealStore";
 import dummyMealData from "../../../dummyMealData";
 import { useEffect } from "react";
+import { onSuccess } from "./responseHandler";
 
 const useFetchScheduledMeal = (date: string, mealType: string) => {
-  const { loading, error, data } = useQuery(GET_SCHEDULE_MEAL, {
+  const { loading, error, refetch } = useQuery(GET_SCHEDULE_MEAL, {
+    fetchPolicy: "cache-and-network",
     onCompleted: ({ getScheduledMealByAdmin }) => {
       const { date, mealId, mealType, items } = getScheduledMealByAdmin;
       scheduledMealStore.setScheduledMeal(date, mealType, items, mealId);
+      onSuccess(getScheduledMealByAdmin);
     },
     variables: {
       params: {
@@ -17,7 +20,6 @@ const useFetchScheduledMeal = (date: string, mealType: string) => {
         mealType: mealType.toUpperCase(),
       },
     },
-    fetchPolicy: "cache-and-network",
   });
   let index;
   if (mealType === "BREAKFAST") {
@@ -34,6 +36,6 @@ const useFetchScheduledMeal = (date: string, mealType: string) => {
       scheduledMealStore.setScheduledMeal(date, mealType, mealId, items);
     }
   }, [error]);
-  return { mealsLoading: loading, error, data };
+  return { mealsLoading: loading, error, refetch };
 };
 export default useFetchScheduledMeal;
