@@ -7,7 +7,6 @@ import {
   MealFoodDataType,
   MealTypeEnum,
   ReactElementType,
-  SuccessTypenamesEnum,
   VoidFunctionType,
 } from "../../types";
 import MealDate from "../mealDate/MealDate";
@@ -18,7 +17,7 @@ import DeleteConfirmModal from "../confirmModal/DeleteConfirmModal";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import ModalStore from "../../store/ModalStore";
 import useScheduleMeal from "../../apis/mutations/scheduleMeal/useMutateScheduleMeal";
-import { formatDate } from "../../utils/formatDate";
+import { formatDate, getTomorrowDate } from "../../utils/formatDate";
 import { successToast } from "../../utils/toastUtils/successToast";
 import { failureToast } from "../../utils/toastUtils/failureToast";
 import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
@@ -26,7 +25,7 @@ import Loader from "../loader/Loader";
 import scheduledMealStore from "../../store/ScheduledMealStore";
 
 const ScheduleMeal: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [currentDate, setCurrentDate] = useState<Date>(getTomorrowDate());
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [showFoodItemsModal, setShowFoodItemsModal] = useState<boolean>(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] =
@@ -34,29 +33,20 @@ const ScheduleMeal: React.FC = () => {
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
     useState<boolean>(false);
   const [deleteFoodItemId, setDeleteFoodItemId] = useState<string | null>(null);
-  const [foodData, setFoodData] = useState<MealFoodDataType>({
-    breakfast: [],
-    lunch: [],
-    dinner: [],
-  });
   const { mealsLoading } = useFetchScheduledMeal(
     formatDate(currentDate),
     currentMealTab
   );
+  const scheduledMealItems = scheduledMealStore.getMealDayData(
+    formatDate(currentDate)
+  );
+  const mealDataObjectString = JSON.stringify(scheduledMealItems);
+  const [foodData, setFoodData] =
+    useState<MealFoodDataType>(scheduledMealItems);
 
   useEffect(() => {
-    const scheduledMealItems = scheduledMealStore.getMealData(
-      currentMealTab,
-      formatDate(currentDate)
-    );
-    console.log(scheduledMealItems);
-    if (!scheduledMealItems) {
-      foodData[currentMealTab] = [];
-      return;
-    }
-    const { date, mealType, items } = scheduledMealItems;
-    foodData[currentMealTab] = items;
-  }, [mealsLoading, currentDate]);
+    setFoodData(scheduledMealItems);
+  }, [mealDataObjectString]);
 
   const { loading, error, setSchedule } = useScheduleMeal();
 
@@ -119,14 +109,20 @@ const ScheduleMeal: React.FC = () => {
     ModalStore.closeConfirmModal();
   };
 
-  const renderScheduleFoodItem: ReactElementType = () => {
+  const renderMealItemsHeaders = () => {
+    return (
+      <ul className="flex items-center gap-4 mt-4 text-primary font-semibold">
+        <li className="w-1/4">Items</li>
+        <li className="w-[118px]">Full Meal</li>
+        <li className="">Half Meal</li>
+      </ul>
+    );
+  };
+
+  const renderScheduleFoodItems: ReactElementType = () => {
     return (
       <>
-        <ul className="flex items-center gap-4 mt-4 text-primary font-semibold">
-          <li className="w-1/4">Items</li>
-          <li className="w-[118px]">Full Meal</li>
-          <li className="">Half Meal</li>
-        </ul>
+        {renderMealItemsHeaders()}
         <ul className="mt-6 flex flex-col gap-2">
           {foodData[currentMealTab].map((food) => {
             return (
@@ -151,43 +147,55 @@ const ScheduleMeal: React.FC = () => {
     );
   };
 
-  const renderMealFoods: ReactElementType = () => {
+  const renderLoadingView: ReactElementType = () => {
+    return (
+      <div className="min-h-[300px] flex items-center justify-center">
+        <Loader color="#0B69FF" height={40} width={40} radius={4} />
+      </div>
+    );
+  };
+
+  const renderErrorView: ReactElementType = () => {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[300px]">
+        <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
+        <button
+          onClick={handleSaveMealSchedule}
+          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  };
+
+  const renderMealsEmptyView: ReactElementType = () => {
+    return (
+      <div className="flex flex-col items-center justify-center  min-h-[300px]">
+        <h1 className="text-general font-semibold text-xl">
+          Currently there are no food item's
+        </h1>
+        <button
+          onClick={() => setShowFoodItemsModal(true)}
+          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
+        >
+          ADD ITEM
+        </button>
+      </div>
+    );
+  };
+
+  const renderMealItems: ReactElementType = () => {
     if (mealsLoading) {
-      return (
-        <div className="min-h-[300px] flex items-center justify-center">
-          <Loader color="#0B69FF" height={40} width={40} radius={4} />
-        </div>
-      );
+      return renderLoadingView();
     }
     if (error) {
-      return (
-        <div className="flex flex-col items-center justify-center min-h-[300px]">
-          <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
-          <button
-            onClick={handleSaveMealSchedule}
-            className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
-          >
-            Retry
-          </button>
-        </div>
-      );
+      return renderErrorView();
     }
     if (foodData[currentMealTab].length === 0) {
-      return (
-        <div className="flex flex-col items-center justify-center  min-h-[300px]">
-          <h1 className="text-general font-semibold text-xl">
-            Currently there are no food item's
-          </h1>
-          <button
-            onClick={() => setShowFoodItemsModal(true)}
-            className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
-          >
-            ADD ITEM
-          </button>
-        </div>
-      );
+      return renderMealsEmptyView();
     }
-    return renderScheduleFoodItem();
+    return renderScheduleFoodItems();
   };
 
   const renderDeleteConfirmModal: ReactElementType = () => {
@@ -217,15 +225,22 @@ const ScheduleMeal: React.FC = () => {
     ModalStore.closeConfirmModal();
   };
 
+  const handleMealSaveSuccess: VoidFunctionType = () => {
+    successToast("Meal Added");
+  };
+
+  const handleMealSaveFailure: VoidFunctionType = () => {
+    failureToast("Something went wrong !!!");
+    handleCloseSaveConfirmModal();
+  };
+
   const handleSaveMealSchedule: VoidFunctionType = () => {
     handleCloseSaveConfirmModal();
-    const handleMealSaveSuccess: VoidFunctionType = () => {
-      successToast("Meal Added");
-    };
     const itemIds: string[] = [];
     const fullMealQuantities: number[] = [];
     const halfMealQuantities: number[] = [];
     let validation = true;
+
     foodData[currentMealTab].forEach((meal) => {
       const { id, fullMealQuantity, halfMealQuantity } = meal;
       if (fullMealQuantity === 0 || halfMealQuantity === 0) {
@@ -251,14 +266,10 @@ const ScheduleMeal: React.FC = () => {
         },
       }).then(({ data }) => {
         const { scheduleMeal } = data;
-        if (scheduleMeal.__typename === SuccessTypenamesEnum.SCHEDULE_MEAL) {
+        if (scheduleMeal.__typename === "ScheduleMealSuccess") {
           handleMealSaveSuccess();
         } else if (scheduleMeal.__typename === "ScheduleMealFailure") {
-          //add scheduled items into store even though request is failed
-          // const items = foodData[currentMealTab]
-          // scheduledMealStore.setScheduledMeal(formatDate(currentDate), currentMealTab, items);
-          failureToast("Something went wrong !!!");
-          handleCloseSaveConfirmModal();
+          handleMealSaveFailure();
         }
       });
     }
@@ -304,7 +315,7 @@ const ScheduleMeal: React.FC = () => {
     );
   };
 
-  const renderFoodItemModel: ReactElementType = () => {
+  const renderFoodItemsModel: ReactElementType = () => {
     if (showFoodItemsModal) {
       return (
         <FoodItemsModal
@@ -317,11 +328,8 @@ const ScheduleMeal: React.FC = () => {
     return <></>;
   };
 
-  return (
-    <div className="flex flex-col border-[1px] rounded-md mt-4 py-10 px-20">
-      <h1 className="text-3xl pb-2 text-general border-b-2 w-fit border-b-primary mb-10">
-        Schedule Meal
-      </h1>
+  const renderMealTabsAndDate: ReactElementType = () => {
+    return (
       <div className="flex justify-between items-center">
         <MealTabs
           handleTabChange={handleTabChange}
@@ -329,9 +337,24 @@ const ScheduleMeal: React.FC = () => {
         />
         <MealDate currentDate={currentDate} setCurrentDate={setCurrentDate} />
       </div>
-      {renderMealFoods()}
+    );
+  };
+
+  const renderHeader: ReactElementType = () => {
+    return (
+      <h1 className="text-3xl pb-2 text-general border-b-2 w-fit border-b-primary mb-10">
+        Schedule Meal
+      </h1>
+    );
+  };
+
+  return (
+    <div className="flex flex-col border-[1px] rounded-md mt-4 py-10 px-20">
+      {renderHeader()}
+      {renderMealTabsAndDate()}
+      {renderMealItems()}
       {renderButtons()}
-      {renderFoodItemModel()}
+      {renderFoodItemsModel()}
       {renderDeleteConfirmModal()}
       {renderSaveConfirmModal()}
     </div>

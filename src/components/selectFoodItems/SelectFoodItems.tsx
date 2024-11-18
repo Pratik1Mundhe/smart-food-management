@@ -1,16 +1,10 @@
 import React from "react";
-
-import foodItemsStore from "../../store/FoodItemsStore";
-import { FoodItemType } from "../../types";
 import { observer } from "mobx-react-lite";
 
-interface FoodItemOptionPropsType {
-  setSelectedFoodItem: React.Dispatch<
-    React.SetStateAction<FoodItemType | null>
-  >;
-}
+import foodItemsStore from "../../store/FoodItemsStore";
+import { FoodItemsSelectPropsType } from "../../types";
 
-const SelectFoodItems: React.FC<FoodItemOptionPropsType> = ({
+const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
   setSelectedFoodItem,
 }) => {
   const handleSelectFoodItem = (e: React.ChangeEvent<HTMLSelectElement>) => {

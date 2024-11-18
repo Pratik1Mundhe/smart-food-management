@@ -2,11 +2,11 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { IoIosCloseCircle } from "react-icons/io";
 
-import { foodItemType, VoidFunctionType } from "../../types";
+import { FoodItemType, VoidFunctionType } from "../../types";
 import QuantityCounter from "../quantityCounter/QuantityCounter";
 
 interface ScheduleFoodItemPropsType {
-  food: foodItemType;
+  food: FoodItemType;
   updateFullMealQuantity: (id: string, quantity: number) => void;
   updateHalfMealQuantity: (id: string, quantity: number) => void;
   removeFoodItem: (id: string) => void;
