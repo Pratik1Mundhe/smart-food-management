@@ -1,45 +1,49 @@
 import { makeAutoObservable } from "mobx";
+import dayjs from "dayjs";
 
-import ScheduledMealModel from "../models/ScheduledMealModel";
-import MealFoodItemModel from "../models/MealFoodItemModel";
 import {
+  MealFoodDataType,
   MealFoodItemResponseType,
-  MealPreferenceEnum,
   MealScheduledDataType,
-  MealStatusEnum,
   MealTypeEnum,
-  UserMealPreferenceType,
-  UserMealStatusType,
 } from "../types";
+import MealFoodItemModel from "../models/MealFoodItemModel";
+import ScheduledMealModel from "../models/ScheduledMealModel";
+import { MEAL_DAY_KEY_FORMAT } from "../constants";
 
 class ScheduledMealStore {
-  date: string | null = null;
-  mealData: MealScheduledDataType = {
-    breakfast: null,
-    lunch: null,
-    dinner: null,
-  };
-
-  userMealPreference: UserMealPreferenceType = {
-    breakfast: null,
-    lunch: null,
-    dinner: null,
-  };
-  userMealStatus: UserMealStatusType = {
-    breakfast: null,
-    lunch: null,
-    dinner: null,
-  };
+  mealDayData: Map<string, MealScheduledDataType> = new Map();
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  getMealDayData(date: string): MealFoodDataType {
+    const dateObject = new Date(date);
+    const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
+    const mealData = this.mealDayData.get(formattedDate);
+    if (!mealData) {
+      return {
+        breakfast: [],
+        lunch: [],
+        dinner: [],
+      };
+    }
+    const mealDayDataObject = {
+      breakfast: mealData.breakfast?.items || [],
+      lunch: mealData.lunch?.items || [],
+      dinner: mealData.dinner?.items || [],
+    };
+    return mealDayDataObject;
   }
 
   setScheduledMeal(
     date: string,
     mealType: MealTypeEnum,
     items: MealFoodItemResponseType[]
-  ) {
+  ): void {
+    const dateObject = new Date(date);
+    const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
     const itemInstances = items.map((item) => {
       const { id, name, fullMealQuantity, halfMealQuantity } = item;
       return new MealFoodItemModel({
@@ -49,42 +53,22 @@ class ScheduledMealStore {
         halfMealQuantity,
       });
     });
-    this.date = date;
-    this.mealData[mealType] = new ScheduledMealModel(
-      date,
-      mealType,
-      itemInstances
-    );
-  }
 
-  getMealData(mealType: MealTypeEnum, date: string) {
-    if (!this.date) {
-      return null;
+    const mealModel = new ScheduledMealModel(mealType, itemInstances);
+    if (this.mealDayData.has(date)) {
+      const mealDataObject = this.mealDayData.get(formattedDate);
+      if (!mealDataObject) {
+        return;
+      }
+      mealDataObject[mealType] = mealModel;
     }
-    console.log(this.mealData[mealType]);
-    if (new Date(date).getDate() === new Date(this.date).getDate()) {
-      return this.mealData[mealType];
-    }
-    return null;
-  }
-
-  setUserMealPreference(
-    mealType: MealTypeEnum,
-    mealPreference: MealPreferenceEnum
-  ) {
-    this.userMealPreference[mealType] = mealPreference;
-  }
-
-  getUserMealPreference(mealType: MealTypeEnum) {
-    return this.userMealPreference[mealType];
-  }
-
-  setUserStatus(mealType: MealTypeEnum, mealStatus: MealStatusEnum) {
-    this.userMealStatus[mealType] = mealStatus;
-  }
-
-  getUserStatus(mealType: MealTypeEnum) {
-    return this.userMealStatus[mealType];
+    const mealDataObject: MealScheduledDataType = {
+      breakfast: null,
+      lunch: null,
+      dinner: null,
+    };
+    mealDataObject[mealType] = mealModel;
+    this.mealDayData.set(formattedDate, mealDataObject);
   }
 }
 

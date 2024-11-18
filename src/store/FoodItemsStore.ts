@@ -26,14 +26,14 @@ class FoodItemsStore {
     this.foodItems = foodItemInstances;
   }
 
-  getFoodItem(foodId: string) {
+  getFoodItem(foodId: string): FoodItemModal | undefined {
     return this.foodItems.find((item) => item.id === foodId);
   }
 
-  getFoodItems() {
+  getFoodItems(): FoodItemModal[] {
     return this.foodItems;
   }
-  setInCampusStatus() {
+  setInCampusStatus(): void {
     this.inCampusStatus = !this.inCampusStatus;
   }
 }
