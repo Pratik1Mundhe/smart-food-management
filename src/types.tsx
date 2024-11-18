@@ -105,15 +105,14 @@ export interface MealFoodItemResponseType {
 export interface ScheduledMealResponseType {
   date: string;
   mealType: string;
-  mealId: string;
   items: MealFoodItemResponseType[];
   mealId: string;
 }
 
 export interface MealScheduledDataType {
-  breakfast: ScheduledMealModel | null;
-  lunch: ScheduledMealModel | null;
-  dinner: ScheduledMealModel | null;
+  breakfast: ScheduledMealResponseType | null;
+  lunch: ScheduledMealResponseType | null;
+  dinner: ScheduledMealResponseType | null;
 }
 
 export interface UserMealItemModelType {
