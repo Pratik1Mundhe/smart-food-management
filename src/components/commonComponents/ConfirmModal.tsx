@@ -23,7 +23,8 @@ const Modal: React.FC<ModalProp> = (props) => {
     }
   }, [ModalStore.isConfirmModalOpen]);
 
-  const modalRenderContainer = document.getElementById(PORTAL_RENDER_ID);
+  const modalRenderContainer: HTMLElement | null =
+    document.getElementById(PORTAL_RENDER_ID);
   if (!modalRenderContainer) {
     return null;
   }

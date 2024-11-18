@@ -18,6 +18,12 @@ export const LOGIN_METHOD = "POST";
 export const INVALID_USERNAME_RESPONSE = "INVALID_USERNAME";
 export const INVALID_PASSWORD_RESPONSE = "INVALID_PASSWORD";
 export const ACCESS_TOKEN = "accessToken";
+export const ADMIN_TOKEN = "admin";
+export const USER_TOKEN = "userId";
+
+export const DINNER_TIME = "20:00 - 22:00";
+export const LUNCH_TIME = "12:00 - 14:00";
+export const BREAKFAST_TIME = "08:00 - 10:00";
 
 export const MEAL_TYPES: MealTypeEnum[] = [
   MealTypeEnum.BREAKFAST,
@@ -26,3 +32,8 @@ export const MEAL_TYPES: MealTypeEnum[] = [
 ];
 
 export const MEAL_DAY_KEY_FORMAT = "DD/MM/YYYY";
+export const BACKEND_URL = "https://blue-corners-kneel.loca.lt/";
+export const GRAPHQL_URL = BACKEND_URL + "graphql";
+export const LOGIN_URL = BACKEND_URL + "api/meals/login/";
+export const LOGOUT_URL = BACKEND_URL + "api/meals/logout/";
+export const TOASTER_POSITION = "top-center";

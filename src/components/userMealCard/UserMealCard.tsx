@@ -17,14 +17,16 @@ import {
   timeDetailsContainer,
 } from "./styles";
 import ModalStore from "../../store/ModalStore";
-import { MealCardProps, ReactElementType } from "../../types";
+import { MealCardProps, ReactElementType, VoidFunctionType } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
 import foodItemsStore from "../../store/FoodItemsStore";
+import { MealStatusEnum } from "../../types";
 import { formatDate } from "../../utils/formatDate";
 import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
 import scheduledMealStore from "../../store/ScheduledMealStore";
+import useSaveMealStatus from "../../apis/mutations/saveMealStatus/useSaveMealStatus";
 
 const UserMealCard: React.FC<MealCardProps> = ({
   type,
@@ -40,6 +42,11 @@ const UserMealCard: React.FC<MealCardProps> = ({
     date,
     type.toUpperCase()
   );
+  const {
+    triggerSaveMealStatue,
+    loading: saveStatusLoading,
+    error: saveStatusError,
+  } = useSaveMealStatus();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -100,6 +107,9 @@ const UserMealCard: React.FC<MealCardProps> = ({
             </li>
           );
         })}
+        <div className=" relative bottom-4 h-[100%] w-[100%]  flex flex-row justify-center items-center">
+          {mealStatusButtons()}
+        </div>
       </ul>
     );
   };
@@ -138,10 +148,24 @@ const UserMealCard: React.FC<MealCardProps> = ({
     if (isMealAteStatus && foodItemsStore.inCampusStatus) {
       return (
         <p className="flex self-center gap-6">
-          <button className="text-sm px-5 py-2 bg-blue-600 rounded-sm text-white  hover:bg-blue-700 mt-8">
+          <button
+            className="text-sm px-5 py-2 bg-blue-600 rounded-sm text-white  hover:bg-blue-700 mt-8"
+            onClick={() =>
+              triggerSaveMealStatue({
+                status: MealStatusEnum.ATE,
+              })
+            }
+          >
             I Ate it
           </button>
-          <button className="text-sm px-5 py-2 border-2 border-gray-300  rounded hover:bg-gray-100  mt-8">
+          <button
+            className="text-sm px-5 py-2 border-2 border-gray-300  rounded hover:bg-gray-100  mt-8"
+            onClick={() =>
+              triggerSaveMealStatue({
+                status: MealStatusEnum.SKIP,
+              })
+            }
+          >
             I Skipped
           </button>
         </p>
@@ -150,7 +174,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     return renderEditButton();
   };
 
-  const handleRefetchMeal = () => {
+  const handleRefetchMeal: VoidFunctionType = () => {
     refetch({
       params: {
         date: date,
@@ -159,7 +183,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     });
   };
 
-  const renderMealErrorView = () => {
+  const renderMealErrorView: ReactElementType = () => {
     return (
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
@@ -184,11 +208,9 @@ const UserMealCard: React.FC<MealCardProps> = ({
       <>
         {mealTypeAndTime()}
         {meals()}
-        {mealStatusButtons()}
       </>
     );
   };
-
   return (
     <div className={cardContainer}>
       <MealPreferenceModal />

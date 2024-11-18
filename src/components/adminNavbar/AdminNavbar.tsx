@@ -7,6 +7,13 @@ import globalLogo from "../../assets/global-logo.png";
 import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
 import { PageRoutesEnum, ReactElementType } from "../../types";
 import ModalStore from "../../store/ModalStore";
+import {
+  headerContainer,
+  headerMenuItem,
+  logo,
+  menuContainer,
+  redButton,
+} from "./styles";
 
 const AdminNavbar: React.FC = () => {
   const navigate: NavigateFunction = useNavigate();
@@ -46,10 +53,7 @@ const AdminNavbar: React.FC = () => {
     if (showLogout) {
       return (
         <div className="absolute top-8 right-0 bg-white">
-          <button
-            className="bg-red-500 text-white text-sm hover:bg-red-600 p-2 rounded-md"
-            onClick={handleOpenLogoutConfirmModal}
-          >
+          <button className={redButton} onClick={handleOpenLogoutConfirmModal}>
             Logout
           </button>
         </div>
@@ -81,17 +85,17 @@ const AdminNavbar: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-10 border-b-[1px]">
+    <div className={headerContainer}>
       <img
         onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
         src={globalLogo}
-        className="h-[60px] w-[60px] cursor-pointer"
+        className={logo}
       />
 
-      <ul className="flex justify-between items-center gap-4 w-[200px]">
+      <ul className={menuContainer}>
         <li
           onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
-          className={`text-general text-sm font-medium cursor-pointer ${
+          className={`${headerMenuItem} ${
             path === PageRoutesEnum.ADMIN_HOME_PAGE
               ? "text-primary"
               : "text-general"

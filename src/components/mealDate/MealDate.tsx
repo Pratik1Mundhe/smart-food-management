@@ -14,12 +14,14 @@ const MealDate: React.FC<MealDatePropsType> = ({
   currentDate,
   setCurrentDate,
 }) => {
+  const today: boolean = currentDate.getDate() == new Date().getDate();
+
   const handleNextDate: VoidFunctionType = () => {
     const nextDate = new Date(currentDate);
     nextDate.setDate(currentDate.getDate() + 1);
     setCurrentDate(nextDate);
   };
-  const today = currentDate.getDate() == new Date().getDate();
+
   const handlePreviousDate: VoidFunctionType = () => {
     if (today) {
       return;

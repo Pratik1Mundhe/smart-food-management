@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Input from "../commonComponents/Input";
+import Loader from "../loader/Loader";
+import { PageRoutesEnum } from "../../types";
+import { addItemLocalStorage } from "../../utils/localStorageUtils/addItem";
+import { successToast } from "../../utils/toastUtils/successToast";
+import { failureToast } from "../../utils/toastUtils/failureToast";
 import {
   button,
   errorInput,
@@ -21,17 +26,13 @@ import {
   USERNAME_LABEL,
   USERNAME_ID,
   PASSWORD_LABEL,
-  LOGIN_METHOD,
   INVALID_USERNAME_RESPONSE,
   INVALID_PASSWORD_RESPONSE,
   ACCESS_TOKEN,
+  ADMIN_TOKEN,
+  USER_TOKEN,
+  LOGIN_URL,
 } from "../../constants";
-import Loader from "../loader/Loader";
-import { PageRoutesEnum } from "../../types";
-import UserMealStore from "../../store/UserMealStore";
-import { addItemLocalStorage } from "../../utils/localStorageUtils/addItem";
-import { successToast } from "../../utils/toastUtils/successToast";
-import { failureToast } from "../../utils/toastUtils/failureToast";
 
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -89,20 +90,17 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://slow-bars-smoke.loca.lt/api/meals/login/",
-        {
-          method: LOGIN_METHOD,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(LOGIN_URL, {
+        method: LOGIN_URL,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       const result = await response.json();
       if (result.status_code === 200) {
         if (result.response.is_admin) {
-          addItemLocalStorage("admin", result.response.is_admin);
+          addItemLocalStorage(ADMIN_TOKEN, result.response.is_admin);
           addItemLocalStorage(
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
@@ -113,7 +111,10 @@ const Login = () => {
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );
-          UserMealStore.setUserId(result.response.user_id);
+          localStorage.setItem(
+            USER_TOKEN,
+            JSON.stringify(result.response.user_id)
+          );
           navigate(PageRoutesEnum.HOME_PAGE);
           successToast("Login Successful");
         }

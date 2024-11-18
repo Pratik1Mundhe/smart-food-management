@@ -11,6 +11,7 @@ import {
 import useFetchFoodItems from "../../apis/queries/getFoodItems/useFetchFoodItems";
 import Loader from "../loader/Loader";
 import SelectFoodItems from "../selectFoodItems/SelectFoodItems";
+import { blueButton, selectArrowButton, greenButton } from "./styles";
 
 const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
   setShowFoodItemsModal,
@@ -18,7 +19,6 @@ const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
   addFoodItem,
 }) => {
   const { loading, error, refetch, refetchloading } = useFetchFoodItems();
-
   const [selectedFoodItem, setSelectedFoodItem] = useState<FoodItemType | null>(
     null
   );
@@ -46,10 +46,7 @@ const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
     return (
       <div className="mt-6">
         <h1>Something went wrong !!!</h1>
-        <button
-          onClick={handleRefetchFoodItems}
-          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
-        >
+        <button onClick={handleRefetchFoodItems} className={blueButton}>
           Retry
         </button>
       </div>
@@ -68,11 +65,9 @@ const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
     if (error) {
       renderErrorView();
     }
-
     if (loading || refetchloading) {
       renderLoaderView();
     }
-
     return (
       <>
         <p className="text-secondary text-sm font-medium">
@@ -80,14 +75,11 @@ const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
         </p>
         <div className="relative flex flex-col gap-1">
           <SelectFoodItems setSelectedFoodItem={setSelectedFoodItem} />
-          <div className="pointer-events-none absolute top-4 right-3 flex items-center text-slate-600">
+          <button className={selectArrowButton}>
             <FiChevronDown className="w-5 h-5" />
-          </div>
+          </button>
         </div>
-        <button
-          onClick={handleAddFoodItem}
-          className="bg-success w-fit self-center text-white font-medium py-2 px-5 rounded-lg mt-4"
-        >
+        <button onClick={handleAddFoodItem} className={greenButton}>
           ADD ITEM
         </button>
       </>

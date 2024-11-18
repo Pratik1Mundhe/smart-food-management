@@ -100,11 +100,10 @@ export interface MealFoodItemResponseType {
   name: string;
   fullMealQuantity: number;
   halfMealQuantity: number;
-  __typename: string;
+  // __typename: string;
 }
 
 export interface ScheduledMealResponseType {
-  date: string;
   mealType: string;
   items: MealFoodItemResponseType[];
   mealId: string;
@@ -127,14 +126,18 @@ export interface UserPreferredMealPlanType {
   lunch: null | UserPreferredMealModel;
   dinner: null | UserPreferredMealModel;
 }
-
+export interface UserPreferenceDataType {
+  id: string;
+  name: string;
+  customMealQuantity: number;
+}
 export interface FoodItemsModalPropsType {
   setShowFoodItemsModal: React.Dispatch<React.SetStateAction<boolean>>;
   currentMealTab: MealTypeEnum;
   addFoodItem: (food: FoodItemType) => void;
 }
 
-export interface FoodItemOptionPropsType {
+export interface FoodItemsSelectPropsType {
   setSelectedFoodItem: React.Dispatch<
     React.SetStateAction<FoodItemType | null>
   >;

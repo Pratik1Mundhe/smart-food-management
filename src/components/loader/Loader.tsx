@@ -1,3 +1,6 @@
+import React from "react";
+import { loaderContainer } from "./styles";
+
 interface LoaderPropsType {
   height?: number;
   width?: number;
@@ -5,7 +8,7 @@ interface LoaderPropsType {
   radius?: number;
 }
 
-const Loader = ({
+const Loader: React.FC<LoaderPropsType> = ({
   height = 20,
   width = 20,
   color = "white",
@@ -22,7 +25,7 @@ const Loader = ({
   };
 
   return (
-    <div className="flex flex-row justify-center items-center h-[100%]">
+    <div className={loaderContainer}>
       <div style={loaderStyle}></div>
     </div>
   );

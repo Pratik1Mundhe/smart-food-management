@@ -12,3 +12,5 @@ export const activeMealTabHalf =
 export const activeMealTabCustom =
   "bg-blue-600 text-white px-3 py-2  tab border-blue-600 transition-all duration-500";
 export const errorIcon = "p-2 border-2 bg-red-200 border-red-300 border-l-0";
+export const mealButtonFull =
+  "px-3 py-2 transition-all duration-500 border-gray-300";

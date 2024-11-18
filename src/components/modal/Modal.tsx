@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 import { VoidFunctionType } from "../../types";
+import { modalContainer, modalContent } from "./styles";
 
 interface ModalPropsTypes {
   close: () => void;
@@ -24,14 +25,10 @@ const Modal: React.FC<ModalPropsTypes> = ({ close, children }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center  bg-black bg-opacity-60 transition-opacity duration-300  ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`${modalContainer} ${isVisible ? "opacity-100" : "opacity-0"}`}
     >
       <div
-        className={`flex relative flex-col rounded-lg bg-white gap-4 py-16 px-14  transform transition-transform duration-300 ${
-          isVisible ? "scale-100" : "scale-90"
-        }`}
+        className={`${modalContent} ${isVisible ? "scale-100" : "scale-90"}`}
       >
         <button
           onClick={handleModalClose}

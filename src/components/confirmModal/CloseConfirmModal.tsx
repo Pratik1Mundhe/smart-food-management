@@ -1,8 +1,8 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
 import ConfirmModal from "../commonComponents/Modal";
 import { ReactElementType, VoidFunctionType } from "../../types";
-import { observer } from "mobx-react-lite";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
