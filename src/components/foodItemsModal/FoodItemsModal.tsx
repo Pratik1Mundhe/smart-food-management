@@ -11,7 +11,6 @@ import {
 import useFetchFoodItems from "../../apis/queries/getFoodItems/useFetchFoodItems";
 import Loader from "../loader/Loader";
 import SelectFoodItems from "../selectFoodItems/SelectFoodItems";
-import InfiniteScrollDropdown from "../scrollDropdown/InfiniteScrollDropdown";
 
 const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
   setShowFoodItemsModal,
