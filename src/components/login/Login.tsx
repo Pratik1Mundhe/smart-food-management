@@ -26,12 +26,12 @@ import {
   USERNAME_LABEL,
   USERNAME_ID,
   PASSWORD_LABEL,
-  LOGIN_METHOD,
   INVALID_USERNAME_RESPONSE,
   INVALID_PASSWORD_RESPONSE,
   ACCESS_TOKEN,
   ADMIN_TOKEN,
   USER_TOKEN,
+  LOGIN_URL,
 } from "../../constants";
 
 const Login = () => {
@@ -90,16 +90,13 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://free-meals-say.loca.lt/api/meals/login/",
-        {
-          method: LOGIN_METHOD,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(LOGIN_URL, {
+        method: LOGIN_URL,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       const result = await response.json();
       if (result.status_code === 200) {
         if (result.response.is_admin) {

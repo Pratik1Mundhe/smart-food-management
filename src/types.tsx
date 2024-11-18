@@ -1,4 +1,5 @@
 import MealFoodItemModel from "./models/MealFoodItemModel";
+import ScheduledMealModel from "./models/ScheduledMealModel";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
 export enum FoodItemCategoryEnum {
   RICE = "rice",
@@ -103,16 +104,15 @@ export interface MealFoodItemResponseType {
 }
 
 export interface ScheduledMealResponseType {
-  date: string;
   mealType: string;
   items: MealFoodItemResponseType[];
   mealId: string;
 }
 
 export interface MealScheduledDataType {
-  breakfast: ScheduledMealResponseType | null;
-  lunch: ScheduledMealResponseType | null;
-  dinner: ScheduledMealResponseType | null;
+  breakfast: ScheduledMealModel | null;
+  lunch: ScheduledMealModel | null;
+  dinner: ScheduledMealModel | null;
 }
 
 export interface UserMealItemModelType {
@@ -137,7 +137,7 @@ export interface FoodItemsModalPropsType {
   addFoodItem: (food: FoodItemType) => void;
 }
 
-export interface FoodItemOptionPropsType {
+export interface FoodItemsSelectPropsType {
   setSelectedFoodItem: React.Dispatch<
     React.SetStateAction<FoodItemType | null>
   >;

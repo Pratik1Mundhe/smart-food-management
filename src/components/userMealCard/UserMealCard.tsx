@@ -17,13 +17,12 @@ import {
   timeDetailsContainer,
 } from "./styles";
 import ModalStore from "../../store/ModalStore";
-import { MealCardProps, ReactElementType } from "../../types";
+import { MealCardProps, ReactElementType, VoidFunctionType } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
 import foodItemsStore from "../../store/FoodItemsStore";
 import { MealStatusEnum } from "../../types";
-
 import { formatDate } from "../../utils/formatDate";
 import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
 import scheduledMealStore from "../../store/ScheduledMealStore";
@@ -48,6 +47,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     loading: saveStatusLoading,
     error: saveStatusError,
   } = useSaveMealStatus();
+
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
@@ -174,7 +174,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     return renderEditButton();
   };
 
-  const handleRefetchMeal = () => {
+  const handleRefetchMeal: VoidFunctionType = () => {
     refetch({
       params: {
         date: date,
@@ -183,7 +183,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     });
   };
 
-  const renderMealErrorView = () => {
+  const renderMealErrorView: ReactElementType = () => {
     return (
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>

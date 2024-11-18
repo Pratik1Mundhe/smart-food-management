@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+
 import UserMealCard from "../../components/userMealCard/UserMealCard";
 import { MealTypeEnum, PageRoutesEnum } from "../../types";
 import MealDate from "../../components/mealDate/MealDate";
-import { observer } from "mobx-react-lite";
 import {
   ACCESS_TOKEN,
   BREAKFAST_TIME,
@@ -22,6 +23,7 @@ const Home: React.FC = () => {
   if (isAdmin) {
     return <Navigate to={PageRoutesEnum.ADMIN_HOME_PAGE} replace />;
   }
+
   return (
     <div className="flex flex-col py-4">
       <div className="mx-auto mb-4">

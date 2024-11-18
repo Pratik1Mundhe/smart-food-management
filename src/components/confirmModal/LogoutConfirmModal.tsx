@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import {
@@ -7,8 +7,7 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-
-import { ACCESS_TOKEN, ADMIN_TOKEN, BACKEND_URL } from "../../constants";
+import { ACCESS_TOKEN, ADMIN_TOKEN, LOGOUT_URL } from "../../constants";
 import Loader from "../loader/Loader";
 import { removeItemLocalStorage } from "../../utils/localStorageUtils/removeItem";
 
@@ -19,14 +18,14 @@ interface LogoutConfirmModalType {
 const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
   handleCloseLogoutConfirmModal,
 }) => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const navigate: NavigateFunction = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  function handleLogoutModal() {
+  function handleLogoutModal(): void {
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
     async function logout() {
       setLoading(true);
-      const response = await fetch(BACKEND_URL, {
+      const response = await fetch(LOGOUT_URL, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,

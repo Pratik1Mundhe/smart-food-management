@@ -148,6 +148,7 @@ const MealPreferenceModal: React.FC = () => {
     }
     return <></>;
   };
+
   if (ModalStore.typeOfMeal && scheduledMealStore.mealData === null) {
     let mealData = scheduledMealStore.mealData[type as MealTypeEnum];
     return (

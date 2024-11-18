@@ -23,6 +23,7 @@ import { failureToast } from "../../utils/toastUtils/failureToast";
 import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
 import Loader from "../loader/Loader";
 import scheduledMealStore from "../../store/ScheduledMealStore";
+import { blueButton, greenButton, header, viewContainer } from "./styles";
 
 const ScheduleMeal: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(getTomorrowDate());
@@ -139,7 +140,7 @@ const ScheduleMeal: React.FC = () => {
         </ul>
         <button
           onClick={() => setShowFoodItemsModal(true)}
-          className="bg-primary self-start text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
+          className={blueButton}
         >
           ADD ITEM
         </button>
@@ -149,7 +150,7 @@ const ScheduleMeal: React.FC = () => {
 
   const renderLoadingView: ReactElementType = () => {
     return (
-      <div className="min-h-[300px] flex items-center justify-center">
+      <div className={viewContainer}>
         <Loader color="#0B69FF" height={40} width={40} radius={4} />
       </div>
     );
@@ -157,12 +158,9 @@ const ScheduleMeal: React.FC = () => {
 
   const renderMealSaveErrorView: ReactElementType = () => {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[300px]">
+      <div className={viewContainer}>
         <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
-        <button
-          onClick={handleSaveMealSchedule}
-          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
-        >
+        <button onClick={handleSaveMealSchedule} className={blueButton}>
           Retry
         </button>
       </div>
@@ -171,13 +169,13 @@ const ScheduleMeal: React.FC = () => {
 
   const renderMealsEmptyView: ReactElementType = () => {
     return (
-      <div className="flex flex-col items-center justify-center  min-h-[300px]">
+      <div className={viewContainer}>
         <h1 className="text-general font-semibold text-xl">
           Currently there are no food item's
         </h1>
         <button
           onClick={() => setShowFoodItemsModal(true)}
-          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
+          className={blueButton}
         >
           ADD ITEM
         </button>
@@ -299,16 +297,12 @@ const ScheduleMeal: React.FC = () => {
       }
       return "Save";
     };
-
     return (
       <div className="flex items-center gap-4 self-end">
         <button className="rounded text-sm py-2 px-5 text-general font-semibold border-2">
           Back
         </button>
-        <button
-          onClick={handleOpenSaveConfirmModal}
-          className="bg-success text-sm text-white px-5 py-2 rounded font-semibold"
-        >
+        <button onClick={handleOpenSaveConfirmModal} className={greenButton}>
           {renderButtonLoader()}
         </button>
       </div>
@@ -341,11 +335,7 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const renderHeader: ReactElementType = () => {
-    return (
-      <h1 className="text-3xl pb-2 text-general border-b-2 w-fit border-b-primary mb-10">
-        Schedule Meal
-      </h1>
-    );
+    return <h1 className={header}>Schedule Meal</h1>;
   };
 
   return (

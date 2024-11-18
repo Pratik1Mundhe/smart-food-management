@@ -1,8 +1,10 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { IoAdd } from "react-icons/io5";
 import { FiMinus } from "react-icons/fi";
-import { observer } from "mobx-react-lite";
+
 import { VoidFunctionType } from "../../types";
+import { counterButton } from "./styles";
 
 interface QuantityCounterPropsType {
   setQuantity: (quantity: number) => void;
@@ -29,10 +31,7 @@ const QuantityCounter: React.FC<QuantityCounterPropsType> = ({
 
   return (
     <div className="flex items-center">
-      <button
-        onClick={handleDecreaseCount}
-        className="p-2 border-2 border-r-0 rounded-l text-secondary"
-      >
+      <button onClick={handleDecreaseCount} className={counterButton}>
         <FiMinus
           fontSize={20}
           className={`${quantity === 0 ? "opacity-50" : ""}`}
@@ -41,10 +40,7 @@ const QuantityCounter: React.FC<QuantityCounterPropsType> = ({
       <div className="py-2 px-4 border-2 ">
         <p className="text-center text-sm text-secondary">{quantity}</p>
       </div>
-      <button
-        onClick={handleIncreaseCount}
-        className="p-2 border-2 border-l-0 rounded-r text-secondary"
-      >
+      <button onClick={handleIncreaseCount} className={counterButton}>
         <IoAdd fontSize={20} />
       </button>
     </div>

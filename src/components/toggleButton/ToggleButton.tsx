@@ -5,6 +5,7 @@ import foodItemsStore from "../../store/FoodItemsStore";
 import useInCampusStatus from "../../apis/mutations/InCampusStatus/useInCampusStatus";
 import Loader from "../loader/Loader";
 import { USER_TOKEN } from "../../constants";
+import { button, container } from "./styles";
 
 const ToggleSwitch: React.FC = observer(() => {
   const { triggerCampusStatus, loading } = useInCampusStatus();
@@ -22,12 +23,12 @@ const ToggleSwitch: React.FC = observer(() => {
   return (
     <div
       onClick={handleToggle}
-      className={` w-[44px] p-1 rounded-3xl transition-all cursor-pointer duration-300 ease-in-out ${
+      className={`${container} ${
         foodItemsStore.inCampusStatus ? "bg-blue-600" : "bg-slate-200"
       }`}
     >
       <div
-        className={`h-[16px] w-[16px] bg-white shadow-md rounded-full transition-all duration-300 ease-in-out
+        className={`${button}
         ${foodItemsStore.inCampusStatus ? "translate-x-5" : ""}`}
       ></div>
     </div>

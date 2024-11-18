@@ -1,9 +1,11 @@
-import Login from "../../components/login/Login";
+import React from "react";
 import { Navigate } from "react-router-dom";
+
+import Login from "../../components/login/Login";
 import { ACCESS_TOKEN } from "../../constants";
 import { PageRoutesEnum } from "../../types";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem("admin");
 
