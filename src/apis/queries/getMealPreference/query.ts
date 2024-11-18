@@ -1,3 +1,9 @@
 import { DocumentNode, gql } from "@apollo/client";
 
-export const GET_MEAL_PREFERENCE: DocumentNode = gql``;
+export const GET_MEAL_PREFERENCE: DocumentNode = gql`
+    Query GetMealPreference{
+        getMealPreference{
+            mealPreference
+        }
+    }
+`;

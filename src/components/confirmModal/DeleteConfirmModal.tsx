@@ -1,11 +1,11 @@
 import React from "react";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
-import { foodItemType, ReactElementType, VoidFunctionType } from "../../types";
+import { FoodItemType, ReactElementType, VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
 
 interface ConfirmModalPropsType {
-  foodItem: foodItemType;
+  foodItem: FoodItemType;
   handleCloseDeleteConfirmModal: VoidFunctionType;
   removeFoodItem: (id: string) => void;
 }

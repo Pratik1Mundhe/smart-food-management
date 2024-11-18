@@ -8,7 +8,7 @@ import UserMealStore from "../../store/UserMealStore";
 const ToggleSwitch: React.FC = observer(() => {
   const { triggerCampusStatus, loading } = useInCampusStatus();
   const handleToggle: VoidFunctionType = () => {
-    triggerCampusStatus;
+    triggerCampusStatus({ userId: UserMealStore.userId, inCampus: true });
     console.log(UserMealStore.userId);
     foodItemsStore.setInCampusStatus();
   };
