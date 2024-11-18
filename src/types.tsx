@@ -1,5 +1,4 @@
 import MealFoodItemModel from "./models/MealFoodItemModel";
-import ScheduledMealModel from "./models/ScheduledMealModel";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
 export enum FoodItemCategoryEnum {
   RICE = "rice",
