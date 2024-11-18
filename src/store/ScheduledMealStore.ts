@@ -14,6 +14,7 @@ import {
 
 class ScheduledMealStore {
   date: string | null = null;
+  mealId: string = "";
   mealData: MealScheduledDataType = {
     breakfast: null,
     lunch: null,
@@ -38,6 +39,7 @@ class ScheduledMealStore {
   setScheduledMeal(
     date: string,
     mealType: MealTypeEnum,
+    mealId: string,
     items: MealFoodItemResponseType[]
   ) {
     const itemInstances = items.map((item) => {
@@ -50,6 +52,7 @@ class ScheduledMealStore {
       });
     });
     this.date = date;
+    this.mealId = mealId;
     this.mealData[mealType] = new ScheduledMealModel(
       date,
       mealType,
@@ -61,7 +64,6 @@ class ScheduledMealStore {
     if (!this.date) {
       return null;
     }
-    console.log(this.mealData[mealType]);
     if (new Date(date).getDate() === new Date(this.date).getDate()) {
       return this.mealData[mealType];
     }

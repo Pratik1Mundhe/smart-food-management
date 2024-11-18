@@ -3,16 +3,21 @@ import { VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
 import foodItemsStore from "../../store/FoodItemsStore";
 import useInCampusStatus from "../../apis/mutations/InCampusStatus/useInCampusStatus";
-import UserMealStore from "../../store/UserMealStore";
+import Loader from "../loader/Loader";
 
 const ToggleSwitch: React.FC = observer(() => {
   const { triggerCampusStatus, loading } = useInCampusStatus();
   const handleToggle: VoidFunctionType = () => {
-    triggerCampusStatus({ userId: UserMealStore.userId, inCampus: true });
-    console.log(UserMealStore.userId);
-    foodItemsStore.setInCampusStatus();
+    const userId = JSON.parse(localStorage.getItem("userId")!);
+    triggerCampusStatus({
+      userId: userId,
+      inCampus: !foodItemsStore.inCampusStatus,
+    });
+    // foodItemsStore.setInCampusStatus();
   };
-
+  if (loading) {
+    return <Loader color="blue" />;
+  }
   return (
     <div
       onClick={handleToggle}

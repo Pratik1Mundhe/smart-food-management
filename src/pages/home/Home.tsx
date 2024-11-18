@@ -4,7 +4,12 @@ import UserMealCard from "../../components/userMealCard/UserMealCard";
 import { MealTypeEnum, PageRoutesEnum } from "../../types";
 import MealDate from "../../components/mealDate/MealDate";
 import { observer } from "mobx-react-lite";
-import { ACCESS_TOKEN } from "../../constants";
+import {
+  ACCESS_TOKEN,
+  BREAKFAST_TIME,
+  DINNER_TIME,
+  LUNCH_TIME,
+} from "../../constants";
 
 const Home: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -26,17 +31,17 @@ const Home: React.FC = () => {
         <UserMealCard
           currentDate={currentDate}
           type={MealTypeEnum.BREAKFAST}
-          mealTime="8:00 - 10:00"
+          mealTime={BREAKFAST_TIME}
         />
         <UserMealCard
           currentDate={currentDate}
           type={MealTypeEnum.LUNCH}
-          mealTime="13:00 - 15:00"
+          mealTime={LUNCH_TIME}
         />
         <UserMealCard
           currentDate={currentDate}
           type={MealTypeEnum.DINNER}
-          mealTime="20:00 - 22:00"
+          mealTime={DINNER_TIME}
         />
       </div>
     </div>

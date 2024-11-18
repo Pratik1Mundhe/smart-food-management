@@ -49,7 +49,6 @@ const ScheduleMeal: React.FC = () => {
       currentMealTab,
       formatDate(currentDate)
     );
-    console.log(scheduledMealItems);
     if (!scheduledMealItems) {
       foodData[currentMealTab] = [];
       return;

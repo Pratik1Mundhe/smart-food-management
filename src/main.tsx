@@ -8,17 +8,19 @@ import {
 
 import "./index.css";
 import App from "./App.tsx";
-
-const cache = new InMemoryCache({});
-
+import { ACCESS_TOKEN } from "./constants.ts";
+let accessToken = localStorage.getItem(ACCESS_TOKEN);
+if (accessToken) {
+  accessToken = JSON.parse(accessToken);
+}
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: "https://heavy-suits-beam.loca.lt/graphql",
+    uri: "https://free-meals-say.loca.lt/graphql",
     headers: {
-      Authorization: `Bearer 0787031c-d9a2-487c-b6b4-94fdab089f7d`,
+      Authorization: `Bearer ${accessToken}`,
     },
   }),
-  cache,
+  cache: new InMemoryCache(),
 });
 
 createRoot(document.getElementById("root")!).render(

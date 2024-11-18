@@ -3,19 +3,36 @@ import React from "react";
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import { ReactElementType, VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
+import CustomMealModel from "../../models/CustomMealModel";
+import UserMealStore from "../../store/UserMealStore";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
   action: VoidFunctionType;
+  customMutation?: CustomMealModel | undefined;
+  activeTab?: string;
+  date?: string;
+  mealId?: string;
 }
 
 const SaveConfirmModal: React.FC<ConfirmModalPropsType> = ({
   action,
   closeModal,
+  customMutation,
+  date,
+  activeTab,
 }) => {
   const handleClickSave: VoidFunctionType = () => {
     action();
     closeModal();
+    const variables = {
+      date: date,
+      mealId: UserMealStore.mealId,
+      mealItems: customMutation?.items,
+      mealPreference: activeTab,
+      mealStatus: null,
+      mealType: customMutation?.mealType,
+    };
   };
 
   const renderButtons: ReactElementType = () => {

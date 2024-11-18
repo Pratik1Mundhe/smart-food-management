@@ -12,8 +12,8 @@ export const customMealTab = " border-gray-300 px-3 py-2";
 export const activeMealTab = "bg-blue-600 text-white px-3 py-2";
 
 export const mealsDetailsContainer = "flex flex-row justify-between";
-export const mealsCustomContainer = "py-4 flex flex-col gap-4 w-[300px]";
-export const mealsContainer = "py-4 flex flex-col gap-4 w-[250px]";
+export const mealsCustomContainer = "py-4 flex flex-col gap-2 w-[300px]";
+export const mealsContainer = "py-4 flex flex-col gap-6 w-[250px]";
 export const mealContainer = "flex flex-row justify-between items-center ";
 export const mealItem = "text-gray-400 text-sm";
 export const mealType = "text-gray-400 text-sm";

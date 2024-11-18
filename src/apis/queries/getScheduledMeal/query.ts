@@ -6,6 +6,7 @@ export const GET_SCHEDULE_MEAL: DocumentNode = gql`
       ... on AdminScheduledMeal {
         date
         mealType
+        mealId
         items {
           id
           name

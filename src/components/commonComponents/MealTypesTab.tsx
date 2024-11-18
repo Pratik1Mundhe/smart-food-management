@@ -8,6 +8,7 @@ import {
   activeMealTab,
   activeMealTabHalf,
   activeMealTabCustom,
+  mealButtonFull,
 } from "./styles";
 import { observer } from "mobx-react-lite";
 
@@ -18,16 +19,22 @@ interface MealTabProp {
 
 const MealTypesTab: React.FC<MealTabProp> = (prop) => {
   const { activeTab, handelActiveTab } = prop;
-  return (
-    <ul className={mealTypes}>
+
+  const fullMealButton = () => {
+    return (
       <li
-        className={`px-3 py-2 transition-all duration-500 border-gray-300 ${
+        className={`${mealButtonFull} ${
           activeTab === MealPreferenceEnum.FULL ? activeMealTab : fullMealTab
         }`}
         onClick={() => handelActiveTab(MealPreferenceEnum.FULL)}
       >
         Full Meal
       </li>
+    );
+  };
+
+  const halfMealButton = () => {
+    return (
       <li
         className={
           activeTab === MealPreferenceEnum.HALF
@@ -38,6 +45,11 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
       >
         Half Meal
       </li>
+    );
+  };
+
+  const customMealButton = () => {
+    return (
       <li
         className={
           activeTab === MealPreferenceEnum.CUSTOM
@@ -48,6 +60,14 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
       >
         Custom
       </li>
+    );
+  };
+
+  return (
+    <ul className={mealTypes}>
+      {fullMealButton()}
+      {halfMealButton()}
+      {customMealButton()}
     </ul>
   );
 };

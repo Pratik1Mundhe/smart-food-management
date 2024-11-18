@@ -8,7 +8,7 @@ import {
   VoidFunctionType,
 } from "../../types";
 
-import { ACCESS_TOKEN } from "../../constants";
+import { ACCESS_TOKEN, ADMIN_TOKEN } from "../../constants";
 import Loader from "../loader/Loader";
 
 interface LogoutConfirmModalType {
@@ -26,7 +26,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     async function logout() {
       setLoading(true);
       const response = await fetch(
-        "https://slow-bars-smoke.loca.lt/api/meals/logout/",
+        "https://free-meals-say.loca.lt/api/meals/logout/",
         {
           method: "POST",
           headers: {
@@ -36,7 +36,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
       );
       if (response.ok) {
         localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem("admin");
+        localStorage.removeItem(ADMIN_TOKEN);
         handleCloseLogoutConfirmModal();
         navigate(PageRoutesEnum.LOGIN_PAGE);
       }
@@ -51,7 +51,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
           onClick={handleLogoutModal}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          {!loading ? "Logout" : <Loader />}
+          {loading ? <Loader /> : "Logout"}
         </button>
         <button
           onClick={handleCloseLogoutConfirmModal}

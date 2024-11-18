@@ -136,3 +136,8 @@ export interface UserPreferredMealPlanType {
   lunch: null | UserPreferredMealModel;
   dinner: null | UserPreferredMealModel;
 }
+export interface UserPreferenceDataType {
+  id: string;
+  name: string;
+  customMealQuantity: number;
+}
