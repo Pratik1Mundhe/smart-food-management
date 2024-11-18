@@ -17,21 +17,14 @@ import {
   timeDetailsContainer,
 } from "./styles";
 import ModalStore from "../../store/ModalStore";
-import { MealTypeEnum } from "../../types";
+import { MealCardProps, ReactElementType } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
 import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
 import foodItemsStore from "../../store/FoodItemsStore";
-
 import { formatDate } from "../../utils/formatDate";
 import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
 import scheduledMealStore from "../../store/ScheduledMealStore";
-
-interface MealCardProps {
-  type: MealTypeEnum;
-  mealTime: string;
-  currentDate: Date;
-}
 
 const UserMealCard: React.FC<MealCardProps> = ({
   type,
@@ -43,7 +36,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   const [loading, setLoading] = useState(true);
   const date = formatDate(currentDate);
 
-  const { mealsLoading, error } = useFetchScheduledMeal(
+  const { mealsLoading, error, refetch } = useFetchScheduledMeal(
     date,
     type.toUpperCase()
   );
@@ -62,7 +55,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const mealTypeAndTime = () => {
+  const mealTypeAndTime: ReactElementType = () => {
     return (
       <div className={header}>
         <div className={timeDetailsContainer}>
@@ -79,14 +72,18 @@ const UserMealCard: React.FC<MealCardProps> = ({
     );
   };
 
-  const meals = () => {
-    const mealItems = scheduledMealStore.getMealData(type, date)?.items;
+  const renderMealsEmptyView: ReactElementType = () => {
+    return (
+      <div className="flex items-center justify-center my-auto">
+        <h1 className="font-semibold text-slate-800">Meal plan is empty</h1>
+      </div>
+    );
+  };
+
+  const meals: ReactElementType = () => {
+    const mealItems = scheduledMealStore.getMealDayData(date)[type];
     if (!mealItems) {
-      return (
-        <div className="flex items-center justify-center my-auto">
-          <h1 className="font-semibold text-slate-800">Meal plan is empty</h1>
-        </div>
-      );
+      return renderMealsEmptyView();
     }
     return (
       <ul className={foodItems}>
@@ -106,7 +103,8 @@ const UserMealCard: React.FC<MealCardProps> = ({
       </ul>
     );
   };
-  const renderEditButton = () => {
+
+  const renderEditButton: ReactElementType = () => {
     return (
       <button
         className={
@@ -136,7 +134,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
     );
   };
 
-  const mealStatusButtons = () => {
+  const mealStatusButtons: ReactElementType = () => {
     if (isMealAteStatus && foodItemsStore.inCampusStatus) {
       return (
         <p className="flex self-center gap-6">
@@ -152,7 +150,33 @@ const UserMealCard: React.FC<MealCardProps> = ({
     return renderEditButton();
   };
 
-  const renderCardContent = () => {
+  const handleRefetchMeal = () => {
+    refetch({
+      params: {
+        date: date,
+        mealType: type.toUpperCase(),
+      },
+    });
+  };
+
+  const renderMealErrorView = () => {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
+        <button
+          onClick={handleRefetchMeal}
+          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  };
+
+  const renderCardContent: ReactElementType = () => {
+    if (error) {
+      return renderMealErrorView();
+    }
     if (mealsLoading) {
       return <Loader color="blue" height={40} width={40} radius={4} />;
     }

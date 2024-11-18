@@ -107,6 +107,13 @@ export interface ScheduledMealResponseType {
   date: string;
   mealType: string;
   items: MealFoodItemResponseType[];
+  mealId: string;
+}
+
+export interface MealScheduledDataType {
+  breakfast: ScheduledMealModel | null;
+  lunch: ScheduledMealModel | null;
+  dinner: ScheduledMealModel | null;
 }
 
 export interface UserMealItemModelType {
@@ -127,8 +134,14 @@ export interface FoodItemsModalPropsType {
   addFoodItem: (food: FoodItemType) => void;
 }
 
-export interface FoodItemsSelectPropsType {
+export interface FoodItemOptionPropsType {
   setSelectedFoodItem: React.Dispatch<
     React.SetStateAction<FoodItemType | null>
   >;
+}
+
+export interface MealCardProps {
+  type: MealTypeEnum;
+  mealTime: string;
+  currentDate: Date;
 }
