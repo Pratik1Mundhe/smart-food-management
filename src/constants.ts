@@ -25,6 +25,8 @@ export const DINNER_TIME = "20:00 - 22:00";
 export const LUNCH_TIME = "12:00 - 14:00";
 export const BREAKFAST_TIME = "08:00 - 10:00";
 
+export const GRAPHQL_END_POINT = "https://old-melons-cheat.loca.lt";
+
 export const MEAL_TYPES: MealTypeEnum[] = [
   MealTypeEnum.BREAKFAST,
   MealTypeEnum.LUNCH,

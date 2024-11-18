@@ -4,11 +4,10 @@ import FoodItemModal from "../models/FoodItemModel";
 import { FoodItemsResponseType } from "../types";
 
 class FoodItemsStore {
-  inCampusStatus: boolean;
+  //This value is not valid in this store, can move to appropriate store
   foodItems: FoodItemModal[] = [];
 
   constructor() {
-    this.inCampusStatus = true;
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
@@ -32,9 +31,6 @@ class FoodItemsStore {
 
   getFoodItems(): FoodItemModal[] {
     return this.foodItems;
-  }
-  setInCampusStatus(): void {
-    this.inCampusStatus = !this.inCampusStatus;
   }
 }
 

@@ -8,7 +8,7 @@ import {
   VoidFunctionType,
 } from "../../types";
 
-import { ACCESS_TOKEN, ADMIN_TOKEN } from "../../constants";
+import { ACCESS_TOKEN, ADMIN_TOKEN, GRAPHQL_END_POINT } from "../../constants";
 import Loader from "../loader/Loader";
 
 interface LogoutConfirmModalType {
@@ -25,15 +25,12 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
     async function logout() {
       setLoading(true);
-      const response = await fetch(
-        "https://free-meals-say.loca.lt/api/meals/logout/",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await fetch(`${GRAPHQL_END_POINT}/api/meals/logout/`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       if (response.ok) {
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem(ADMIN_TOKEN);

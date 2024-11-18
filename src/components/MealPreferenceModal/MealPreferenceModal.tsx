@@ -124,7 +124,7 @@ const MealPreferenceModal: React.FC = () => {
         />
       );
     } else if (showSaveConfirmModal) {
-      let editedMeal: any = CustomMealStore.meals.find(
+      let editedMeal = CustomMealStore.meals.find(
         (each) => each.mealType === type
       );
       if (activeTab !== "custom") {
@@ -133,8 +133,8 @@ const MealPreferenceModal: React.FC = () => {
           ["items"]: selectedMealTypeData(activeTab, editedMeal?.mealType),
         };
       }
-      if (editedMeal?.mealId) {
-        UserMealStore.setMealId(editedMeal?.mealId);
+      if (editedMeal?.mealId && CustomMealStore.date !== null) {
+        UserMealStore.setMealDetails(CustomMealStore.date, editedMeal?.mealId);
       }
       return (
         <SaveConfirmModal

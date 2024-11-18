@@ -32,6 +32,7 @@ import {
   ACCESS_TOKEN,
   ADMIN_TOKEN,
   USER_TOKEN,
+  GRAPHQL_END_POINT,
 } from "../../constants";
 
 const Login = () => {
@@ -46,6 +47,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  //Not readable, the below function
   function handleLoginDetails(
     updatingValue: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -72,6 +74,7 @@ const Login = () => {
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    //can trim while saving
     const isUserNameEmpty = loginDetails.username.trim() === "";
     const isPasswordEmpty = loginDetails.password.trim() === "";
 
@@ -89,17 +92,16 @@ const Login = () => {
 
     setLoading(true);
 
+    //Do changes in this code as discussed
+
     try {
-      const response = await fetch(
-        "https://free-meals-say.loca.lt/api/meals/login/",
-        {
-          method: LOGIN_METHOD,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`${GRAPHQL_END_POINT}/api/meals/login/`, {
+        method: LOGIN_METHOD,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
       const result = await response.json();
       if (result.status_code === 200) {
         if (result.response.is_admin) {

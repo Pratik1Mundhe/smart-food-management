@@ -7,6 +7,7 @@ const LoginPage = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem("admin");
 
+  //Handle the false isAdmin case
   if (accessToken === null && !isAdmin) {
     return <Login />;
   }

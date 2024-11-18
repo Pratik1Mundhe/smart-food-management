@@ -11,7 +11,7 @@ interface ConfirmModalPropsType {
   action: VoidFunctionType;
   customMutation?: CustomMealModel | undefined;
   activeTab?: string;
-  date?: string;
+  date?: Date | null;
   mealId?: string;
 }
 

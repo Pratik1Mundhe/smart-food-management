@@ -2,33 +2,47 @@ import { makeAutoObservable } from "mobx";
 import { MealStatusEnum, MealTypeEnum } from "../types";
 
 class _UserMealStore {
-  data: string;
-  mealId: string;
+  data: Date | null;
+  mealId: string | null;
+  inCampusStatus: boolean;
   mealStatus: {
-    breakfast: MealStatusEnum;
-    lunch: MealStatusEnum;
-    dinner: MealStatusEnum;
+    breakfast: MealStatusEnum | null;
+    lunch: MealStatusEnum | null;
+    dinner: MealStatusEnum | null;
   };
 
   constructor() {
-    this.data = "Today";
-    this.mealId = "";
+    //use Date type
+    this.data = null;
+    //Use null type for no value cases
+    this.mealId = null;
+    //Remove NULL from the enum
+    this.inCampusStatus = true;
     this.mealStatus = {
-      breakfast: MealStatusEnum.NULL,
-      lunch: MealStatusEnum.NULL,
-      dinner: MealStatusEnum.NULL,
+      breakfast: null,
+      lunch: null,
+      dinner: null,
     };
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  setDate(newDate: string) {
+  //Write a new method for selected meal data storing
+  //Can add private access modifier if required
+  private setDate(newDate: Date) {
     this.data = newDate;
   }
-  setMealId(newMealId: string) {
+  private setMealId(newMealId: string) {
     this.mealId = newMealId;
+  }
+  setMealDetails(newDate: Date, newMealId: string) {
+    this.setDate(newDate);
+    this.setMealId(newMealId);
   }
   setMealStatus(status: MealStatusEnum, mealType: MealTypeEnum) {
     this.mealStatus = { ...this.mealStatus, [mealType]: status };
+  }
+  setInCampusStatus(): void {
+    this.inCampusStatus = !this.inCampusStatus;
   }
 }
 

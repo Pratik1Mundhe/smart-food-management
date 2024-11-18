@@ -1,5 +1,7 @@
 import scheduledMealStore from "../store/ScheduledMealStore";
 import { MealTypeEnum } from "../types";
+
+//Remove any type
 function selectedMealTypeData(activeTab: string, typeOfMeal: any) {
   const items = scheduledMealStore.mealData[
     typeOfMeal as MealTypeEnum
