@@ -10,7 +10,7 @@ import {
   mealQuantity,
 } from "./styles";
 import { MealFoodItemResponseType, MealTypeEnum } from "../../types";
-import useGetCustomUserMeal from "../../apis/queries/getCustomUserMeal/useGetCustomUserMeal";
+import useGetCustomUserMeal from "../../apis/queries/GetUserMeal/useGetCustomUserMeal";
 import CustomMealStore from "../../store/CustomMealStore";
 import CustomMeal from "./CustomMeal";
 import ModalStore from "../../store/ModalStore";

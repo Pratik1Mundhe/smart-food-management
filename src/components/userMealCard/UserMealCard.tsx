@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CiClock1 } from "react-icons/ci";
 import { observer } from "mobx-react";
 
-import calculateCutoffTime from "../../utils/calculateCutoffTime";
+import calculateCutoffTime from "../../utils/timeUtils/calculateCutoffTime";
 import MealPreferenceModal from "../MealPreferenceModal/MealPreferenceModal";
 import {
   buttonContent,
@@ -19,14 +19,14 @@ import {
 import ModalStore from "../../store/ModalStore";
 import { MealCardProps, ReactElementType, VoidFunctionType } from "../../types";
 import IconMeal from "../iconMeal/IconMeal";
-import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
+import calculateMealCompleteTime from "../../utils/timeUtils/calculateMealCompletedTime";
 import Loader from "../loader/Loader";
 import foodItemsStore from "../../store/FoodItemsStore";
 import { MealStatusEnum } from "../../types";
 import { formatDate } from "../../utils/formatDate";
-import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
+import useFetchScheduledMeal from "../../apis/queries/GetMealScheduled/useFetchScheduledMeal";
 import scheduledMealStore from "../../store/ScheduledMealStore";
-import useSaveMealStatus from "../../apis/mutations/saveMealStatus/useSaveMealStatus";
+import useSaveMealStatus from "../../apis/mutations/SaveDayMealStatus/useSaveMealStatus";
 
 const UserMealCard: React.FC<MealCardProps> = ({
   type,

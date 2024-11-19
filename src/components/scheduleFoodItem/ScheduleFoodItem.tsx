@@ -2,22 +2,13 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { IoIosCloseCircle } from "react-icons/io";
 
-import { FoodItemType, VoidFunctionType } from "../../types";
+import { ScheduleFoodItemPropsType, VoidFunctionType } from "../../types";
 import QuantityCounter from "../quantityCounter/QuantityCounter";
-
-interface ScheduleFoodItemPropsType {
-  food: FoodItemType;
-  updateFullMealQuantity: (id: string, quantity: number) => void;
-  updateHalfMealQuantity: (id: string, quantity: number) => void;
-  removeFoodItem: (id: string) => void;
-  handleOpenConfirmModal: (id: string) => void;
-}
 
 const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
   food,
-  updateFullMealQuantity,
+
   handleOpenConfirmModal,
-  updateHalfMealQuantity,
 }) => {
   const { name, id } = food;
 
@@ -26,11 +17,11 @@ const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
   };
 
   const handleFullMealQuantity = (quantity: number): void => {
-    updateFullMealQuantity(id, quantity);
+    food.updateFullMealQuantity(quantity);
   };
 
   const handleHalfMealQuantity = (quantity: number): void => {
-    updateHalfMealQuantity(id, quantity);
+    food.updateHalfMealQuantity(quantity);
   };
 
   return (

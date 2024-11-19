@@ -1,8 +1,9 @@
 import React from "react";
-import { VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
+
+import { VoidFunctionType } from "../../types";
 import foodItemsStore from "../../store/FoodItemsStore";
-import useInCampusStatus from "../../apis/mutations/InCampusStatus/useInCampusStatus";
+import useInCampusStatus from "../../apis/mutations/SaveInCampusStatus/useInCampusStatus";
 import Loader from "../loader/Loader";
 import { USER_TOKEN } from "../../constants";
 import { button, container } from "./styles";

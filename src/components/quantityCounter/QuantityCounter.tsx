@@ -1,14 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-
 import { IoAdd } from "react-icons/io5";
 import { FiMinus } from "react-icons/fi";
-import { VoidFunctionType } from "../../types";
 
-interface QuantityCounterPropsType {
-  setQuantity: (quantity: number) => void;
-  quantity: number;
-}
+import { QuantityCounterPropsType, VoidFunctionType } from "../../types";
 
 const QuantityCounter: React.FC<QuantityCounterPropsType> = ({
   setQuantity,

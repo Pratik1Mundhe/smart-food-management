@@ -14,13 +14,18 @@ import {
   menuContainer,
   redButton,
 } from "./styles";
+import { useTranslation } from "react-i18next";
+import SelectLanguages from "../selectLanguages/SelectLanguages";
 
 const AdminNavbar: React.FC = () => {
-  const navigate: NavigateFunction = useNavigate();
-  const path = window.location.pathname;
   const [showLogoutConfirmModal, setLogoutConfirmModal] =
     useState<boolean>(false);
   const [showLogout, setShowLogout] = useState<boolean>(false);
+  const navigate: NavigateFunction = useNavigate();
+  const path = window.location.pathname;
+  const { t } = useTranslation();
+  const tPath = "components.adminNavbar";
+  const adminUsername = "admin";
 
   const handleOpenLogoutConfirmModal = (): void => {
     setLogoutConfirmModal(true);
@@ -54,7 +59,7 @@ const AdminNavbar: React.FC = () => {
       return (
         <div className="absolute top-8 right-0 bg-white">
           <button className={redButton} onClick={handleOpenLogoutConfirmModal}>
-            Logout
+            {t(tPath + ".buttons.logout")}
           </button>
         </div>
       );
@@ -66,7 +71,9 @@ const AdminNavbar: React.FC = () => {
     return (
       <li className="flex items-center gap-2 relative">
         <LuUserCircle className="h-5 w-5" />
-        <h1 className="text-general text-sm font-medium">Admin</h1>
+        <h1 className="text-general text-sm font-medium first-letter:capitalize">
+          {adminUsername}
+        </h1>
         {renderLogout()}
         {renderLogoutButton()}
       </li>
@@ -93,6 +100,9 @@ const AdminNavbar: React.FC = () => {
       />
 
       <ul className={menuContainer}>
+        <li>
+          <SelectLanguages />
+        </li>
         <li
           onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
           className={`${headerMenuItem} ${
@@ -101,7 +111,7 @@ const AdminNavbar: React.FC = () => {
               : "text-general"
           }`}
         >
-          Home
+          {t(tPath + ".menuOptions.home")}
         </li>
         {renderUserProfile()}
       </ul>

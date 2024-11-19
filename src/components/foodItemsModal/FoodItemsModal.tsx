@@ -1,77 +1,55 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { observer } from "mobx-react-lite";
+import { useTranslation } from "react-i18next";
 
 import Modal from "../modal/Modal";
-import {
-  FoodItemType,
-  FoodItemsModalPropsType,
-  ReactElementType,
-} from "../../types";
-import useFetchFoodItems from "../../apis/queries/getFoodItems/useFetchFoodItems";
-import Loader from "../loader/Loader";
+import { FoodItemsModalPropsType, ReactElementType } from "../../types";
 import SelectFoodItems from "../selectFoodItems/SelectFoodItems";
-import { blueButton, selectArrowButton, greenButton } from "./styles";
+import { selectArrowButton, greenButton } from "./styles";
+import foodItemsStore from "../../store/FoodItemsStore";
+import FoodItemsEmptyView from "./FoodItemsEmptyView";
+import FoodItemsLoaderView from "./FoodItemsLoaderView";
+import FoodItemsErrorView from "./FoodItemsErrorView";
 
 const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
-  setShowFoodItemsModal,
+  handleRefetchFoodItems,
+  handleAddFoodItem,
+  handleCloseModal,
+  setSelectedFoodItem,
+  refetchloading,
+  loading,
+  error,
   currentMealTab,
-  addFoodItem,
 }) => {
-  const { loading, error, refetch, refetchloading } = useFetchFoodItems();
-  const [selectedFoodItem, setSelectedFoodItem] = useState<FoodItemType | null>(
-    null
-  );
-  const currentMealType: string =
-    currentMealTab[0].toUpperCase() + currentMealTab.slice(1);
-
-  const handleAddFoodItem = (): void => {
-    if (!selectedFoodItem) {
-      return;
-    }
-    addFoodItem(selectedFoodItem);
-    setShowFoodItemsModal(false);
-  };
-
-  const handleRefetchFoodItems = (): void => {
-    refetch({
-      params: {
-        limit: 10,
-        offset: 0,
-      },
-    });
-  };
-
-  const renderErrorView: ReactElementType = () => {
-    return (
-      <div className="mt-6">
-        <h1>Something went wrong !!!</h1>
-        <button onClick={handleRefetchFoodItems} className={blueButton}>
-          Retry
-        </button>
-      </div>
-    );
-  };
-
-  const renderLoaderView: ReactElementType = () => {
-    return (
-      <div className="mt-6">
-        <Loader color="#0B69FF" width={30} height={30} />
-      </div>
-    );
-  };
+  const { t } = useTranslation();
+  const tPath = "pages.adminHome.scheduleMeal.foodItemsModal";
 
   const renderFoodItems: ReactElementType = () => {
     if (error) {
-      renderErrorView();
+      return (
+        <FoodItemsErrorView
+          tPath={tPath}
+          handleRefetchFoodItems={handleRefetchFoodItems}
+        />
+      );
     }
     if (loading || refetchloading) {
-      renderLoaderView();
+      return <FoodItemsLoaderView />;
+    }
+
+    if (foodItemsStore.getFoodItems().length === 0) {
+      return (
+        <FoodItemsEmptyView
+          tPath={tPath}
+          handleRefetchFoodItems={handleRefetchFoodItems}
+        />
+      );
     }
     return (
       <>
         <p className="text-secondary text-sm font-medium">
-          SELECT THE FOOD ITEM
+          {t(tPath + ".selectOption")}
         </p>
         <div className="relative flex flex-col gap-1">
           <SelectFoodItems setSelectedFoodItem={setSelectedFoodItem} />
@@ -80,20 +58,18 @@ const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
           </button>
         </div>
         <button onClick={handleAddFoodItem} className={greenButton}>
-          ADD ITEM
+          {t(tPath + ".buttons.addItem")}
         </button>
       </>
     );
   };
 
-  const handleCloseModal = (): void => {
-    setShowFoodItemsModal(false);
-  };
-
   return (
     <Modal close={handleCloseModal}>
       <div className="w-[400px] flex flex-col gap-4">
-        <h1 className="text-xl">Add to {currentMealType}</h1>
+        <h1 className="text-xl text-general font-semibold">
+          {t(tPath + ".title") + t(tPath + `.mealType.${currentMealTab}`)}
+        </h1>
         {renderFoodItems()}
       </div>
     </Modal>

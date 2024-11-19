@@ -4,8 +4,7 @@ export const redButton =
 export const headerMenuItem =
   "text-general text-sm font-medium cursor-pointer ";
 
-export const menuContainer =
-  "flex justify-between items-center gap-4 w-[200px]";
+export const menuContainer = "flex justify-between items-center gap-4 w-1/4";
 
 export const headerContainer =
   "flex items-center justify-between px-10 border-b-[1px]";

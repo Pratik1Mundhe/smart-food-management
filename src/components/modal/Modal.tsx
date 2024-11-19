@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-import { VoidFunctionType } from "../../types";
+import { ModalPropsTypes, VoidFunctionType } from "../../types";
 import { modalContainer, modalContent } from "./styles";
-
-interface ModalPropsTypes {
-  close: () => void;
-  children: React.ReactElement;
-}
 
 const Modal: React.FC<ModalPropsTypes> = ({ close, children }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);

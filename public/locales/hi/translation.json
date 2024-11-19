@@ -1,0 +1,113 @@
+{
+  "pages": {
+    "adminHome": {
+      "title": "ऐडमिन पोर्टल",
+      "scheduleMeal": {
+        "header": "मील शेड्यूल करें",
+        "mealItemsHeaders": {
+          "items": "आइटम्स",
+          "fullMeal": "फुल मील",
+          "halfMeal": "हाफ मील"
+        },
+        "buttons": {
+          "addItem": "आइटम जोड़ें",
+          "retry": "फिर से प्रयास करें",
+          "save": "सेव करें",
+          "back": "वापस"
+        },
+        "errorView": {
+          "title": "कुछ गलत हो गया!"
+        },
+        "emptyView": {
+          "title": "अभी कोई फूड आइटम्स नहीं हैं"
+        },
+        "toasts": {
+          "success": "मील जोड़ा गया",
+          "failure": "कुछ गलत हो गया!",
+          "quantityError": "मात्रा शून्य नहीं हो सकती"
+        },
+        "mealTabs": {
+          "breakfast": "ब्रेकफास्ट",
+          "lunch": "लंच",
+          "dinner": "डिनर"
+        },
+        "mealDate": {
+          "tomorrow": "कल",
+          "today": "आज"
+        },
+        "foodItemsModal": {
+          "mealType": {
+            "breakfast": "ब्रेकफास्ट",
+            "lunch": "लंच",
+            "dinner": "डिनर"
+          },
+          "title": "में जोड़ें",
+          "selectOption": "फूड आइटम चुनें",
+          "errors": {
+            "itemNotSelected": "आइटम चयनित नहीं है"
+          },
+          "errorView": {
+            "title": "कुछ गलत हो गया!"
+          },
+          "emptyView": {
+            "title": "अभी कोई फूड आइटम्स नहीं हैं"
+          },
+          "buttons": {
+            "retry": "फिर से प्रयास करें",
+            "addItem": "आइटम जोड़ें"
+          },
+          "selectFoodItems": {
+            "title": "फूड आइटम चुनें"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "confirmModal": {
+      "save": {
+        "title": "क्या आप इसे सेव करना चाहते हैं?",
+        "buttons": {
+          "save": "सेव करें",
+          "cancel": "रद्द करें"
+        }
+      },
+      "close": {
+        "title": "क्या आप इसे बंद करना चाहते हैं?",
+        "buttons": {
+          "back": "वापस",
+          "cancel": "रद्द करें"
+        }
+      },
+      "logout": {
+        "title": "क्या आप लॉगआउट करना चाहते हैं?",
+        "buttons": {
+          "logout": "लॉगआउट",
+          "cancel": "रद्द करें"
+        }
+      },
+      "skip": {
+        "title": "क्या आप इसे स्किप करना चाहते हैं?",
+        "buttons": {
+          "skip": "स्किप करें",
+          "cancel": "रद्द करें"
+        }
+      },
+      "delete": {
+        "title": "क्या आप इसे डिलीट करना चाहते हैं?",
+        "buttons": {
+          "delete": "डिलीट करें",
+          "cancel": "रद्द करें"
+        }
+      }
+    },
+    "adminNavbar": {
+      "buttons": {
+        "logout": "लॉगआउट"
+      },
+      "menuOptions": {
+        "home": "होम"
+      }
+    }
+  }
+}

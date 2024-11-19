@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
@@ -20,6 +21,8 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
 }) => {
   const navigate: NavigateFunction = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
+  const tPath = "components.confirmModal.logout";
 
   function handleLogoutModal(): void {
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
@@ -49,13 +52,13 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
           onClick={handleLogoutModal}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          {loading ? <Loader /> : "Logout"}
+          {loading ? <Loader /> : t(tPath + ".buttons.logout")}
         </button>
         <button
           onClick={handleCloseLogoutConfirmModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
-          Cancel
+          {t(tPath + ".buttons.cancel")}
         </button>
       </div>
     );
@@ -65,7 +68,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     <ConfirmModal>
       <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
-          Are you sure you want to close?
+          {t(tPath + ".title")}
         </h1>
         {renderButtons()}
       </div>

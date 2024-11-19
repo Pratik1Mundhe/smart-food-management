@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import foodItemsStore from "../../store/FoodItemsStore";
 import { FoodItemsSelectPropsType } from "../../types";
 import { selectInput } from "./styles";
+import MealFoodItemModel from "../../models/MealFoodItemModel";
 
 const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
   setSelectedFoodItem,
@@ -12,12 +13,8 @@ const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const { id, name } = foodItemsStore.getFoodItem(e.target.value)!;
-    setSelectedFoodItem({
-      id,
-      name,
-      fullMealQuantity: 0,
-      halfMealQuantity: 0,
-    });
+    const mealFoodItem = new MealFoodItemModel(id, name, 0, 0);
+    setSelectedFoodItem(mealFoodItem);
   };
 
   return (
