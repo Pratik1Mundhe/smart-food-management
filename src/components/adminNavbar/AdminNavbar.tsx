@@ -25,6 +25,8 @@ const AdminNavbar: React.FC = () => {
   const path = window.location.pathname;
   const { t } = useTranslation();
   const tPath = "components.adminNavbar";
+  const adminUsername = "admin";
+
   const handleOpenLogoutConfirmModal = (): void => {
     setLogoutConfirmModal(true);
     ModalStore.openConfirmModal();
@@ -69,7 +71,9 @@ const AdminNavbar: React.FC = () => {
     return (
       <li className="flex items-center gap-2 relative">
         <LuUserCircle className="h-5 w-5" />
-        <h1 className="text-general text-sm font-medium">Admin</h1>
+        <h1 className="text-general text-sm font-medium first-letter:capitalize">
+          {adminUsername}
+        </h1>
         {renderLogout()}
         {renderLogoutButton()}
       </li>

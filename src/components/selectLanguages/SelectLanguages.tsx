@@ -31,7 +31,7 @@ const SelectLanguages = () => {
           return <LanguageOption key={v4()} language={language} />;
         })}
       </select>
-      <div className="pointer-events-none absolute top-2.5 right-3 flex items-center text-slate-500 dark:text-slate-200">
+      <div className="pointer-events-none absolute top-2.5 right-3 flex items-center text-slate-500 ">
         <FiChevronDown className="w-5 h-5" />
       </div>
     </div>

@@ -1,14 +1,17 @@
 import React from "react";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
-import { FoodItemType, ReactElementType, VoidFunctionType } from "../../types";
+import { MealTypeEnum, ReactElementType, VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
+import MealFoodItemModel from "../../models/MealFoodItemModel";
 
 interface ConfirmModalPropsType {
-  foodItem: FoodItemType;
+  foodItem: MealFoodItemModel;
   handleCloseDeleteConfirmModal: VoidFunctionType;
   removeFoodItem: (id: string) => void;
+  currentMealTab: MealTypeEnum;
+  currentDate: Date;
 }
 
 const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({

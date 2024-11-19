@@ -1,3 +1,4 @@
+import { ApolloError } from "@apollo/client";
 import MealFoodItemModel from "./models/MealFoodItemModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
@@ -107,6 +108,7 @@ export interface ScheduledMealResponseType {
   mealType: string;
   items: MealFoodItemResponseType[];
   mealId: string;
+  date: string;
 }
 
 export interface MealScheduledDataType {
@@ -131,15 +133,10 @@ export interface UserPreferenceDataType {
   name: string;
   customMealQuantity: number;
 }
-export interface FoodItemsModalPropsType {
-  setShowFoodItemsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  currentMealTab: MealTypeEnum;
-  addFoodItem: (food: FoodItemType) => void;
-}
 
 export interface FoodItemsSelectPropsType {
   setSelectedFoodItem: React.Dispatch<
-    React.SetStateAction<FoodItemType | null>
+    React.SetStateAction<MealFoodItemModel | null>
   >;
 }
 
@@ -155,9 +152,7 @@ export interface QuantityCounterPropsType {
 }
 
 export interface ScheduleFoodItemPropsType {
-  food: FoodItemType;
-  updateFullMealQuantity: (id: string, quantity: number) => void;
-  updateHalfMealQuantity: (id: string, quantity: number) => void;
+  food: MealFoodItemModel;
   removeFoodItem: (id: string) => void;
   handleOpenConfirmModal: (id: string) => void;
 }
@@ -176,4 +171,46 @@ export interface LoaderPropsType {
   width?: number;
   color?: string;
   radius?: number;
+}
+
+export interface ScheduleMealModalType {
+  showFoodItemsModal: boolean;
+  showDeleteConfirmModal: boolean;
+  showSaveConfirmModal: boolean;
+}
+
+export interface ScheduleMealPropsType {
+  foodData: MealFoodDataType;
+  currentDate: Date;
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+  currentMealTab: MealTypeEnum;
+  addFoodItem: (food: MealFoodItemModel) => void;
+  removeFoodItem: (id: string) => void;
+  showModals: ScheduleMealModalType;
+  mealsLoading: boolean;
+  fetchMealsError: ApolloError | undefined;
+  scheduleMealLoading: boolean;
+  scheduleMealError: ApolloError | undefined;
+  handleRefetchScheduledMeal: VoidFunctionType;
+  handleSaveMealSchedule: VoidFunctionType;
+  deleteFoodItemId: string | null;
+  handleOpenSaveConfirmModal: VoidFunctionType;
+  handleShowFoodItemsModal: (value: boolean) => void;
+  handleCloseDeleteConfirmModal: VoidFunctionType;
+  handleCloseSaveConfirmModal: VoidFunctionType;
+  handleOpenDeleteConfirmModal: (foodId: string) => void;
+  handleTabChange: (meal: MealTypeEnum) => void;
+}
+
+export interface FoodItemsModalPropsType {
+  handleRefetchFoodItems: VoidFunctionType;
+  handleCloseModal: VoidFunctionType;
+  handleAddFoodItem: VoidFunctionType;
+  setSelectedFoodItem: React.Dispatch<
+    React.SetStateAction<MealFoodItemModel | null>
+  >;
+  refetchloading: boolean;
+  loading: boolean;
+  error: ApolloError | undefined;
+  currentMealTab: MealTypeEnum;
 }

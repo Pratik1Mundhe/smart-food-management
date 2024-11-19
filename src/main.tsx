@@ -17,7 +17,7 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: GRAPHQL_URL,
     headers: {
-      Authorization: `Bearer a98aec44-1bec-401f-ba00-ab10b6881cae`,
+      Authorization: `Bearer a944a352-3dec-4b6f-ac81-983072533bc9`,
     },
   }),
   cache: new InMemoryCache(),

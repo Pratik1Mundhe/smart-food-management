@@ -7,9 +7,8 @@ import QuantityCounter from "../quantityCounter/QuantityCounter";
 
 const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
   food,
-  updateFullMealQuantity,
+
   handleOpenConfirmModal,
-  updateHalfMealQuantity,
 }) => {
   const { name, id } = food;
 
@@ -18,11 +17,11 @@ const ScheduleFoodItem: React.FC<ScheduleFoodItemPropsType> = ({
   };
 
   const handleFullMealQuantity = (quantity: number): void => {
-    updateFullMealQuantity(id, quantity);
+    food.updateFullMealQuantity(quantity);
   };
 
   const handleHalfMealQuantity = (quantity: number): void => {
-    updateHalfMealQuantity(id, quantity);
+    food.updateHalfMealQuantity(quantity);
   };
 
   return (

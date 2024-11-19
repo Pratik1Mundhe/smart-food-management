@@ -46,29 +46,53 @@ class ScheduledMealStore {
     const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
     const itemInstances = items.map((item) => {
       const { id, name, fullMealQuantity, halfMealQuantity } = item;
-      return new MealFoodItemModel({
+      return new MealFoodItemModel(
         id,
         name,
         fullMealQuantity,
-        halfMealQuantity,
-      });
+        halfMealQuantity
+      );
     });
 
     const mealModel = new ScheduledMealModel(mealId, mealType, itemInstances);
-    if (this.mealDayData.has(date)) {
-      const mealDataObject = this.mealDayData.get(formattedDate);
-      if (!mealDataObject) {
-        return;
-      }
-      mealDataObject[mealType] = mealModel;
-    }
-    const mealDataObject: MealScheduledDataType = {
+
+    const mealDataObject = this.mealDayData.get(formattedDate) || {
       breakfast: null,
       lunch: null,
       dinner: null,
     };
-    mealDataObject[mealType] = mealModel;
-    this.mealDayData.set(formattedDate, mealDataObject);
+
+    this.mealDayData.set(formattedDate, {
+      ...mealDataObject,
+      [mealType]: mealModel,
+    });
+  }
+
+  addFoodItemIntoMeal(
+    date: Date,
+    mealType: MealTypeEnum,
+    id: string,
+    name: string,
+    fullMealQuantity: number,
+    halfMealQuantity: number
+  ) {
+    const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
+    const mealDay = this.mealDayData.get(formattedDate);
+    if (!mealDay) {
+      return;
+    }
+    const meal = mealDay[mealType];
+    meal?.addFoodItem(id, name, fullMealQuantity, halfMealQuantity);
+  }
+
+  removeFoodItemFromMeal(date: Date, mealType: MealTypeEnum, foodId: string) {
+    const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
+    const mealDay = this.mealDayData.get(formattedDate);
+    if (!mealDay) {
+      return;
+    }
+    const meal = mealDay[mealType];
+    meal?.removeFoodItem(foodId);
   }
 }
 

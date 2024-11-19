@@ -43,7 +43,7 @@
             "lunch": "Lunch",
             "dinner": "Dinner"
           },
-          "title": "Add to",
+          "title": "Add to ",
           "selectOption": "SELECT THE FOOD ITEM",
           "errors": {
             "itemNotSelected": "Item is not selected"
