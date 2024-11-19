@@ -10,6 +10,7 @@ import { button, container } from "./styles";
 
 const ToggleSwitch: React.FC = observer(() => {
   const { triggerCampusStatus, loading } = useInCampusStatus();
+
   const handleToggle: VoidFunctionType = () => {
     const userId = JSON.parse(localStorage.getItem(USER_TOKEN)!);
     triggerCampusStatus({

@@ -3,12 +3,14 @@ import { useQuery, NetworkStatus } from "@apollo/client";
 import { GET_SCHEDULE_MEAL } from "./query";
 import scheduledMealStore from "../../../store/ScheduledMealStore";
 import { onSuccess } from "./responseHandler";
-import { MealTypeEnum } from "../../../types";
+import { MealTypeEnum, useFetchScheduledMealType } from "../../../types";
 
-//TODO: we can remove mealtype and fetch 3 meals of the day at a time
-const useFetchScheduledMeal = (date: string, mealType: MealTypeEnum) => {
+const useFetchScheduledMeal: useFetchScheduledMealType = (
+  date: string,
+  mealType: MealTypeEnum
+) => {
   const hasMealItems =
-    scheduledMealStore.getMealDayData(date)![mealType].length > 0;
+    scheduledMealStore.getMealDayData(date)![mealType]?.length > 0;
   const { loading, error, refetch, networkStatus } = useQuery(
     GET_SCHEDULE_MEAL,
     {

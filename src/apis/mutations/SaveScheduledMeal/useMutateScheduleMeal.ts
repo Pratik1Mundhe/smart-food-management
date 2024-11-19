@@ -1,12 +1,12 @@
 import { useMutation } from "@apollo/client";
 import SET_SCHEDULE_MEAL from "./mutation";
 
-function useScheduleMeal() {
+const useMutateScheduleMeal = () => {
   const [setSchedule, { loading, error }] = useMutation(SET_SCHEDULE_MEAL, {
-    onCompleted: (data) => {},
+    onCompleted: () => {},
   });
 
   return { setSchedule, loading, error };
-}
+};
 
-export default useScheduleMeal;
+export default useMutateScheduleMeal;

@@ -5,7 +5,11 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 import globalLogo from "../../assets/global-logo.png";
 import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
-import { PageRoutesEnum, ReactElementType } from "../../types";
+import {
+  PageRoutesEnum,
+  ReactElementType,
+  VoidFunctionType,
+} from "../../types";
 import ModalStore from "../../store/ModalStore";
 import {
   headerContainer,
@@ -27,12 +31,12 @@ const AdminNavbar: React.FC = () => {
   const tPath = "components.adminNavbar";
   const adminUsername = "admin";
 
-  const handleOpenLogoutConfirmModal = (): void => {
+  const handleOpenLogoutConfirmModal: VoidFunctionType = () => {
     setLogoutConfirmModal(true);
     ModalStore.openConfirmModal();
   };
 
-  const handleCloseLogoutConfirmModal = (): void => {
+  const handleCloseLogoutConfirmModal: VoidFunctionType = () => {
     setLogoutConfirmModal(false);
     ModalStore.closeConfirmModal();
   };

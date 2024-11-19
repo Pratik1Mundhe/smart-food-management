@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import Input from "../commonComponents/Input";
 import Loader from "../loader/Loader";
-import { PageRoutesEnum } from "../../types";
+import { PageRoutesEnum, ReactElementType } from "../../types";
 import { addItemLocalStorage } from "../../utils/localStorageUtils/addItem";
 import { successToast } from "../../utils/toastUtils/successToast";
 import { failureToast } from "../../utils/toastUtils/failureToast";
@@ -34,23 +34,36 @@ import {
   LOGIN_URL,
 } from "../../constants";
 
-const Login = () => {
-  const [loginDetails, setLoginDetails] = useState({
+interface LoginDataType {
+  username: string;
+  password: string;
+}
+
+interface LoginInvalidDetailsType {
+  isUsernameInvalid: boolean;
+  isPasswordInvalid: boolean;
+}
+
+const Login: React.FC = () => {
+  const [loginDetails, setLoginDetails] = useState<LoginDataType>({
     username: USERNAME_INITIAL_VALUE,
     password: PASSWORD_INITIAL_VALUE,
   });
-  const [isLoginDetailsInvalid, setIsLoginDetailsInvalid] = useState({
-    isUsernameInvalid: false,
-    isPasswordInvalid: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const [isLoginDetailsInvalid, setIsLoginDetailsInvalid] =
+    useState<LoginInvalidDetailsType>({
+      isUsernameInvalid: false,
+      isPasswordInvalid: false,
+    });
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate: NavigateFunction = useNavigate();
 
   function handleLoginDetails(
     updatingValue: string,
     event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const newValue = event.target.value;
+  ): void {
+    const newValue: string = event.target.value;
+
     setLoginDetails((previousState) => ({
       ...previousState,
       [updatingValue]: newValue,
@@ -111,7 +124,7 @@ const Login = () => {
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );
-          localStorage.setItem(
+          addItemLocalStorage(
             USER_TOKEN,
             JSON.stringify(result.response.user_id)
           );
@@ -143,7 +156,7 @@ const Login = () => {
     }
   }
 
-  const headerSection = () => (
+  const headerSection: ReactElementType = () => (
     <>
       <img src={GLOBAL_LOGO_URL} className={logo} alt={GLOBAL_LOGO_ALT} />
       <h1 className={heading}>
@@ -153,7 +166,7 @@ const Login = () => {
     </>
   );
 
-  const inputsSection = () => (
+  const inputsSection: ReactElementType = () => (
     <>
       <Input
         label={USERNAME_LABEL}
