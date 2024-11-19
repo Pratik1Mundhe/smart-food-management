@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import useFetchFoodItems from "../apis/queries/GetMealFoodItems/useFetchFoodItems";
-import { FoodItemType, MealTypeEnum, VoidFunctionType } from "../types";
-import { FOOD_ITEMS_LIMIT, FOOD_ITEMS_OFFSET } from "../constants";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+
+import useFetchFoodItems from "../apis/queries/GetMealFoodItems/useFetchFoodItems";
 import FoodItemsModal from "../components/foodItemsModal/FoodItemsModal";
 import MealFoodItemModel from "../models/MealFoodItemModel";
+import { MealTypeEnum, VoidFunctionType } from "../types";
+import { FOOD_ITEMS_LIMIT, FOOD_ITEMS_OFFSET } from "../constants";
 
 export interface FoodItemsModalControllerPropsType {
   handleShowFoodItemsModal: (value: boolean) => void;

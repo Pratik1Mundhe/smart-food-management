@@ -1,4 +1,8 @@
-import { ApolloError } from "@apollo/client";
+import {
+  ApolloError,
+  ApolloQueryResult,
+  OperationVariables,
+} from "@apollo/client";
 import MealFoodItemModel from "./models/MealFoodItemModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
@@ -213,4 +217,14 @@ export interface FoodItemsModalPropsType {
   loading: boolean;
   error: ApolloError | undefined;
   currentMealTab: MealTypeEnum;
+}
+
+export interface useFetchScheduledMealType {
+  (date: string, mealType: MealTypeEnum): {
+    mealsLoading: boolean;
+    error: ApolloError | undefined;
+    refetch: (
+      variables?: Partial<OperationVariables> | undefined
+    ) => Promise<ApolloQueryResult<any>>;
+  };
 }

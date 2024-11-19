@@ -4,13 +4,13 @@ import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 
 import Modal from "../modal/Modal";
-import { FoodItemsModalPropsType, ReactElementType } from "../../types";
 import SelectFoodItems from "../selectFoodItems/SelectFoodItems";
-import { selectArrowButton, greenButton } from "./styles";
 import foodItemsStore from "../../store/FoodItemsStore";
 import FoodItemsEmptyView from "./FoodItemsEmptyView";
 import FoodItemsLoaderView from "./FoodItemsLoaderView";
 import FoodItemsErrorView from "./FoodItemsErrorView";
+import { selectArrowButton, greenButton } from "./styles";
+import { FoodItemsModalPropsType, ReactElementType } from "../../types";
 
 const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
   handleRefetchFoodItems,

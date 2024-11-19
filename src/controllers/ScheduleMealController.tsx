@@ -19,29 +19,23 @@ import MealFoodItemModel from "../models/MealFoodItemModel";
 
 const ScheduleMealController: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(getTomorrowDate());
-
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
-
   const [showModals, setShowModals] = useState<ScheduleMealModalType>({
     showFoodItemsModal: false,
     showDeleteConfirmModal: false,
     showSaveConfirmModal: false,
   });
-
   const [deleteFoodItemId, setDeleteFoodItemId] = useState<string | null>(null);
-
   const {
     mealsLoading,
     error: fetchMealsError,
     refetch,
   } = useFetchScheduledMeal(formatDate(currentDate), currentMealTab);
-
   const {
     loading: scheduleMealLoading,
     error: scheduleMealError,
     setSchedule,
   } = useScheduleMeal();
-
   const scheduledMealItems = scheduledMealStore.getMealDayData(
     formatDate(currentDate)
   );

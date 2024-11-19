@@ -14,6 +14,7 @@ const AdminHome: React.FC = () => {
   const adminUsername = "admin";
   const accessToken = getItemLocalStorage(ACCESS_TOKEN);
   const isAdmin = getItemLocalStorage(ADMIN_TOKEN);
+
   if (accessToken === null) {
     return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
   }
@@ -21,7 +22,6 @@ const AdminHome: React.FC = () => {
     return <Navigate to={PageRoutesEnum.HOME_PAGE} replace />;
   }
 
-  //add dynamic logo based on username
   return (
     <div className={adminContainer}>
       <div className="flex items-center gap-2">

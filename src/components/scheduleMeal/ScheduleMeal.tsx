@@ -3,20 +3,20 @@ import { observer } from "mobx-react-lite";
 import { v4 } from "uuid";
 import { useTranslation } from "react-i18next";
 
-import { ReactElementType, ScheduleMealPropsType } from "../../types";
 import Loader from "../loader/Loader";
 import MealDate from "../mealDate/MealDate";
 import MealTabs from "../mealTabs/MealTabs";
 import ScheduleFoodItem from "../scheduleFoodItem/ScheduleFoodItem";
 import DeleteConfirmModal from "../confirmModal/DeleteConfirmModal";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
-import { blueButton, greenButton, header } from "./styles";
 import ScheduledMealsLoader from "./ScheduledMealsLoader";
 import ScheduledMealSaveErrorView from "./ScheduledMealSaveErrorView";
 import ScheduledMealsEmptyView from "./ScheduledMealsEmptyView";
 import ScheduledMealsErrorView from "./ScheduledMealsErrorView";
 import FoodItemsModalController from "../../controllers/FoodItemsModalController";
 import MealFoodItemModel from "../../models/MealFoodItemModel";
+import { ReactElementType, ScheduleMealPropsType } from "../../types";
+import { blueButton, greenButton, header } from "./styles";
 
 const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
   foodData,
@@ -54,7 +54,6 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
       </ul>
     );
   };
-
   const renderScheduleFoodItems: ReactElementType = () => {
     return (
       <>
@@ -110,7 +109,6 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
     }
     return renderScheduleFoodItems();
   };
-
   const renderButtons: ReactElementType = () => {
     const renderButtonLoader = (): JSX.Element | string => {
       if (scheduleMealLoading) {
@@ -140,7 +138,7 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
       </div>
     );
   };
-  const renderModal = () => {
+  const renderModal: ReactElementType = () => {
     if (showModals.showFoodItemsModal) {
       return (
         <FoodItemsModalController
