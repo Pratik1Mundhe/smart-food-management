@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import { DATE_FORMAT } from "../../constants";
@@ -14,6 +15,8 @@ const MealDate: React.FC<MealDatePropsType> = ({
   currentDate,
   setCurrentDate,
 }) => {
+  const { t } = useTranslation();
+  const tPath = "pages.adminHome.scheduleMeal.mealDate";
   const today: boolean = currentDate.getDate() == new Date().getDate();
 
   const handleNextDate: VoidFunctionType = () => {
@@ -34,11 +37,9 @@ const MealDate: React.FC<MealDatePropsType> = ({
   const renderDayText = (): string => {
     switch (currentDate.getDate()) {
       case new Date().getDate():
-        return "Today";
+        return t(tPath + ".today");
       case new Date().getDate() + 1:
-        return "Tomorrow";
-      case new Date().getDate() - 1:
-        return "Yesterday";
+        return t(tPath + ".tomorrow");
       default:
         return dayjs(currentDate).format(DATE_FORMAT);
     }
@@ -54,11 +55,9 @@ const MealDate: React.FC<MealDatePropsType> = ({
           className={`h-3 w-3 ${today ? "opacity-50 pointer-events-none" : ""}`}
         />
       </button>
-
       <div className="py-2 border-2 w-[140px]">
         <p className="text-sm text-secondary text-center">{renderDayText()}</p>
       </div>
-
       <button
         onClick={handleNextDate}
         className="p-3 border-2 border-l-0 rounded-r"

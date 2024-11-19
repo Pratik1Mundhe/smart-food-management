@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { v4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 import {
   FoodItemType,
@@ -9,6 +10,7 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
+import Loader from "../loader/Loader";
 import MealDate from "../mealDate/MealDate";
 import MealTabs from "../mealTabs/MealTabs";
 import ScheduleFoodItem from "../scheduleFoodItem/ScheduleFoodItem";
@@ -16,16 +18,16 @@ import FoodItemsModal from "../foodItemsModal/FoodItemsModal";
 import DeleteConfirmModal from "../confirmModal/DeleteConfirmModal";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import ModalStore from "../../store/ModalStore";
-import useScheduleMeal from "../../apis/mutations/scheduleMeal/useMutateScheduleMeal";
+import useScheduleMeal from "../../apis/mutations/SaveScheduledMeal/useMutateScheduleMeal";
 import { formatDate, getTomorrowDate } from "../../utils/formatDate";
 import { successToast } from "../../utils/toastUtils/successToast";
 import { failureToast } from "../../utils/toastUtils/failureToast";
-import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
-import Loader from "../loader/Loader";
+import useFetchScheduledMeal from "../../apis/queries/GetMealScheduled/useFetchScheduledMeal";
 import scheduledMealStore from "../../store/ScheduledMealStore";
 import { blueButton, greenButton, header, viewContainer } from "./styles";
 
 const ScheduleMeal: React.FC = () => {
+  //create object state for all modals
   const [currentDate, setCurrentDate] = useState<Date>(getTomorrowDate());
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [showFoodItemsModal, setShowFoodItemsModal] = useState<boolean>(false);
@@ -38,18 +40,19 @@ const ScheduleMeal: React.FC = () => {
     formatDate(currentDate),
     currentMealTab
   );
+  const { loading, error, setSchedule } = useScheduleMeal();
   const scheduledMealItems = scheduledMealStore.getMealDayData(
     formatDate(currentDate)
   );
-  const mealDataObjectString = JSON.stringify(scheduledMealItems);
   const [foodData, setFoodData] =
     useState<MealFoodDataType>(scheduledMealItems);
+  const { t } = useTranslation();
+  const tPath = "pages.adminHome.scheduleMeal.";
 
+  const mealDataObjectString = JSON.stringify(scheduledMealItems);
   useEffect(() => {
     setFoodData(scheduledMealItems);
   }, [mealDataObjectString]);
-
-  const { loading, error, setSchedule } = useScheduleMeal();
 
   const addFoodItem = (food: FoodItemType): void => {
     const isFoodExist = foodData[currentMealTab].some(
@@ -110,12 +113,13 @@ const ScheduleMeal: React.FC = () => {
     ModalStore.closeConfirmModal();
   };
 
-  const renderMealItemsHeaders = () => {
+  const renderMealItemsHeaders: ReactElementType = () => {
+    const path = tPath + "mealItemsHeaders.";
     return (
       <ul className="flex items-center gap-4 mt-4 text-primary font-semibold">
-        <li className="w-1/4">Items</li>
-        <li className="w-[118px]">Full Meal</li>
-        <li className="">Half Meal</li>
+        <li className="w-1/4">{t(path + "items")}</li>
+        <li className="w-[118px]">{t(path + "fullMeal")}</li>
+        <li className="">{t(path + "halfMeal")}</li>
       </ul>
     );
   };
@@ -142,7 +146,7 @@ const ScheduleMeal: React.FC = () => {
           onClick={() => setShowFoodItemsModal(true)}
           className={blueButton}
         >
-          ADD ITEM
+          {t(tPath + "buttons.addItem")}
         </button>
       </>
     );
@@ -159,9 +163,11 @@ const ScheduleMeal: React.FC = () => {
   const renderMealSaveErrorView: ReactElementType = () => {
     return (
       <div className={viewContainer}>
-        <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
+        <h1 className="text-xl font-semibold ">
+          {t(tPath + "errorView.title")}
+        </h1>
         <button onClick={handleSaveMealSchedule} className={blueButton}>
-          Retry
+          {t(tPath + "buttons.retry")}
         </button>
       </div>
     );
@@ -171,13 +177,13 @@ const ScheduleMeal: React.FC = () => {
     return (
       <div className={viewContainer}>
         <h1 className="text-general font-semibold text-xl">
-          Currently there are no food item's
+          {t(tPath + "emptyView.title")}
         </h1>
         <button
           onClick={() => setShowFoodItemsModal(true)}
           className={blueButton}
         >
-          ADD ITEM
+          {t(tPath + "buttons.addItem")}
         </button>
       </div>
     );
@@ -190,6 +196,7 @@ const ScheduleMeal: React.FC = () => {
     if (error) {
       return renderMealSaveErrorView();
     }
+    //while data is storing in store, getting glitch
     if (foodData[currentMealTab].length === 0) {
       return renderMealsEmptyView();
     }
@@ -199,6 +206,7 @@ const ScheduleMeal: React.FC = () => {
   const renderDeleteConfirmModal: ReactElementType = () => {
     if (showDeleteConfirmModal) {
       if (!deleteFoodItemId) {
+        //throw error
         return <></>;
       }
       const getFoodItem = (): FoodItemType => {
@@ -224,11 +232,11 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const handleMealSaveSuccess: VoidFunctionType = () => {
-    successToast("Meal Added");
+    successToast(t(tPath + "toasts.success"));
   };
 
   const handleMealSaveFailure: VoidFunctionType = () => {
-    failureToast("Something went wrong !!!");
+    failureToast(t(tPath + "toasts.failure"));
     handleCloseSaveConfirmModal();
   };
 
@@ -242,7 +250,7 @@ const ScheduleMeal: React.FC = () => {
     foodData[currentMealTab].forEach((meal) => {
       const { id, fullMealQuantity, halfMealQuantity } = meal;
       if (fullMealQuantity === 0 || halfMealQuantity === 0) {
-        failureToast("Quantities can't be zero");
+        failureToast(t(tPath + "toasts.quantityError"));
         validation = false;
         return;
       }
@@ -295,12 +303,12 @@ const ScheduleMeal: React.FC = () => {
       if (loading) {
         return <Loader />;
       }
-      return "Save";
+      return t(tPath + "buttons.save");
     };
     return (
       <div className="flex items-center gap-4 self-end">
         <button className="rounded text-sm py-2 px-5 text-general font-semibold border-2">
-          Back
+          {t(tPath + "buttons.back")}
         </button>
         <button onClick={handleOpenSaveConfirmModal} className={greenButton}>
           {renderButtonLoader()}
@@ -335,7 +343,7 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const renderHeader: ReactElementType = () => {
-    return <h1 className={header}>Schedule Meal</h1>;
+    return <h1 className={header}>{t(tPath + "header")}</h1>;
   };
 
   return (

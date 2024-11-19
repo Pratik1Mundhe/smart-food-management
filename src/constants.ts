@@ -32,8 +32,15 @@ export const MEAL_TYPES: MealTypeEnum[] = [
 ];
 
 export const MEAL_DAY_KEY_FORMAT = "DD/MM/YYYY";
-export const BACKEND_URL = "https://old-melons-cheat.loca.lt/";
+export const BACKEND_URL = "https://sixty-rockets-join.loca.lt/";
 export const GRAPHQL_URL = BACKEND_URL + "graphql";
 export const LOGIN_URL = BACKEND_URL + "api/meals/login/";
 export const LOGOUT_URL = BACKEND_URL + "api/meals/logout/";
 export const TOASTER_POSITION = "top-center";
+export const FOOD_ITEMS_OFFSET = 0;
+export const FOOD_ITEMS_LIMIT = 10;
+export const LANGUAGES = [
+  { value: "en", name: "English" },
+  { value: "te", name: "తెలుగు" },
+  { value: "hi", name: "हिंदी" },
+];

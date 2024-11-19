@@ -4,10 +4,13 @@ import { observer } from "mobx-react-lite";
 import foodItemsStore from "../../store/FoodItemsStore";
 import { FoodItemsSelectPropsType } from "../../types";
 import { selectInput } from "./styles";
+import { useTranslation } from "react-i18next";
 
 const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
   setSelectedFoodItem,
 }) => {
+  const { t } = useTranslation();
+  const tPath = "pages.adminHome.scheduleMeal.foodItemsModal";
   const handleSelectFoodItem = (
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
@@ -26,7 +29,7 @@ const SelectFoodItems: React.FC<FoodItemsSelectPropsType> = ({
       onChange={handleSelectFoodItem}
       className={selectInput}
     >
-      <option value="">Select Food Item</option>
+      <option value="">{t(tPath + ".selectOption")}</option>
       {foodItemsStore.getFoodItems().map((food) => {
         const { id, name } = food;
         return (

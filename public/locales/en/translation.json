@@ -1,0 +1,115 @@
+{
+  "pages": {
+    "adminHome": {
+      "title": "Admin Portal",
+      "scheduleMeal": {
+        "header": "Schedule Meal",
+        "mealItemsHeaders": {
+          "items": "Items",
+          "fullMeal": "Full Meal",
+          "halfMeal": "Half Meal"
+        },
+        "buttons": {
+          "addItem": "Add Item",
+          "retry": "Retry",
+          "save": "Save",
+          "back": "Back"
+        },
+        "errorView": {
+          "title": "Something went wrong!"
+        },
+        "emptyView": {
+          "title": "Currently there are no food item's"
+        },
+
+        "toasts": {
+          "success": "Meal Added",
+          "failure": "Something went wrong !",
+          "quantityError": "Quantities can't be zero"
+        },
+        "mealTabs": {
+          "breakfast": "Breakfast",
+          "lunch": "Lunch",
+          "dinner": "Dinner"
+        },
+        "mealDate": {
+          "tomorrow": "Tomorrow",
+          "today": "Today"
+        },
+
+        "foodItemsModal": {
+          "mealType": {
+            "breakfast": "Breakfast",
+            "lunch": "Lunch",
+            "dinner": "Dinner"
+          },
+          "title": "Add to",
+          "selectOption": "SELECT THE FOOD ITEM",
+          "errors": {
+            "itemNotSelected": "Item is not selected"
+          },
+          "errorView": {
+            "title": "Something went wrong!"
+          },
+          "emptyView": {
+            "title": "Currently there are no food item's"
+          },
+          "buttons": {
+            "retry": "Retry",
+            "addItem": "ADD ITEM"
+          },
+          "selectFoodItems": {
+            "title": "Select Food Item"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "confirmModal": {
+      "save": {
+        "title": "Are you sure you want to save?",
+        "buttons": {
+          "save": "Save",
+          "cancel": "Cancel"
+        }
+      },
+      "close": {
+        "title": "Are you sure you want to close?",
+        "buttons": {
+          "back": "Back",
+          "cancel": "Cancel"
+        }
+      },
+      "logout": {
+        "title": "Are you sure you want to logout?",
+        "buttons": {
+          "logout": "Logout",
+          "cancel": "Cancel"
+        }
+      },
+      "skip": {
+        "title": "Are you sure you want to skip?",
+        "buttons": {
+          "skip": "Skip",
+          "cancel": "Cancel"
+        }
+      },
+      "delete": {
+        "title": "Are you sure you want to delete?",
+        "buttons": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "adminNavbar": {
+      "buttons": {
+        "logout": "Logout"
+      },
+      "menuOptions": {
+        "home": "Home"
+      }
+    }
+  }
+}

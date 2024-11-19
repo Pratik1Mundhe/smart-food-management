@@ -7,8 +7,9 @@ import {
   VoidFunctionType,
 } from "../../types";
 import { observer } from "mobx-react-lite";
-import useSaveMealStatus from "../../apis/mutations/saveMealStatus/useSaveMealStatus";
+import useSaveMealStatus from "../../apis/mutations/SaveDayMealStatus/useSaveMealStatus";
 import UserMealStore from "../../store/UserMealStore";
+import { useTranslation } from "react-i18next";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
@@ -19,14 +20,18 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
   closeModal,
   action,
 }) => {
-  const { triggerSaveMealStatue, loading, error } = useSaveMealStatus();
+  const { t } = useTranslation();
+  const tPath = "components.confirmModal.skip";
+  // const { triggerSaveMealStatue, loading, error } = useSaveMealStatus();
+
   function handelSkipButton() {
     action();
-    triggerSaveMealStatue({
-      mealId: UserMealStore.mealId,
-      status: MealStatusEnum.SKIP,
-    });
+    // triggerSaveMealStatue({
+    //   mealId: UserMealStore.mealId,
+    //   status: MealStatusEnum.SKIP,
+    // });
   }
+
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">
@@ -34,13 +39,13 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
           onClick={handelSkipButton}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          Skip
+          {t(tPath + ".buttons.skip")}
         </button>
         <button
           onClick={closeModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
-          Cancel
+          {t(tPath + ".buttons.cancel")}
         </button>
       </div>
     );
@@ -50,7 +55,7 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
     <ConfirmModal>
       <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
-          Are you sure you want to skip?
+          {t(tPath + ".title")}
         </h1>
         {renderButtons()}
       </div>

@@ -5,7 +5,7 @@ import {
   InMemoryCache,
   HttpLink,
 } from "@apollo/client";
-
+import "./i18n.ts"; // Import this to initialize i18n
 import "./index.css";
 import App from "./App.tsx";
 import { ACCESS_TOKEN, GRAPHQL_URL } from "./constants.ts";
@@ -17,7 +17,7 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: GRAPHQL_URL,
     headers: {
-      Authorization: `Bearer feea4782-8e6f-486f-8202-28fee10eed62`,
+      Authorization: `Bearer a98aec44-1bec-401f-ba00-ab10b6881cae`,
     },
   }),
   cache: new InMemoryCache(),

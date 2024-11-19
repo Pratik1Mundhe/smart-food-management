@@ -1,12 +1,7 @@
 import React from "react";
-import { loaderContainer } from "./styles";
 
-interface LoaderPropsType {
-  height?: number;
-  width?: number;
-  color?: string;
-  radius?: number;
-}
+import { loaderContainer } from "./styles";
+import { LoaderPropsType } from "../../types";
 
 const Loader: React.FC<LoaderPropsType> = ({
   height = 20,

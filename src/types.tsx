@@ -148,3 +148,32 @@ export interface MealCardProps {
   mealTime: string;
   currentDate: Date;
 }
+
+export interface QuantityCounterPropsType {
+  setQuantity: (quantity: number) => void;
+  quantity: number;
+}
+
+export interface ScheduleFoodItemPropsType {
+  food: FoodItemType;
+  updateFullMealQuantity: (id: string, quantity: number) => void;
+  updateHalfMealQuantity: (id: string, quantity: number) => void;
+  removeFoodItem: (id: string) => void;
+  handleOpenConfirmModal: (id: string) => void;
+}
+
+export interface ModalPropsTypes {
+  close: () => void;
+  children: React.ReactElement;
+}
+export interface MealTabsPropsType {
+  currentMealTab: string;
+  handleTabChange: (meal: MealTypeEnum) => void;
+}
+
+export interface LoaderPropsType {
+  height?: number;
+  width?: number;
+  color?: string;
+  radius?: number;
+}

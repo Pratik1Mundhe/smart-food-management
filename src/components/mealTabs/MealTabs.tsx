@@ -1,19 +1,17 @@
 import React from "react";
 import { v4 } from "uuid";
+import { useTranslation } from "react-i18next";
 
 import { MEAL_TYPES } from "../../constants";
-import { MealTypeEnum } from "../../types";
+import { MealTabsPropsType } from "../../types";
 import { tabStyle } from "./styles";
-
-interface MealTabsPropsType {
-  currentMealTab: string;
-  handleTabChange: (meal: MealTypeEnum) => void;
-}
 
 const MealTabs: React.FC<MealTabsPropsType> = ({
   currentMealTab,
   handleTabChange,
 }) => {
+  const { t } = useTranslation();
+  const tPath = "pages.adminHome.scheduleMeal.mealTabs";
   return (
     <ul className="flex items-center border-2 rounded-md">
       {MEAL_TYPES.map((meal) => {
@@ -27,7 +25,7 @@ const MealTabs: React.FC<MealTabsPropsType> = ({
                 : "bg-transparent text-black"
             }`}
           >
-            {meal}
+            {t(tPath + `.${meal}`)}
           </li>
         );
       })}
