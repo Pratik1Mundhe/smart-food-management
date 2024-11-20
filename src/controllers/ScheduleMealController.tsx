@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 
@@ -6,6 +6,7 @@ import useScheduleMeal from "../apis/mutations/SaveScheduledMeal/useMutateSchedu
 import scheduledMealStore from "../store/ScheduledMealStore";
 import { formatDate, getTomorrowDate } from "../utils/formatDate";
 import {
+  MealFoodDataType,
   MealTypeEnum,
   ScheduleMealModalType,
   VoidFunctionType,
@@ -18,6 +19,7 @@ import ScheduleMeal from "../components/scheduleMeal/ScheduleMeal";
 import MealFoodItemModel from "../models/MealFoodItemModel";
 
 const ScheduleMealController: React.FC = () => {
+  const { t } = useTranslation();
   const [currentDate, setCurrentDate] = useState<Date>(getTomorrowDate());
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [showModals, setShowModals] = useState<ScheduleMealModalType>({
@@ -36,15 +38,13 @@ const ScheduleMealController: React.FC = () => {
     error: scheduleMealError,
     setSchedule,
   } = useScheduleMeal();
-  const scheduledMealItems = scheduledMealStore.getMealDayData(
-    formatDate(currentDate)
-  );
+  const scheduledMealItems = scheduledMealStore.getMealDayData(currentDate);
 
-  const { t } = useTranslation();
   const tPath = "pages.adminHome.scheduleMeal.";
 
   const addFoodItem = (food: MealFoodItemModel): void => {
     const { id, name, halfMealQuantity, fullMealQuantity } = food;
+
     scheduledMealStore.addFoodItemIntoMeal(
       currentDate,
       currentMealTab,
@@ -54,6 +54,7 @@ const ScheduleMealController: React.FC = () => {
       fullMealQuantity
     );
   };
+
   const removeFoodItem = (id: string): void => {
     scheduledMealStore.removeFoodItemFromMeal(currentDate, currentMealTab, id);
   };

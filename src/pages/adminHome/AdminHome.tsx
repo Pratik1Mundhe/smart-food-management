@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { ACCESS_TOKEN, ADMIN_TOKEN } from "../../constants";
+import { ACCESS_TOKEN, ADMIN_TOKEN, USERNAME_KEY } from "../../constants";
 import { getItemLocalStorage } from "../../utils/localStorageUtils/getItem";
 import { PageRoutesEnum } from "../../types";
 import { adminContainer, adminLogo } from "./styles";
@@ -11,7 +11,7 @@ import ScheduleMealController from "../../controllers/ScheduleMealController";
 
 const AdminHome: React.FC = () => {
   const { t } = useTranslation();
-  const adminUsername = "admin";
+  const adminUsername = getItemLocalStorage(USERNAME_KEY) || "admin";
   const accessToken = getItemLocalStorage(ACCESS_TOKEN);
   const isAdmin = getItemLocalStorage(ADMIN_TOKEN);
 

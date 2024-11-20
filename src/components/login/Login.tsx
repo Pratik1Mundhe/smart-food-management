@@ -32,6 +32,7 @@ import {
   ADMIN_TOKEN,
   USER_TOKEN,
   LOGIN_URL,
+  USERNAME_KEY,
 } from "../../constants";
 
 interface LoginDataType {
@@ -124,6 +125,7 @@ const Login: React.FC = () => {
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );
+          addItemLocalStorage(USERNAME_KEY, "admin");
           addItemLocalStorage(
             USER_TOKEN,
             JSON.stringify(result.response.user_id)

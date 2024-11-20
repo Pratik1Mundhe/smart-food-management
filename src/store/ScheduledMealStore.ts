@@ -10,6 +10,8 @@ import {
 import MealFoodItemModel from "../models/MealFoodItemModel";
 import ScheduledMealModel from "../models/ScheduledMealModel";
 import { MEAL_DAY_KEY_FORMAT } from "../constants";
+import { v4 } from "uuid";
+import { formatDate } from "../utils/formatDate";
 
 class ScheduledMealStore {
   mealDayData: Map<string, MealScheduledDataType> = new Map();
@@ -17,9 +19,8 @@ class ScheduledMealStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  getMealDayData(date: string): MealFoodDataType {
-    const dateObject = new Date(date);
-    const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
+  getMealDayData(date: Date): MealFoodDataType {
+    const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
     const mealData = this.mealDayData.get(formattedDate);
     if (!mealData) {
       return {
@@ -37,13 +38,12 @@ class ScheduledMealStore {
   }
 
   setScheduledMeal(
-    date: string,
+    date: Date,
     mealType: MealTypeEnum,
     items: MealFoodItemResponseType[],
     mealId: string
   ): void {
-    const dateObject = new Date(date);
-    const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
+    const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
     const itemInstances = items.map((item) => {
       const { id, name, fullMealQuantity, halfMealQuantity } = item;
       return new MealFoodItemModel(
@@ -53,9 +53,7 @@ class ScheduledMealStore {
         halfMealQuantity
       );
     });
-
     const mealModel = new ScheduledMealModel(mealId, mealType, itemInstances);
-
     const mealDataObject = this.mealDayData.get(formattedDate) || {
       breakfast: null,
       lunch: null,
@@ -78,11 +76,15 @@ class ScheduledMealStore {
   ) {
     const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
     const mealDay = this.mealDayData.get(formattedDate);
+    //if data is not there in database and store
     if (!mealDay) {
-      return;
+      const item = { id, name, fullMealQuantity, halfMealQuantity };
+      this.setScheduledMeal(date, mealType, [item], v4());
+    } else {
+      const meal = mealDay[mealType];
+      console.log(meal);
+      meal?.addFoodItem(id, name, fullMealQuantity, halfMealQuantity);
     }
-    const meal = mealDay[mealType];
-    meal?.addFoodItem(id, name, fullMealQuantity, halfMealQuantity);
   }
 
   removeFoodItemFromMeal(date: Date, mealType: MealTypeEnum, foodId: string) {

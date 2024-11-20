@@ -20,16 +20,19 @@ import {
 } from "./styles";
 import { useTranslation } from "react-i18next";
 import SelectLanguages from "../selectLanguages/SelectLanguages";
+import { getItemLocalStorage } from "../../utils/localStorageUtils/getItem";
+import { USERNAME_KEY } from "../../constants";
 
 const AdminNavbar: React.FC = () => {
   const [showLogoutConfirmModal, setLogoutConfirmModal] =
     useState<boolean>(false);
   const [showLogout, setShowLogout] = useState<boolean>(false);
   const navigate: NavigateFunction = useNavigate();
-  const path = window.location.pathname;
   const { t } = useTranslation();
+
+  const path = window.location.pathname;
   const tPath = "components.adminNavbar";
-  const adminUsername = "admin";
+  const adminUsername = getItemLocalStorage(USERNAME_KEY);
 
   const handleOpenLogoutConfirmModal: VoidFunctionType = () => {
     setLogoutConfirmModal(true);

@@ -9,8 +9,13 @@ const useFetchScheduledMeal: useFetchScheduledMealType = (
   date: string,
   mealType: MealTypeEnum
 ) => {
-  const hasMealItems =
-    scheduledMealStore.getMealDayData(date)![mealType]?.length > 0;
+  let hasMealItems = false;
+  const mealDay = scheduledMealStore.getMealDayData(new Date(date));
+
+  if (mealDay) {
+    hasMealItems = mealDay[mealType]?.length > 0;
+  }
+
   const { loading, error, refetch, networkStatus } = useQuery(
     GET_SCHEDULE_MEAL,
     {
@@ -31,7 +36,6 @@ const useFetchScheduledMeal: useFetchScheduledMealType = (
     }
   );
   const mealsLoading = loading || NetworkStatus.refetch === networkStatus;
-
   return { mealsLoading, error, refetch };
 };
 export default useFetchScheduledMeal;
