@@ -32,6 +32,14 @@ class ScheduledMealModel {
   removeFoodItem(id: string) {
     this.items = this.items.filter((item) => item.id !== id);
   }
+
+  static createScheduledMealModel(
+    mealId: string,
+    mealType: MealTypeEnum,
+    items: MealFoodItemModel[]
+  ) {
+    return new ScheduledMealModel(mealId, mealType, items);
+  }
 }
 
 export default ScheduledMealModel;

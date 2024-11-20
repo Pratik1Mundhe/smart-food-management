@@ -32,18 +32,24 @@ const ScheduleMealController: React.FC = () => {
     error: fetchMealsError,
     refetch,
   } = useFetchScheduledMeal(formatDate(currentDate), currentMealTab);
+
+  const saveMealSuccess: VoidFunctionType = () => {
+    handleMealSaveSuccess();
+  };
+  const saveMealFailure: VoidFunctionType = () => {
+    handleMealSaveFailure();
+  };
   const {
     loading: scheduleMealLoading,
     error: scheduleMealError,
     setSchedule,
-  } = useScheduleMeal();
-  const scheduledMealItems = scheduledMealStore.getMealDayData(currentDate);
+  } = useScheduleMeal(saveMealSuccess, saveMealFailure);
 
+  const scheduledMealItems = scheduledMealStore.getMealDayData(currentDate);
   const tPath = "pages.adminHome.scheduleMeal.";
 
   const addFoodItem = (food: MealFoodItemModel): void => {
     const { id, name, halfMealQuantity, fullMealQuantity } = food;
-
     scheduledMealStore.addFoodItemIntoMeal(
       currentDate,
       currentMealTab,
@@ -132,13 +138,6 @@ const ScheduleMealController: React.FC = () => {
             mealType: currentMealTab.toUpperCase(),
           },
         },
-      }).then(({ data }) => {
-        const { scheduleMeal } = data;
-        if (scheduleMeal.__typename === "ScheduleMealSuccess") {
-          handleMealSaveSuccess();
-        } else if (scheduleMeal.__typename === "ScheduleMealFailure") {
-          handleMealSaveFailure();
-        }
       });
     }
   };

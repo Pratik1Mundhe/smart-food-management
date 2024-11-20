@@ -8,7 +8,7 @@ import MealFoodItemModel from "../models/MealFoodItemModel";
 import { MealTypeEnum, VoidFunctionType } from "../types";
 import { FOOD_ITEMS_LIMIT, FOOD_ITEMS_OFFSET } from "../constants";
 
-export interface FoodItemsModalControllerPropsType {
+interface FoodItemsModalControllerPropsType {
   handleShowFoodItemsModal: (value: boolean) => void;
   currentMealTab: MealTypeEnum;
   addFoodItem: (food: MealFoodItemModel) => void;

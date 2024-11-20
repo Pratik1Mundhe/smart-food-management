@@ -15,7 +15,7 @@ class FoodItemsStore {
   addFoodItems(items: FoodItemsResponseType[]): void {
     const foodItemInstances = items.map((item) => {
       const { id, name, category, baseSizeUnit, servingSizeUnit } = item;
-      return new FoodItemModal(
+      return FoodItemModal.createFoodItemModal(
         id,
         name,
         category,
@@ -36,7 +36,11 @@ class FoodItemsStore {
   setInCampusStatus(): void {
     this.inCampusStatus = !this.inCampusStatus;
   }
+
+  static createFoodItemsStore() {
+    return new FoodItemsStore();
+  }
 }
 
-const foodItemsStore = new FoodItemsStore();
+const foodItemsStore = FoodItemsStore.createFoodItemsStore();
 export default foodItemsStore;
