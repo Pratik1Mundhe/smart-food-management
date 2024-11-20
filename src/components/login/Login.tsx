@@ -32,6 +32,8 @@ import {
   ADMIN_TOKEN,
   USER_TOKEN,
   LOGIN_URL,
+  USERNAME_KEY,
+  LOGIN_METHOD,
 } from "../../constants";
 
 interface LoginDataType {
@@ -104,7 +106,7 @@ const Login: React.FC = () => {
 
     try {
       const response = await fetch(LOGIN_URL, {
-        method: LOGIN_URL,
+        method: LOGIN_METHOD,
         headers: {
           "Content-Type": "application/json",
         },
@@ -124,6 +126,7 @@ const Login: React.FC = () => {
             ACCESS_TOKEN,
             JSON.stringify(result.response.access_token)
           );
+          addItemLocalStorage(USERNAME_KEY, "admin");
           addItemLocalStorage(
             USER_TOKEN,
             JSON.stringify(result.response.user_id)
@@ -136,6 +139,7 @@ const Login: React.FC = () => {
         throw new Error(result.res_status);
       }
     } catch (err: unknown) {
+      console.log(err);
       if (err instanceof Error) {
         if (err.message === INVALID_USERNAME_RESPONSE) {
           setIsLoginDetailsInvalid({

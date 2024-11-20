@@ -17,6 +17,7 @@ import FoodItemsModalController from "../../controllers/FoodItemsModalController
 import MealFoodItemModel from "../../models/MealFoodItemModel";
 import { ReactElementType, ScheduleMealPropsType } from "../../types";
 import { blueButton, greenButton, header } from "./styles";
+import { QUERY_NOT_EXIST_ERROR } from "../../constants";
 
 const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
   foodData,
@@ -80,7 +81,7 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
     );
   };
   const renderMealItems: ReactElementType = () => {
-    if (fetchMealsError) {
+    if (fetchMealsError && fetchMealsError?.message !== QUERY_NOT_EXIST_ERROR) {
       return (
         <ScheduledMealsErrorView
           tPath={tPath}
@@ -107,6 +108,7 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
         />
       );
     }
+
     return renderScheduleFoodItems();
   };
   const renderButtons: ReactElementType = () => {

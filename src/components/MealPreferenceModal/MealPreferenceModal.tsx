@@ -155,8 +155,9 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
     return <></>;
   };
 
-  const mealItems =
-    scheduledMealStore.getMealDayData(date)[type as MealTypeEnum];
+  const mealItems = scheduledMealStore.getMealDayData(new Date(date))[
+    type as MealTypeEnum
+  ];
 
   if (ModalStore.typeOfMeal && mealItems) {
     return (

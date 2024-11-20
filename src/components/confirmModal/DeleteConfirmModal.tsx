@@ -28,6 +28,7 @@ const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({
     handleCloseDeleteConfirmModal();
     removeFoodItem(id);
   };
+
   const renderButtons: ReactElementType = () => {
     return (
       <div className="flex items-center self-center gap-6">
@@ -46,6 +47,7 @@ const DeleteConfirmModal: React.FC<ConfirmModalPropsType> = ({
       </div>
     );
   };
+
   return (
     <ConfirmModal>
       <div className="flex flex-col gap-12 py-16 px-14">
