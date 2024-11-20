@@ -11,7 +11,6 @@ import MealFoodItemModel from "../models/MealFoodItemModel";
 import ScheduledMealModel from "../models/ScheduledMealModel";
 import { MEAL_DAY_KEY_FORMAT } from "../constants";
 import { v4 } from "uuid";
-import { formatDate } from "../utils/formatDate";
 
 class ScheduledMealStore {
   mealDayData: Map<string, MealScheduledDataType> = new Map();

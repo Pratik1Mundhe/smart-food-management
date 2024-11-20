@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 
@@ -6,7 +6,6 @@ import useScheduleMeal from "../apis/mutations/SaveScheduledMeal/useMutateSchedu
 import scheduledMealStore from "../store/ScheduledMealStore";
 import { formatDate, getTomorrowDate } from "../utils/formatDate";
 import {
-  MealFoodDataType,
   MealTypeEnum,
   ScheduleMealModalType,
   VoidFunctionType,
