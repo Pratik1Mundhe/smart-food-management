@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class _ModalStore {
+class ModalStore {
   isModalOpen: boolean;
   typeOfMeal: string;
   isConfirmModalOpen: boolean;
@@ -28,7 +28,10 @@ class _ModalStore {
   closeConfirmModal(): void {
     this.isConfirmModalOpen = false;
   }
+
+  static createModalStore() {
+    return new ModalStore();
+  }
 }
 
-const ModalStore = new _ModalStore();
-export default ModalStore;
+export default ModalStore.createModalStore();

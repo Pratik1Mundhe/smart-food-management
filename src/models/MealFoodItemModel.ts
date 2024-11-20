@@ -25,6 +25,15 @@ class MealFoodItemModel {
   updateHalfMealQuantity(quantity: number): void {
     this.halfMealQuantity = quantity;
   }
+
+  static createMealFoodItemModel(
+    id: string,
+    name: string,
+    fullMealQuantity: number,
+    halfMealQuantity: number
+  ) {
+    return new MealFoodItemModel(id, name, fullMealQuantity, halfMealQuantity);
+  }
 }
 
 export default MealFoodItemModel;

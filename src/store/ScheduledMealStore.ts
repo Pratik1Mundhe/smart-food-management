@@ -45,14 +45,18 @@ class ScheduledMealStore {
     const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
     const itemInstances = items.map((item) => {
       const { id, name, fullMealQuantity, halfMealQuantity } = item;
-      return new MealFoodItemModel(
+      return MealFoodItemModel.createMealFoodItemModel(
         id,
         name,
         fullMealQuantity,
         halfMealQuantity
       );
     });
-    const mealModel = new ScheduledMealModel(mealId, mealType, itemInstances);
+    const mealModel = ScheduledMealModel.createScheduledMealModel(
+      mealId,
+      mealType,
+      itemInstances
+    );
     const mealDataObject = this.mealDayData.get(formattedDate) || {
       breakfast: null,
       lunch: null,
@@ -75,13 +79,31 @@ class ScheduledMealStore {
   ) {
     const formattedDate = dayjs(date).format(MEAL_DAY_KEY_FORMAT);
     const mealDay = this.mealDayData.get(formattedDate);
+    const item = { id, name, fullMealQuantity, halfMealQuantity };
     //if data is not there in database and store
     if (!mealDay) {
-      const item = { id, name, fullMealQuantity, halfMealQuantity };
       this.setScheduledMeal(date, mealType, [item], v4());
     } else {
       const meal = mealDay[mealType];
-      console.log(meal);
+      //if day data was set but meal type data is not set
+      if (!meal) {
+        const mealItemModel = MealFoodItemModel.createMealFoodItemModel(
+          id,
+          name,
+          fullMealQuantity,
+          halfMealQuantity
+        );
+        const mealModel = ScheduledMealModel.createScheduledMealModel(
+          v4(),
+          mealType,
+          [mealItemModel]
+        );
+        this.mealDayData.set(formattedDate, {
+          ...mealDay,
+          [mealType]: mealModel,
+        });
+        return;
+      }
       meal?.addFoodItem(id, name, fullMealQuantity, halfMealQuantity);
     }
   }
@@ -92,10 +114,15 @@ class ScheduledMealStore {
     if (!mealDay) {
       return;
     }
+
     const meal = mealDay[mealType];
     meal?.removeFoodItem(foodId);
   }
+
+  static createScheduledMealStore() {
+    return new ScheduledMealStore();
+  }
 }
 
-const scheduledMealStore = new ScheduledMealStore();
+const scheduledMealStore = ScheduledMealStore.createScheduledMealStore();
 export default scheduledMealStore;

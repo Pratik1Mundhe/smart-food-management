@@ -55,6 +55,10 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
       </ul>
     );
   };
+
+  const showFoodItemsModal = () => {
+    handleShowFoodItemsModal(true);
+  };
   const renderScheduleFoodItems: ReactElementType = () => {
     return (
       <>
@@ -71,10 +75,7 @@ const ScheduleMeal: React.FC<ScheduleMealPropsType> = ({
             );
           })}
         </ul>
-        <button
-          onClick={() => handleShowFoodItemsModal(true)}
-          className={blueButton}
-        >
+        <button onClick={showFoodItemsModal} className={blueButton}>
           {t(tPath + "buttons.addItem")}
         </button>
       </>

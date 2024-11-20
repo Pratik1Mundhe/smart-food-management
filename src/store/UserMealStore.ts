@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { MealStatusEnum, MealTypeEnum } from "../types";
 
-class _UserMealStore {
+class UserMealStore {
   data: string;
   mealId: string;
   mealStatus: {
@@ -30,7 +30,10 @@ class _UserMealStore {
   setMealStatus(status: MealStatusEnum, mealType: MealTypeEnum) {
     this.mealStatus = { ...this.mealStatus, [mealType]: status };
   }
+
+  static createUserMealStore() {
+    return new UserMealStore();
+  }
 }
 
-const UserMealStore = new _UserMealStore();
-export default UserMealStore;
+export default UserMealStore.createUserMealStore;
