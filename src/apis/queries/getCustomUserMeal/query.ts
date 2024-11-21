@@ -1,19 +1,25 @@
 import { gql } from "@apollo/client";
 
 const GET_CUSTOM_USER_MEAL = gql`
-  query GetScheduledMealForUser($params: GetScheduledMealForUserParams!) {
+  query Query($params: GetScheduledMealForUserParams!) {
     getScheduledMealForUser(params: $params) {
       ... on UserScheduledMeal {
         date
         meals {
-          mealId
           mealType
+          mealId
+          mealPreference
           items {
             id
             name
+            fullMealQuantity
+            halfMealQuantity
             customMealQuantity
           }
         }
+      }
+      ... on MealNotScheduled {
+        message
       }
     }
   }

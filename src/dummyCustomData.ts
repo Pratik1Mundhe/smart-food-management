@@ -1,7 +1,7 @@
 import { MealTypeEnum } from "./types";
 
 const dummyCustomData = {
-  date: "2024-11-18",
+  date: "2024-11-20",
   meals: [
     {
       mealId: "1",

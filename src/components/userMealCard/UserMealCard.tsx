@@ -1,220 +1,176 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CiClock1 } from "react-icons/ci";
 import { observer } from "mobx-react";
+import { useTranslation } from "react-i18next";
 
-import calculateCutoffTime from "../../utils/calculateCutoffTime";
-import MealPreferenceModal from "../MealPreferenceModal/MealPreferenceModal";
+import IconMeal from "../iconMeal/IconMeal";
+import Loader from "../loader/Loader";
+import UserMealStore from "../../store/UserMealStore";
+import Button from "../commonComponents/Button";
+import {
+  MealCardProps,
+  MealPreferenceEnum,
+  ReactElementType,
+} from "../../types";
 import {
   buttonContent,
   cardContainer,
-  disableEditButton,
-  editButton,
+  customMeals,
   foodItems,
-  halfMeals,
+  halfFullMeals,
   header,
+  mealButtonsContainer,
   mealItem,
   time,
   timeDetailsContainer,
 } from "./styles";
-import ModalStore from "../../store/ModalStore";
-import { MealCardProps, ReactElementType, VoidFunctionType } from "../../types";
-import IconMeal from "../iconMeal/IconMeal";
-import calculateMealCompleteTime from "../../utils/calculateMealCompletedTime";
-import Loader from "../loader/Loader";
-import foodItemsStore from "../../store/FoodItemsStore";
-import { MealStatusEnum } from "../../types";
-import { formatDate } from "../../utils/formatDate";
-import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchScheduledMeal";
-import scheduledMealStore from "../../store/ScheduledMealStore";
-import useSaveMealStatus from "../../apis/mutations/saveMealStatus/useSaveMealStatus";
+import MealPreferenceController from "../../Controllers/MealPreferenceController";
 
 const UserMealCard: React.FC<MealCardProps> = ({
-  type,
+  mealType,
+  mealItems,
   mealTime,
-  currentDate,
+  action,
+  fetchScheduleMealStatus,
 }) => {
-  const [isEditable, setIsEditable] = useState(true);
-  const [isMealAteStatus, setIsMealStatus] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const date = formatDate(currentDate);
-
-  const { mealsLoading, error, refetch } = useFetchScheduledMeal(
-    date,
-    type.toUpperCase()
-  );
-  const {
-    triggerSaveMealStatue,
-    loading: saveStatusLoading,
-    error: saveStatusError,
-  } = useSaveMealStatus();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const cutoff = calculateCutoffTime(mealTime.split("-")[0].trim());
-      const mealCompleteTime = calculateMealCompleteTime(
-        mealTime.split("-")[1].trim()
-      );
-      setIsEditable(now < cutoff);
-      setIsMealStatus(now > mealCompleteTime);
-      setLoading(false);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
+  const { t } = useTranslation();
   const mealTypeAndTime: ReactElementType = () => {
     return (
-      <div className={header}>
-        <div className={timeDetailsContainer}>
-          <div className="border-2 p-2 rounded-sm">
-            <IconMeal mealType={type} />
-          </div>
-          <p className="flex flex-col">
-            <span className="text-lg first-letter:capitalize">{type}</span>
-            <span className={time}>{mealTime}</span>
-          </p>
+      <div className={timeDetailsContainer}>
+        <div className="border-2 p-2 rounded-sm">
+          <IconMeal mealType={mealType} />
         </div>
-        <p className={halfMeals}>Half Meal</p>
+        <p className="flex flex-col">
+          <span className="text-lg first-letter:capitalize">
+            {t(`${mealType}`)}
+          </span>
+          <span className={time}>{mealTime}</span>
+        </p>
       </div>
     );
   };
-
-  const renderMealsEmptyView: ReactElementType = () => {
+  const mealPreference: ReactElementType = () => {
+    const preferenceStyle =
+      UserMealStore.mealPreference[mealType] === MealPreferenceEnum.CUSTOM
+        ? customMeals
+        : halfFullMeals;
+    const fullOrHalfMeal =
+      UserMealStore.mealPreference[mealType] === MealPreferenceEnum.FULL
+        ? t("fullMeal")
+        : t("halfMeal");
+    return (
+      <>
+        {UserMealStore.mealPreference[mealType] ? (
+          <p className={preferenceStyle}>
+            {UserMealStore.mealPreference[mealType] === "custom"
+              ? t("custom")
+              : fullOrHalfMeal}
+          </p>
+        ) : undefined}
+      </>
+    );
+  };
+  const headerSection: ReactElementType = () => {
+    return (
+      <div className={header}>
+        {mealTypeAndTime()}
+        {mealPreference()}
+      </div>
+    );
+  };
+  const mealsEmptyContent: ReactElementType = () => {
     return (
       <div className="flex items-center justify-center my-auto">
-        <h1 className="font-semibold text-slate-800">Meal plan is empty</h1>
+        <h1 className="font-semibold text-slate-800">{t("emptyMeal")}</h1>
       </div>
     );
   };
-
   const meals: ReactElementType = () => {
-    const mealItems = scheduledMealStore.getMealDayData(date)[type];
-    if (!mealItems) {
-      return renderMealsEmptyView();
-    }
     return (
-      <ul className={foodItems}>
+      <>
         {mealItems.map((item, index) => {
           const { id, name } = item;
+          const alignment = index % 2 !== 0 ? "text-right" : "text-left";
+
           return (
-            <li
-              key={id}
-              className={`first-letter:capitalize ${mealItem} ${
-                index % 2 !== 0 ? "text-right" : "text-left"
-              }`}
-            >
+            <li key={id} className={`${mealItem} ${alignment}`}>
               {name}
             </li>
           );
         })}
-        <div className=" relative bottom-4 h-[100%] w-[100%]  flex flex-row justify-center items-center">
-          {mealStatusButtons()}
-        </div>
+      </>
+    );
+  };
+  const mealsContainer: ReactElementType = () => {
+    if (mealItems.length === 0) {
+      return mealsEmptyContent();
+    }
+    return (
+      <ul className={foodItems}>
+        {meals()}
+        <div className={mealButtonsContainer}>{mealStatusButtons()}</div>
       </ul>
     );
   };
-
-  const renderEditButton: ReactElementType = () => {
+  const editButtonContent: ReactElementType = () => {
     return (
-      <button
-        className={
-          isEditable && foodItemsStore.inCampusStatus
-            ? editButton
-            : disableEditButton
-        }
-        onClick={() => {
-          if (foodItemsStore.inCampusStatus) {
-            ModalStore.openModal(type);
-          }
-        }}
-        disabled={!isEditable}
-      >
-        <div className={buttonContent}>
-          {loading ? (
-            <Loader color="" />
-          ) : (
-            <>
-              <span>Edit</span>
-              <CiClock1 className="text-sm" />
-              <span className="font-thin text-sm">Left</span>
-            </>
-          )}
-        </div>
-      </button>
+      <>
+        <span>{t("edit")}</span>
+        <CiClock1 className="text-sm" />
+        <span className="font-thin text-sm">{t("left")}</span>
+      </>
     );
   };
+  const editButton: ReactElementType = () => {
+    const editAction = action.find((action) => action.type === "EDIT");
 
+    if (!editAction) return <></>;
+    return (
+      <>
+        <Button
+          isEditable={editAction.isDisable && UserMealStore.inCampusStatus}
+          onClick={editAction.onClick}
+          disable={!editAction.isDisable}
+        >
+          <div className={buttonContent}>{editButtonContent()}</div>
+        </Button>
+      </>
+    );
+  };
   const mealStatusButtons: ReactElementType = () => {
-    if (isMealAteStatus && foodItemsStore.inCampusStatus) {
+    if (action[1].isHidden && UserMealStore.inCampusStatus) {
+      if (action[1].isDisable) {
+        return <Loader color="blue" />;
+      }
       return (
-        <p className="flex self-center gap-6">
-          <button
-            className="text-sm px-5 py-2 bg-blue-600 rounded-sm text-white  hover:bg-blue-700 mt-8"
-            onClick={() =>
-              triggerSaveMealStatue({
-                status: MealStatusEnum.ATE,
-              })
-            }
-          >
-            I Ate it
-          </button>
-          <button
-            className="text-sm px-5 py-2 border-2 border-gray-300  rounded hover:bg-gray-100  mt-8"
-            onClick={() =>
-              triggerSaveMealStatue({
-                status: MealStatusEnum.SKIP,
-              })
-            }
-          >
-            I Skipped
-          </button>
+        <p className=" absolute top-[360px] flex self-center gap-6">
+          <Button skip onClick={() => action[1].onClick}>
+            {t("iAte")}
+          </Button>
+          <Button outline onClick={() => action[2].onClick}>
+            {t("iSkip")}
+          </Button>
         </p>
       );
     }
-    return renderEditButton();
+    return <div className="absolute top-[360px]">{editButton()}</div>;
   };
 
-  const handleRefetchMeal: VoidFunctionType = () => {
-    refetch({
-      params: {
-        date: date,
-        mealType: type.toUpperCase(),
-      },
-    });
-  };
-
-  const renderMealErrorView: ReactElementType = () => {
-    return (
-      <div className="flex flex-col items-center justify-center my-auto">
-        <h1 className="text-xl font-semibold ">Something went wrong !!!</h1>
-        <button
-          onClick={handleRefetchMeal}
-          className="bg-primary text-sm text-white font-medium py-2 px-5 rounded-lg mt-4"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  };
-
-  const renderCardContent: ReactElementType = () => {
-    if (error) {
-      return renderMealErrorView();
-    }
-    if (mealsLoading) {
-      return <Loader color="blue" height={40} width={40} radius={4} />;
+  const cardContent = (): JSX.Element => {
+    if (fetchScheduleMealStatus) {
+      return fetchScheduleMealStatus;
     }
     return (
       <>
-        {mealTypeAndTime()}
-        {meals()}
+        {headerSection()}
+        {mealsContainer()}
       </>
     );
   };
   return (
     <div className={cardContainer}>
-      <MealPreferenceModal date={date} />
-      {renderCardContent()}
+      <MealPreferenceController />
+      {cardContent()}
     </div>
   );
 };

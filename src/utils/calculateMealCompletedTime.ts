@@ -1,7 +1,7 @@
+import { parse, subHours } from "date-fns";
 const calculateMealCompleteTime = (mealTime: string) => {
-  const [hour, minutes] = mealTime.split(":");
-  const mealCompleteTime = new Date();
-  mealCompleteTime.setHours(Number(hour.trim()), Number(minutes.trim()), 0);
+  const mealDate = parse(mealTime, "HH:mm", new Date());
+  const mealCompleteTime = subHours(mealDate, 0);
   return mealCompleteTime;
 };
 export default calculateMealCompleteTime;

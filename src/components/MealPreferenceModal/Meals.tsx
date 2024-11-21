@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
+import useGetCustomUserMeal from "../../apis/queries/getCustomUserMeal/useGetCustomUserMeal";
+import CustomMealStore from "../../store/CustomMealStore";
+import CustomMeal from "./CustomMeal";
+import ModalStore from "../../store/ModalStore";
+import MealFoodItemModel from "../../models/MealFoodItemModel";
+import Loader from "../loader/Loader";
+import calculateCustomIndex from "../../utils/calculateCustomIndex";
 import {
   mealContainer,
   mealsCustomContainer,
@@ -9,40 +16,35 @@ import {
   mealItem,
   mealQuantity,
 } from "./styles";
-import { MealFoodItemResponseType, MealTypeEnum } from "../../types";
-import useGetCustomUserMeal from "../../apis/queries/getCustomUserMeal/useGetCustomUserMeal";
-import CustomMealStore from "../../store/CustomMealStore";
-import CustomMeal from "./CustomMeal";
-import ModalStore from "../../store/ModalStore";
-import { DATE_FORMAT } from "../../constants";
+import { formatDate } from "../../utils/formatDate";
+import UserMealStore from "../../store/UserMealStore";
 
 interface MealsPropsType {
-  meals: {
-    date: string;
-    mealType: string;
-    items: MealFoodItemResponseType[];
-  };
+  meals: MealFoodItemModel[];
   activeTab: string;
 }
 
 const Meals: React.FC<MealsPropsType> = ({ meals, activeTab }) => {
-  const { triggerFetchCustomUser } = useGetCustomUserMeal();
+  const { t } = useTranslation();
+  const { loading, error, triggerFetchCustomUser } = useGetCustomUserMeal();
+  const date = formatDate(UserMealStore.data!);
   useEffect(() => {
-    triggerFetchCustomUser(dayjs(new Date()).format(DATE_FORMAT));
-  }, []);
-  const type = ModalStore.typeOfMeal.toLocaleLowerCase();
-
-  if (activeTab === "custom") {
-    let index;
-    if (type === MealTypeEnum.BREAKFAST) {
-      index = 0;
-    } else if (type === MealTypeEnum.LUNCH) {
-      index = 1;
-    } else if (type === MealTypeEnum.DINNER) {
-      index = 2;
+    if (activeTab === "custom") {
+      triggerFetchCustomUser(date);
     }
+  }, [date, activeTab]);
 
-    if (index) {
+  if (loading) {
+    return (
+      <div className="relative top-[50%] left-[35%]">
+        <Loader color="blue" height={50} width={50} radius={5} />
+      </div>
+    );
+  }
+
+  const customMealsContainer = () => {
+    const index = calculateCustomIndex(ModalStore.typeOfMeal!);
+    if (CustomMealStore.meals.length > 0) {
       return (
         <ul className={mealsCustomContainer}>
           {CustomMealStore.meals[index].items.map((eachMeal) => (
@@ -51,10 +53,21 @@ const Meals: React.FC<MealsPropsType> = ({ meals, activeTab }) => {
         </ul>
       );
     }
+    return (
+      <ul className={mealsCustomContainer}>
+        {meals.map((eachMeal) => (
+          <CustomMeal eachMeal={eachMeal} />
+        ))}
+      </ul>
+    );
+  };
+
+  if (activeTab === "custom") {
+    return customMealsContainer();
   }
   return (
     <ul className={mealsContainer}>
-      {meals.items.map((eachMeal) => {
+      {meals.map((eachMeal) => {
         const quantity =
           activeTab === "full"
             ? eachMeal.fullMealQuantity
@@ -65,7 +78,9 @@ const Meals: React.FC<MealsPropsType> = ({ meals, activeTab }) => {
               {eachMeal.name}
               <br />
             </p>
-            <p className={mealQuantity}>{quantity} quantity</p>
+            <p className={mealQuantity}>
+              {quantity} {t("quantity")}
+            </p>
           </li>
         );
       })}

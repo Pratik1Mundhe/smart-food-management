@@ -17,6 +17,19 @@ class ScheduledMealStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
+  getMealId(date: string, mealType: MealTypeEnum) {
+    const mealData = this.mealDayData.get(date);
+    if (mealData) {
+      return this.mealDayData.get(date)![mealType]?.mealId;
+    }
+  }
+  getMealItems(date: string, mealType: MealTypeEnum) {
+    const mealData = this.mealDayData.get(date);
+    if (mealData) {
+      return this.mealDayData.get(date)![mealType]?.items;
+    }
+  }
+
   getMealDayData(date: string): MealFoodDataType {
     const dateObject = new Date(date);
     const formattedDate = dayjs(dateObject).format(MEAL_DAY_KEY_FORMAT);
@@ -33,6 +46,7 @@ class ScheduledMealStore {
       lunch: mealData.lunch?.items || [],
       dinner: mealData.dinner?.items || [],
     };
+
     return mealDayDataObject;
   }
 
@@ -53,21 +67,20 @@ class ScheduledMealStore {
         halfMealQuantity,
       });
     });
-
     const mealModel = new ScheduledMealModel(mealId, mealType, itemInstances);
-    if (this.mealDayData.has(date)) {
-      const mealDataObject = this.mealDayData.get(formattedDate);
-      if (!mealDataObject) {
-        return;
-      }
-      mealDataObject[mealType] = mealModel;
-    }
-    const mealDataObject: MealScheduledDataType = {
+
+    // Merge with existing data or create new
+    let mealDataObject = this.mealDayData.get(formattedDate) || {
       breakfast: null,
       lunch: null,
       dinner: null,
     };
-    mealDataObject[mealType] = mealModel;
+
+    mealDataObject = {
+      ...mealDataObject,
+      [mealType]: mealModel,
+    };
+
     this.mealDayData.set(formattedDate, mealDataObject);
   }
 }

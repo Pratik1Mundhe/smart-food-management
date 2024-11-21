@@ -3,16 +3,12 @@ import { VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
 import useInCampusStatus from "../../apis/mutations/InCampusStatus/useInCampusStatus";
 import Loader from "../loader/Loader";
-import { USER_TOKEN } from "../../constants";
 import UserMealStore from "../../store/UserMealStore";
-import { button, container } from "./styles";
 
 const ToggleSwitch: React.FC = observer(() => {
   const { triggerCampusStatus, loading } = useInCampusStatus();
   const handleToggle: VoidFunctionType = () => {
-    const userId = JSON.parse(localStorage.getItem(USER_TOKEN)!);
     triggerCampusStatus({
-      userId: userId,
       inCampus: !UserMealStore.inCampusStatus,
     });
   };

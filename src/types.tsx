@@ -107,6 +107,7 @@ export interface ScheduledMealResponseType {
   mealType: string;
   items: MealFoodItemResponseType[];
   mealId: string;
+  date: string;
 }
 
 export interface MealScheduledDataType {
@@ -142,9 +143,37 @@ export interface FoodItemsSelectPropsType {
     React.SetStateAction<FoodItemType | null>
   >;
 }
+interface Action {
+  type: "I_ATE" | "I_SKIP" | "EDIT";
+  isDisable: boolean;
+  isHidden: boolean;
+  onClick: () => void;
+  isLoading?: boolean;
+}
 
 export interface MealCardProps {
-  type: MealTypeEnum;
+  mealType: MealTypeEnum;
+  mealItems: MealFoodItemModel[];
   mealTime: string;
-  currentDate: Date;
+  action: Action[];
+  fetchScheduleMealStatus: JSX.Element | null;
+}
+export interface MealPreferenceModalPropsType {
+  activeTab: MealPreferenceEnum;
+  handleActiveTab: (activeType: MealPreferenceEnum) => void;
+  setShowSaveConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
+  action: Modals;
+}
+
+export interface Modals {
+  save: ModalActions;
+  skip: ModalActions;
+  close: ModalActions;
+}
+
+export interface ModalActions {
+  isModalOpen: boolean;
+  handleAction: () => void;
+  handleModal?: () => void;
+  handleMealPreference: () => void;
 }

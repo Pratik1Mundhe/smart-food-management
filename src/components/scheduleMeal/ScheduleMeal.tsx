@@ -184,15 +184,15 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const renderMealItems: ReactElementType = () => {
-    if (mealsLoading) {
-      return renderLoadingView();
-    }
-    if (error) {
-      return renderMealSaveErrorView();
-    }
-    if (foodData[currentMealTab].length === 0) {
-      return renderMealsEmptyView();
-    }
+    // if (mealsLoading) {
+    //   return renderLoadingView();
+    // }
+    // if (error) {
+    //   return renderMealSaveErrorView();
+    // }
+    // if (foodData[currentMealTab].length === 0) {
+    //   return renderMealsEmptyView();
+    // }
     return renderScheduleFoodItems();
   };
 

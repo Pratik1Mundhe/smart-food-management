@@ -1,14 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Input from "../commonComponents/Input";
 import Loader from "../loader/Loader";
-import { PageRoutesEnum } from "../../types";
-import { addItemLocalStorage } from "../../utils/localStorageUtils/addItem";
-import { successToast } from "../../utils/toastUtils/successToast";
-import { failureToast } from "../../utils/toastUtils/failureToast";
 import {
-  button,
   errorInput,
   heading,
   input,
@@ -26,125 +20,58 @@ import {
   USERNAME_LABEL,
   USERNAME_ID,
   PASSWORD_LABEL,
-  INVALID_USERNAME_RESPONSE,
-  INVALID_PASSWORD_RESPONSE,
-  ACCESS_TOKEN,
-  ADMIN_TOKEN,
-  USER_TOKEN,
-  GRAPHQL_END_POINT,
 } from "../../constants";
+import useLoginApi from "../../utils/loginApi";
+import Button from "../commonComponents/Button";
 
 const Login = () => {
-  const [loginDetails, setLoginDetails] = useState({
-    username: USERNAME_INITIAL_VALUE,
-    password: PASSWORD_INITIAL_VALUE,
-  });
-  const [isLoginDetailsInvalid, setIsLoginDetailsInvalid] = useState({
-    isUsernameInvalid: false,
-    isPasswordInvalid: false,
-  });
+  const [usernameDetails, setUsernameDetails] = useState<string>(
+    USERNAME_INITIAL_VALUE
+  );
+  const [passwordDetails, setPasswordDetails] = useState<string>(
+    PASSWORD_INITIAL_VALUE
+  );
+  const [userNameError, setUsernameError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
+  const { triggerLogin } = useLoginApi();
   //Not readable, the below function
-  function handleLoginDetails(
-    updatingValue: string,
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const newValue = event.target.value;
-    setLoginDetails((previousState) => ({
-      ...previousState,
-      [updatingValue]: newValue,
-    }));
 
-    if (updatingValue === USERNAME && newValue.trim() !== "") {
-      setIsLoginDetailsInvalid((prev) => ({
-        ...prev,
-        isUsernameInvalid: false,
-      }));
+  function handleUsername(event: React.ChangeEvent<HTMLInputElement>) {
+    let newValue = event.target.value.trim();
+    setUsernameDetails(newValue);
+    if (newValue === "") {
+      setUsernameError(true);
+    } else {
+      setUsernameError(false);
     }
-    if (updatingValue === PASSWORD && newValue.trim() !== "") {
-      setIsLoginDetailsInvalid((prev) => ({
-        ...prev,
-        isPasswordInvalid: false,
-      }));
+  }
+  function handelPassword(event: React.ChangeEvent<HTMLInputElement>) {
+    let newValue = event.target.value.trim();
+    setPasswordDetails(newValue);
+    if (newValue === "") {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
     }
   }
 
-  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     //can trim while saving
-    const isUserNameEmpty = loginDetails.username.trim() === "";
-    const isPasswordEmpty = loginDetails.password.trim() === "";
+    const isUserNameEmpty = usernameDetails === "";
+    const isPasswordEmpty = passwordDetails === "";
 
-    setIsLoginDetailsInvalid({
-      isUsernameInvalid: isUserNameEmpty,
-      isPasswordInvalid: isPasswordEmpty,
-    });
-
+    setUsernameError(isUserNameEmpty);
+    setPasswordError(isPasswordEmpty);
     if (isUserNameEmpty || isPasswordEmpty) return;
 
     const data = {
-      username: loginDetails.username,
-      password: loginDetails.password,
+      username: usernameDetails,
+      password: passwordDetails,
     };
-
+    await triggerLogin(data, setUsernameError, setPasswordError, setLoading);
     setLoading(true);
-
-    //Do changes in this code as discussed
-
-    try {
-      const response = await fetch(`${GRAPHQL_END_POINT}/api/meals/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      if (result.status_code === 200) {
-        if (result.response.is_admin) {
-          addItemLocalStorage(ADMIN_TOKEN, result.response.is_admin);
-          addItemLocalStorage(
-            ACCESS_TOKEN,
-            JSON.stringify(result.response.access_token)
-          );
-          navigate(PageRoutesEnum.ADMIN_HOME_PAGE);
-        } else {
-          addItemLocalStorage(
-            ACCESS_TOKEN,
-            JSON.stringify(result.response.access_token)
-          );
-          localStorage.setItem(
-            USER_TOKEN,
-            JSON.stringify(result.response.user_id)
-          );
-          navigate(PageRoutesEnum.HOME_PAGE);
-          successToast("Login Successful");
-        }
-      }
-      if (result.status_code !== 200) {
-        throw new Error(result.res_status);
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        if (err.message === INVALID_USERNAME_RESPONSE) {
-          setIsLoginDetailsInvalid({
-            isUsernameInvalid: true,
-            isPasswordInvalid: false,
-          });
-        } else if (err.message === INVALID_PASSWORD_RESPONSE) {
-          setIsLoginDetailsInvalid({
-            isUsernameInvalid: false,
-            isPasswordInvalid: true,
-          });
-        } else {
-          failureToast("Failed to Login");
-        }
-      }
-    } finally {
-      setLoading(false);
-    }
   }
 
   const headerSection = () => (
@@ -162,20 +89,20 @@ const Login = () => {
       <Input
         label={USERNAME_LABEL}
         id={USERNAME}
-        style={isLoginDetailsInvalid.isUsernameInvalid ? errorInput : input}
+        style={userNameError ? errorInput : input}
         inputType={USERNAME_ID}
-        value={loginDetails.username}
-        onChangeFunction={(event) => handleLoginDetails(USERNAME, event)}
-        isError={isLoginDetailsInvalid.isUsernameInvalid}
+        value={usernameDetails}
+        onChangeFunction={handleUsername}
+        isError={userNameError}
       />
       <Input
         label={PASSWORD_LABEL}
         id={PASSWORD}
-        style={isLoginDetailsInvalid.isPasswordInvalid ? errorInput : input}
+        style={passwordError ? errorInput : input}
         inputType={PASSWORD}
-        value={loginDetails.password}
-        isError={isLoginDetailsInvalid.isPasswordInvalid}
-        onChangeFunction={(event) => handleLoginDetails(PASSWORD, event)}
+        value={passwordDetails}
+        isError={passwordError}
+        onChangeFunction={handelPassword}
       />
     </>
   );
@@ -185,9 +112,9 @@ const Login = () => {
       <div className={loginContainer}>
         {headerSection()}
         {inputsSection()}
-        <button type="submit" className={button} disabled={loading}>
+        <Button type="submit" disable={loading}>
           {loading ? <Loader /> : "Login"}
-        </button>
+        </Button>
       </div>
     </form>
   );

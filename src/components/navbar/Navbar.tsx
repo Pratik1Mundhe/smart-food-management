@@ -3,6 +3,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { LuUserCircle } from "react-icons/lu";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import globalLogo from "../../assets/global-logo.png";
 import ToggleSwitch from "../toggleButton/ToggleButton";
@@ -26,11 +27,22 @@ const Navbar: React.FC = () => {
   const [showLogoutConfirmModal, setLogoutConfirmModal] =
     useState<boolean>(false);
   const [showLogout, setShowLogout] = useState<boolean>(false);
+  const [isEnglish, setIsEnglish] = useState(true);
+  const { t, i18n } = useTranslation();
+
+  function handelLanguage(lang: "en" | "te") {
+    if (lang === "en") {
+      setIsEnglish(true);
+    } else {
+      setIsEnglish(false);
+    }
+    i18n.changeLanguage(lang);
+  }
 
   const renderCampusToggleButton: ReactElementType = () => {
     return (
       <li className="flex items-center gap-6">
-        <p className="text-general text-sm font-medium">In Campus</p>
+        <p className="text-general text-sm font-medium">{t("inCampus")}</p>
         <ToggleSwitch />
       </li>
     );
@@ -59,7 +71,7 @@ const Navbar: React.FC = () => {
               className={redButton}
               onClick={handleOpenLogoutConfirmModal}
             >
-              Logout
+              {t("Logout")}
             </button>
           </div>
         </>
@@ -77,7 +89,7 @@ const Navbar: React.FC = () => {
     return (
       <li className="flex items-center gap-2">
         <LuUserCircle className="h-5 w-5" />
-        <h1 className="text-general text-sm font-medium">User</h1>
+        <h1 className="text-general text-sm font-medium">{t("user")}</h1>
         {renderLogout()}
       </li>
     );
@@ -92,6 +104,21 @@ const Navbar: React.FC = () => {
       );
     }
     return <></>;
+  };
+
+  const changeLanguageButtons: ReactElementType = () => {
+    if (isEnglish) {
+      return (
+        <button onClick={() => handelLanguage("te")} className="text-sm ">
+          తెలుగు
+        </button>
+      );
+    }
+    return (
+      <button onClick={() => handelLanguage("en")} className="text-sm ">
+        English
+      </button>
+    );
   };
 
   return (
@@ -110,7 +137,7 @@ const Navbar: React.FC = () => {
             path === PageRoutesEnum.HOME_PAGE ? "text-primary" : "text-general"
           }`}
         >
-          Home
+          {t("home")}
         </li>
         <li
           onClick={() => navigate(PageRoutesEnum.WEEKLY_MENU_PAGE)}
@@ -120,8 +147,9 @@ const Navbar: React.FC = () => {
               : "text-general"
           }`}
         >
-          Weekly Menu
+          {t("weeklyMenu")}
         </li>
+        {changeLanguageButtons()}
         {renderUserProfile()}
       </ul>
       {renderLogoutConfirmModal()}

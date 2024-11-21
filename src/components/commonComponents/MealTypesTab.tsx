@@ -1,5 +1,6 @@
 import React from "react";
 import { MealPreferenceEnum } from "../../types";
+import { useTranslation } from "react-i18next";
 import {
   mealTypes,
   fullMealTab,
@@ -19,6 +20,7 @@ interface MealTabProp {
 
 const MealTypesTab: React.FC<MealTabProp> = (prop) => {
   const { activeTab, handelActiveTab } = prop;
+  const { t } = useTranslation();
 
   const fullMealButton = () => {
     return (
@@ -28,7 +30,7 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
         }`}
         onClick={() => handelActiveTab(MealPreferenceEnum.FULL)}
       >
-        Full Meal
+        {t("fullMeal")}
       </li>
     );
   };
@@ -43,7 +45,7 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
         }
         onClick={() => handelActiveTab(MealPreferenceEnum.HALF)}
       >
-        Half Meal
+        {t("halfMeal")}
       </li>
     );
   };
@@ -58,7 +60,7 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
         }
         onClick={() => handelActiveTab(MealPreferenceEnum.CUSTOM)}
       >
-        Custom
+        {t("custom")}
       </li>
     );
   };

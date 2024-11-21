@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 import { DATE_FORMAT } from "../../constants";
 import { VoidFunctionType } from "../../types";
@@ -15,7 +16,7 @@ const MealDate: React.FC<MealDatePropsType> = ({
   setCurrentDate,
 }) => {
   const today: boolean = currentDate.getDate() == new Date().getDate();
-
+  const { t } = useTranslation();
   const handleNextDate: VoidFunctionType = () => {
     const nextDate = new Date(currentDate);
     nextDate.setDate(currentDate.getDate() + 1);
@@ -34,9 +35,9 @@ const MealDate: React.FC<MealDatePropsType> = ({
   const renderDayText = (): string => {
     switch (currentDate.getDate()) {
       case new Date().getDate():
-        return "Today";
+        return t("today");
       case new Date().getDate() + 1:
-        return "Tomorrow";
+        return t("tomorrow");
       case new Date().getDate() - 1:
         return "Yesterday";
       default:

@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { useTranslation } from "react-i18next";
 
 import { mealContainer, mealItem } from "./styles";
 import CustomMealItemModel from "../../models/CustomMealItemModel";
@@ -15,6 +16,31 @@ const CustomMeal = (props: CustomProp) => {
   function handelDecreaseQuantity() {
     eachMeal.decreaseCustomMeal();
   }
+  const { t } = useTranslation();
+
+  const quantityChangerButtons = (): React.ReactElement => {
+    return (
+      <p>
+        <button
+          className="p-2 border-[1px] text-gray-400"
+          disabled={eachMeal.customMealQuantity === 0}
+          onClick={handelDecreaseQuantity}
+        >
+          -
+        </button>
+        <span className="p-2 border-[1px] text-gray-400">
+          {eachMeal.customMealQuantity}
+        </span>
+        <button
+          className="p-2 border-[1px] text-gray-400"
+          disabled={eachMeal.customMealQuantity >= 5}
+          onClick={handelIncreaseQuantity}
+        >
+          +
+        </button>
+      </p>
+    );
+  };
 
   return (
     <li key={eachMeal.id} className={mealContainer}>
@@ -23,26 +49,8 @@ const CustomMeal = (props: CustomProp) => {
         <br />
       </p>
       <div className={`flex flex-row gap-2`}>
-        <p>
-          <button
-            className="p-2 border-[1px] text-gray-400"
-            disabled={eachMeal.customMealQuantity === 0}
-            onClick={handelDecreaseQuantity}
-          >
-            -
-          </button>
-          <span className="p-2 border-[1px] text-gray-400">
-            {eachMeal.customMealQuantity}
-          </span>
-          <button
-            className="p-2 border-[1px] text-gray-400"
-            disabled={eachMeal.customMealQuantity >= 5}
-            onClick={handelIncreaseQuantity}
-          >
-            +
-          </button>
-        </p>
-        <span className="text-gray-300 text-[12px] ml-3">quantity</span>
+        {quantityChangerButtons()}
+        <span className="text-gray-300 text-[12px] ml-3">{t("quantity")}</span>
       </div>
     </li>
   );

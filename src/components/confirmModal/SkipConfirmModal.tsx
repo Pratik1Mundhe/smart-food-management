@@ -1,4 +1,6 @@
 import React from "react";
+import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import {
@@ -8,7 +10,10 @@ import {
 } from "../../types";
 import { observer } from "mobx-react-lite";
 import useSaveMealStatus from "../../apis/mutations/saveMealStatus/useSaveMealStatus";
-import UserMealStore from "../../store/UserMealStore";
+import Loader from "../loader/Loader";
+import scheduledMealStore from "../../store/ScheduledMealStore";
+import { MEAL_DAY_KEY_FORMAT } from "../../constants";
+import ModalStore from "../../store/ModalStore";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
@@ -19,11 +24,14 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
   closeModal,
   action,
 }) => {
-  const { triggerSaveMealStatue, loading, error } = useSaveMealStatus();
+  const { triggerSaveMealStatue, loading, error } = useSaveMealStatus(action);
+  const { t } = useTranslation();
   function handelSkipButton() {
-    action();
     triggerSaveMealStatue({
-      mealId: UserMealStore.mealId,
+      mealId: scheduledMealStore.getMealId(
+        dayjs(new Date()).format(MEAL_DAY_KEY_FORMAT),
+        ModalStore.typeOfMeal!
+      ),
       status: MealStatusEnum.SKIP,
     });
   }
@@ -34,13 +42,13 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
           onClick={handelSkipButton}
           className="bg-error text-sm text-white px-5 py-2 rounded font-semibold"
         >
-          Skip
+          {loading ? <Loader /> : t("skip")}
         </button>
         <button
           onClick={closeModal}
           className="rounded text-sm py-2 px-5 text-general font-semibold border-2"
         >
-          Cancel
+          {t("cancel")}
         </button>
       </div>
     );
@@ -50,7 +58,7 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
     <ConfirmModal>
       <div className="flex flex-col gap-12 py-16 px-14">
         <h1 className="text-black font-medium text-2xl text-center max-w-[400px]">
-          Are you sure you want to skip?
+          {t("confirmSkip")}
         </h1>
         {renderButtons()}
       </div>

@@ -1,17 +1,18 @@
 import { makeAutoObservable } from "mobx";
+import { MealTypeEnum } from "../types";
 
 class _ModalStore {
   isModalOpen: boolean;
-  typeOfMeal: string;
+  typeOfMeal: MealTypeEnum;
   isConfirmModalOpen: boolean;
 
   constructor() {
     this.isModalOpen = false;
-    this.typeOfMeal = "";
+    this.typeOfMeal = MealTypeEnum.BREAKFAST;
     this.isConfirmModalOpen = false;
     makeAutoObservable(this, {}, { autoBind: true });
   }
-  openModal(type?: string): void {
+  openModal(type?: MealTypeEnum): void {
     if (type) {
       this.typeOfMeal = type;
     }

@@ -1,7 +1,9 @@
+import { parse, subHours } from "date-fns";
+
 const calculateCutoffTime = (mealTime: string) => {
-  const [hour, minutes] = mealTime.split(":");
-  const cutoff = new Date();
-  cutoff.setHours(Number(hour.trim()) - 1, Number(minutes.trim()), 0);
+  const mealDate = parse(mealTime, "HH:mm", new Date());
+  const cutoff = subHours(mealDate, 1);
   return cutoff;
 };
+
 export default calculateCutoffTime;

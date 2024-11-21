@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { MealStatusEnum, MealTypeEnum } from "../types";
+import { MealPreferenceEnum, MealStatusEnum, MealTypeEnum } from "../types";
 
 class _UserMealStore {
   data: Date | null;
@@ -9,6 +9,11 @@ class _UserMealStore {
     breakfast: MealStatusEnum | null;
     lunch: MealStatusEnum | null;
     dinner: MealStatusEnum | null;
+  };
+  mealPreference: {
+    breakfast: MealPreferenceEnum | null;
+    lunch: MealPreferenceEnum | null;
+    dinner: MealPreferenceEnum | null;
   };
 
   constructor() {
@@ -23,16 +28,21 @@ class _UserMealStore {
       lunch: null,
       dinner: null,
     };
+    this.mealPreference = {
+      breakfast: null,
+      lunch: null,
+      dinner: null,
+    };
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
   setDate(newDate: string): void {
-    this.data = newDate;
+    this.data = new Date(newDate);
   }
   private setMealId(newMealId: string) {
     this.mealId = newMealId;
   }
-  setMealDetails(newDate: Date, newMealId: string) {
+  setMealDetails(newDate: string, newMealId: string) {
     this.setDate(newDate);
     this.setMealId(newMealId);
   }
@@ -41,6 +51,12 @@ class _UserMealStore {
   }
   setInCampusStatus(): void {
     this.inCampusStatus = !this.inCampusStatus;
+  }
+  setUserPreference(MealPreference: string, mealType: MealTypeEnum) {
+    this.mealPreference = {
+      ...this.mealPreference,
+      [mealType]: MealPreference,
+    };
   }
 }
 

@@ -8,7 +8,7 @@ import {
   VoidFunctionType,
 } from "../../types";
 
-import { ACCESS_TOKEN, ADMIN_TOKEN, GRAPHQL_END_POINT } from "../../constants";
+import { ACCESS_TOKEN, ADMIN_TOKEN, LOGOUT_URL } from "../../constants";
 import Loader from "../loader/Loader";
 import { removeItemLocalStorage } from "../../utils/localStorageUtils/removeItem";
 
@@ -26,7 +26,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
     const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
     async function logout() {
       setLoading(true);
-      const response = await fetch(`${GRAPHQL_END_POINT}/api/meals/logout/`, {
+      const response = await fetch(LOGOUT_URL, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,

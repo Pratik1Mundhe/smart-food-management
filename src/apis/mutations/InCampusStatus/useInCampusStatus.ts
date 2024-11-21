@@ -1,16 +1,14 @@
 import { useMutation } from "@apollo/client";
 import { IN_CAMPUS_STATUS } from "./mutation";
-import UserMealStore from "../../../store/UserMealStore";
+import useResponseHandler from "./responseHandler";
 
 function useInCampusStatus() {
+  const { onSuccessFunction } = useResponseHandler();
   const [setInCampusStatus, { loading }] = useMutation(IN_CAMPUS_STATUS, {
     onCompleted: onSuccessFunction,
   });
-  function triggerCampusStatus(data: any) {
+  function triggerCampusStatus(data: { inCampus: boolean }) {
     setInCampusStatus({ variables: { params: { ...data } } });
-  }
-  function onSuccessFunction() {
-    UserMealStore.setInCampusStatus();
   }
 
   return { triggerCampusStatus, loading };
