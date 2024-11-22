@@ -38,14 +38,17 @@ const Home: React.FC = () => {
       </div>
       <div className="flex justify-center items-center gap-4">
         <UserMealCardController
+          date={date}
           type={MealTypeEnum.BREAKFAST}
           mealTime={BREAKFAST_TIME}
         />
         <UserMealCardController
+          date={date}
           type={MealTypeEnum.LUNCH}
           mealTime={LUNCH_TIME}
         />
         <UserMealCardController
+          date={date}
           type={MealTypeEnum.DINNER}
           mealTime={DINNER_TIME}
         />

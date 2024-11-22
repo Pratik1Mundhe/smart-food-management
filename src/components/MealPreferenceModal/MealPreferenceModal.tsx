@@ -22,7 +22,6 @@ import {
 
 const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
   const { t } = useTranslation();
-
   const {
     mealType,
     activeTab,
@@ -32,8 +31,11 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
     actions,
     handleTriggerUserPreference,
     saveMealPreferenceLoading,
+    handelSkipStatus,
+    saveStatusLoading,
   } = props;
-  const renderHeaderSection: ReactElementType = () => {
+
+  const renderHeader: ReactElementType = () => {
     return (
       <div className={headerContainer}>
         <h1 className={mealTypeHeading}>{t(`${mealType}`)}</h1>
@@ -44,7 +46,7 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
     );
   };
 
-  const renderMealsSection = () => {
+  const renderMeals = () => {
     return (
       <div className={mealsDetailsContainer}>
         <Meals meals={mealItems} activeTab={activeTab} />
@@ -55,7 +57,7 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
     );
   };
 
-  const renderMealTabSection = () => {
+  const renderMealTab = () => {
     return (
       <div className="flex items-center gap-6 mt-10">
         <MealTypesTab activeTab={activeTab} handelActiveTab={handleActiveTab} />
@@ -63,7 +65,7 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
     );
   };
 
-  const renderButtonsSection: ReactElementType = () => {
+  const renderButtons: ReactElementType = () => {
     return (
       <p className={buttonContainer}>
         <Button outline onClick={actions.close.handleAction}>
@@ -86,7 +88,8 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
         return (
           <SkipConfirmModal
             closeModal={actions.skip.handleAction}
-            action={actions.skip.handleMealPreference}
+            handelSkipStatus={handelSkipStatus}
+            saveStatusLoading={saveStatusLoading}
           />
         );
       }
@@ -119,10 +122,10 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
     return (
       <Modal>
         <div className={mealPreferenceContainer}>
-          {renderHeaderSection()}
-          {renderMealTabSection()}
-          {renderMealsSection()}
-          {renderButtonsSection()}
+          {renderHeader()}
+          {renderMealTab()}
+          {renderMeals()}
+          {renderButtons()}
         </div>
         {renderConfirmModal()}
       </Modal>

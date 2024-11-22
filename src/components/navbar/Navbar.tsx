@@ -20,6 +20,7 @@ import {
   headerMenuOption,
   redButton,
 } from "./styles";
+import LogoutController from "../../Controllers/LogoutController";
 
 const Navbar: React.FC = () => {
   const navigate: NavigateFunction = useNavigate();
@@ -98,7 +99,7 @@ const Navbar: React.FC = () => {
   const renderLogoutConfirmModal: ReactElementType = () => {
     if (showLogoutConfirmModal) {
       return (
-        <LogoutConfirmModal
+        <LogoutController
           handleCloseLogoutConfirmModal={handleCloseLogoutConfirmModal}
         />
       );

@@ -79,7 +79,6 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       </div>
     );
   };
-
   const renderMeals = (): JSX.Element => {
     return (
       <>

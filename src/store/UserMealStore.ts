@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { MealPreferenceEnum, MealStatusEnum, MealTypeEnum } from "../types";
 
 class _UserMealStore {
-  data: Date | null;
+  date: Date | null;
   mealId: string | null;
   inCampusStatus: boolean;
   mealStatus: {
@@ -18,7 +18,7 @@ class _UserMealStore {
 
   constructor() {
     //use Date type
-    this.data = null;
+    this.date = null;
     //Use null type for no value cases
     this.mealId = null;
     //Remove NULL from the enum
@@ -37,7 +37,7 @@ class _UserMealStore {
   }
 
   setDate(newDate: string): void {
-    this.data = new Date(newDate);
+    this.date = new Date(newDate);
   }
   private setMealId(newMealId: string) {
     this.mealId = newMealId;

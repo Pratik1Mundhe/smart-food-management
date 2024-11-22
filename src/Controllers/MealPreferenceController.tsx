@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { MealPreferenceEnum, VoidFunctionType } from "../types";
+import { MealPreferenceEnum, MealStatusEnum, VoidFunctionType } from "../types";
 import ModalStore from "../store/ModalStore";
 import MealPreferenceModal from "../components/MealPreferenceModal/MealPreferenceModal";
 import { Modals } from "../types";
 import scheduledMealStore from "../store/ScheduledMealStore";
-import { formatDate } from "../utils/formatDate";
-import UserMealStore from "../store/UserMealStore";
 import { observer } from "mobx-react";
 import useMutateUserPreference from "../apis/mutations/userPreferenceMeal/useMutateUserPreferenceMeal";
 import formatQuantityData from "../utils/formatQuantityData";
 import dayjs from "dayjs";
 import { MEAL_DAY_KEY_FORMAT } from "../constants";
+import useSaveMealStatus from "../apis/mutations/saveMealStatus/useSaveMealStatus";
 
 interface MealPreferenceControllerType {
   date: string;
@@ -20,9 +19,12 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
   date,
 }) => {
   const type = ModalStore.typeOfMeal;
-  const mealItems = scheduledMealStore.getMealDayData(
-    formatDate(UserMealStore.data!)
-  )[type];
+  const mealItems = scheduledMealStore.getMealDayData(date)[type];
+  const mealId = scheduledMealStore.getMealId(
+    dayjs(date).format(MEAL_DAY_KEY_FORMAT),
+    type
+  );
+
   const [activeTab, setActiveTab] = useState(MealPreferenceEnum.FULL);
   const [showSaveConfirmModal, setShowSaveConfirmModal] =
     useState<boolean>(false);
@@ -39,15 +41,12 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
     ModalStore.openConfirmModal();
   };
   const handleMealPreferenceSave: VoidFunctionType = () => {
-    //mutation for saving user meal preference
     setShowSaveConfirmModal(false);
   };
-
   const handleClickBack: VoidFunctionType = () => {
     setShowBackConfirmModal(true);
     ModalStore.openConfirmModal();
   };
-
   const handleClickSave: VoidFunctionType = () => {
     setShowSaveConfirmModal(true);
     ModalStore.openConfirmModal();
@@ -57,31 +56,24 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
     setShowBackConfirmModal(false);
     ModalStore.closeModal();
   };
-
   const handleCloseConfirmModal: VoidFunctionType = () => {
     ModalStore.closeConfirmModal();
     setShowBackConfirmModal(false);
   };
-
   const handleSkipMealPreference: VoidFunctionType = () => {
-    // req will be send to change status as meal is skipped
     setShowSkipConfirmModal(false);
   };
-
   const handleCloseSkipConfirmModal: VoidFunctionType = () => {
     setShowSkipConfirmModal(false);
     ModalStore.closeConfirmModal();
   };
-  const { triggerUserPreference, loading } = useMutateUserPreference(
-    ModalStore.typeOfMeal!,
-    handleMealPreferenceSave
-  );
+
+  // Trigger UserPreference Meal Status Api
+  const { triggerUserPreference, loading: saveMealPreferenceLoading } =
+    useMutateUserPreference(ModalStore.typeOfMeal!, handleMealPreferenceSave);
   const variables = {
     date: date,
-    mealId: scheduledMealStore.getMealId(
-      dayjs(date).format(MEAL_DAY_KEY_FORMAT),
-      type
-    ),
+    mealId: mealId,
     mealItems: formatQuantityData(mealItems, activeTab, type),
     mealPreference: activeTab.toUpperCase(),
     mealStatus: "NULL",
@@ -89,8 +81,18 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
   };
   const handleTriggerUserPreference = () => {
     triggerUserPreference(variables);
-    UserMealStore.setUserPreference(activeTab, type);
   };
+
+  // Trigger skipMeal Api
+  const { triggerSaveMealStatue, loading: saveStatusLoading } =
+    useSaveMealStatus(handleSkipMealPreference);
+  function handelSkipStatus() {
+    triggerSaveMealStatue({
+      mealId: mealId,
+      status: MealStatusEnum.SKIP,
+    });
+  }
+
   const modalAction: Modals = {
     save: {
       isModalOpen: showSaveConfirmModal,
@@ -121,7 +123,9 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
         mealItems={mealItems}
         actions={modalAction}
         handleTriggerUserPreference={handleTriggerUserPreference}
-        saveMealPreferenceLoading={loading}
+        saveMealPreferenceLoading={saveMealPreferenceLoading}
+        handelSkipStatus={handelSkipStatus}
+        saveStatusLoading={saveStatusLoading}
       />
     </>
   );

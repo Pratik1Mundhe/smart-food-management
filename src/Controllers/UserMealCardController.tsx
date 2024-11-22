@@ -8,7 +8,6 @@ import useSaveMealStatus from "../apis/mutations/saveMealStatus/useSaveMealStatu
 import UserMealStore from "../store/UserMealStore";
 import ModalStore from "../store/ModalStore";
 import { MealTypeEnum, MealStatusEnum, PreferenceTypeAction } from "../types";
-import { formatDate } from "../utils/formatDate";
 import Loader from "../components/loader/Loader";
 import { VoidFunctionType } from "../types";
 import calculateCutoffTime from "../utils/calculateCutoffTime";
@@ -22,6 +21,7 @@ import {
 } from "../components/userMealCard/styles";
 
 interface UserMealCardControllerType {
+  date: string;
   type: MealTypeEnum;
   mealTime: string;
 }
@@ -29,7 +29,7 @@ interface UserMealCardControllerType {
 const UserMealCardController: React.FC<UserMealCardControllerType> = (
   props
 ) => {
-  const { type, mealTime } = props;
+  const { date, type, mealTime } = props;
   const userPreference = UserMealStore.mealPreference[type];
 
   const [isEditable, setIsEditable] = useState(true);
@@ -37,10 +37,7 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
 
-  const fetchScheduleMealAPI = useFetchScheduledMeal(
-    formatDate(UserMealStore.data!),
-    type.toUpperCase()
-  );
+  const fetchScheduleMealAPI = useFetchScheduledMeal(date, type.toUpperCase());
   const saveMealStatusAPI = useSaveMealStatus();
   fetchScheduleMealAPI;
   saveMealStatusAPI;
@@ -58,13 +55,11 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  const mealItems = scheduledMealStore.getMealDayData(
-    formatDate(UserMealStore.data!)
-  )[type];
+  const mealItems = scheduledMealStore.getMealDayData(date)[type];
   const handleRefetchMeal: VoidFunctionType = () => {
     fetchScheduleMealAPI.refetch({
       params: {
-        date: formatDate(UserMealStore.data!),
+        date: date,
         mealType: type.toUpperCase(),
       },
     });
@@ -105,7 +100,7 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
     saveMealStatusAPI.triggerSaveMealStatue({
       status: mealStatus,
       mealId: scheduledMealStore.getMealId(
-        dayjs(formatDate(UserMealStore.data!)).format(MEAL_DAY_KEY_FORMAT),
+        dayjs(date).format(MEAL_DAY_KEY_FORMAT),
         type
       ),
     });

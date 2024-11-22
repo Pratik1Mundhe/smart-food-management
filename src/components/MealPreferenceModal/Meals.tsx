@@ -28,7 +28,7 @@ interface MealsPropsType {
 
 const Meals: React.FC<MealsPropsType> = (props) => {
   const { meals, activeTab } = props;
-  const date = formatDate(UserMealStore.data!);
+  const date = formatDate(UserMealStore.date!);
 
   const { t } = useTranslation();
   const { loading, error, triggerFetchUserCustomMeal, triggerRefetchFunction } =
@@ -38,7 +38,6 @@ const Meals: React.FC<MealsPropsType> = (props) => {
       triggerFetchUserCustomMeal(date);
     }
   }, [date, activeTab]);
-
   function handleRefetchCustomMeal() {
     triggerRefetchFunction(date);
   }

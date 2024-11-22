@@ -176,6 +176,8 @@ export interface MealPreferenceModalPropsType {
   actions: Modals;
   handleTriggerUserPreference: () => void;
   saveMealPreferenceLoading: boolean;
+  handelSkipStatus: () => void;
+  saveStatusLoading: boolean;
 }
 
 export interface Modals {
