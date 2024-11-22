@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
 import { MealTypeEnum, PageRoutesEnum } from "../../types";
+import MealPreferenceController from "../../Controllers/MealPreferenceController";
 import MealDate from "../../components/mealDate/MealDate";
 import {
   ACCESS_TOKEN,
@@ -20,8 +21,9 @@ const Home: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const isAdmin = localStorage.getItem(ADMIN_TOKEN);
+  const date = formatDate(currentDate);
   useEffect(() => {
-    UserMealStore.setDate(formatDate(currentDate));
+    UserMealStore.setDate(date);
   }, [currentDate]);
   if (accessToken === null) {
     return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
@@ -47,6 +49,7 @@ const Home: React.FC = () => {
           type={MealTypeEnum.DINNER}
           mealTime={DINNER_TIME}
         />
+        <MealPreferenceController date={date} />
       </div>
     </div>
   );

@@ -15,14 +15,13 @@ import calculateCutoffTime from "../utils/calculateCutoffTime";
 import calculateMealCompleteTime from "../utils/calculateMealCompletedTime";
 import scheduledMealStore from "../store/ScheduledMealStore";
 import { MEAL_DAY_KEY_FORMAT } from "../constants";
+import { ReactElementType } from "../types";
 import {
   mealErrorMsgContainer,
   retryButton,
 } from "../components/userMealCard/styles";
-import { ReactElementType } from "../types";
 
 interface UserMealCardControllerType {
-  currentDate: Date;
   type: MealTypeEnum;
   mealTime: string;
 }
@@ -31,6 +30,7 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
   props
 ) => {
   const { type, mealTime } = props;
+  const userPreference = UserMealStore.mealPreference[type];
 
   const [isEditable, setIsEditable] = useState(true);
   const [isMealAteStatus, setIsMealStatus] = useState(false);
@@ -79,16 +79,21 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
       </div>
     );
   };
-  const fetchScheduleMealStatus = (): JSX.Element | null => {
+  const fetchScheduleMealStatus = (renderSuccessView: () => JSX.Element) => {
     const loadingState =
-      fetchScheduleMealAPI.mealsLoading || fetchScheduleMealAPI.refetchLoading;
-    if (fetchScheduleMealAPI.error !== undefined) {
-      return mealErrorMessage();
+      fetchScheduleMealAPI.mealsLoading ||
+      fetchScheduleMealAPI.refetchLoading ||
+      loading;
+    switch (true) {
+      // case fetchScheduleMealAPI.error !== undefined: {
+      //   return mealErrorMessage();
+      // }
+      case loadingState: {
+        return <Loader color="blue" height={40} width={40} radius={4} />;
+      }
+      default:
+        return renderSuccessView();
     }
-    if (loadingState || loading) {
-      return <Loader color="blue" height={40} width={40} radius={4} />;
-    }
-    return null;
   };
 
   function handelEditButton(): void {
@@ -133,7 +138,8 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
       mealTime={mealTime}
       mealItems={mealItems}
       actions={actions}
-      fetchScheduleMealStatus={fetchScheduleMealStatus()}
+      userPreference={userPreference}
+      fetchScheduleMealStatus={fetchScheduleMealStatus}
     />
   );
 };

@@ -3,14 +3,14 @@ import { observer } from "mobx-react";
 import { useTranslation } from "react-i18next";
 
 import MealTypesTab from "../commonComponents/MealTypesTab";
-import scheduledMealStore from "../../store/ScheduledMealStore";
-import ModalStore from "../../store/ModalStore";
 import { FOOD_URL } from "../../constants";
 import SaveConfirmModal from "../confirmModal/SaveConfirmModal";
 import CloseConfirmModal from "../confirmModal/CloseConfirmModal";
 import SkipConfirmModal from "../confirmModal/SkipConfirmModal";
 import Meals from "./Meals";
 import Button from "../commonComponents/Button";
+import { ReactElementType } from "../../types";
+import { MealPreferenceModalPropsType } from "../../types";
 import {
   buttonContainer,
   headerContainer,
@@ -19,32 +19,32 @@ import {
   mealTypeHeading,
   skipMealButton,
 } from "./styles";
-import { MealTypeEnum, ReactElementType } from "../../types";
-import { MealPreferenceModalPropsType } from "../../types";
-import { formatDate } from "../../utils/formatDate";
-import UserMealStore from "../../store/UserMealStore";
 
-const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
-  activeTab,
-  handleActiveTab,
-  setShowSaveConfirmModal,
-  action,
-}) => {
+const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
   const { t } = useTranslation();
-  const type = ModalStore.typeOfMeal.toLocaleLowerCase();
 
-  const headerSection: ReactElementType = () => {
+  const {
+    mealType,
+    activeTab,
+    handleActiveTab,
+    setShowSaveConfirmModal,
+    mealItems,
+    actions,
+    handleTriggerUserPreference,
+    saveMealPreferenceLoading,
+  } = props;
+  const renderHeaderSection: ReactElementType = () => {
     return (
       <div className={headerContainer}>
-        <h1 className={mealTypeHeading}>{t(`${ModalStore.typeOfMeal}`)}</h1>
-        <button onClick={action.skip.handleModal} className={skipMealButton}>
+        <h1 className={mealTypeHeading}>{t(`${mealType}`)}</h1>
+        <button onClick={actions.skip.handleModal} className={skipMealButton}>
           {t("skipMeals")}
         </button>
       </div>
     );
   };
 
-  const mealsSection = () => {
+  const renderMealsSection = () => {
     return (
       <div className={mealsDetailsContainer}>
         <Meals meals={mealItems} activeTab={activeTab} />
@@ -55,7 +55,7 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
     );
   };
 
-  const mealTabSection = () => {
+  const renderMealTabSection = () => {
     return (
       <div className="flex items-center gap-6 mt-10">
         <MealTypesTab activeTab={activeTab} handelActiveTab={handleActiveTab} />
@@ -63,14 +63,14 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
     );
   };
 
-  const buttonsSection: ReactElementType = () => {
+  const renderButtonsSection: ReactElementType = () => {
     return (
       <p className={buttonContainer}>
-        <Button outline onClick={action.close.handleAction}>
+        <Button outline onClick={actions.close.handleAction}>
           {t("back")}
         </Button>
         <Button
-          onClick={action.save.handleAction}
+          onClick={actions.save.handleAction}
           outline
           styles="bg-green-500 hover:bg-green-600 border-0 text-white"
         >
@@ -82,29 +82,31 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
 
   const renderConfirmModal: ReactElementType = () => {
     switch (true) {
-      case action.skip.isModalOpen: {
+      case actions.skip.isModalOpen: {
         return (
           <SkipConfirmModal
-            closeModal={action.skip.handleAction}
-            action={action.skip.handleMealPreference}
+            closeModal={actions.skip.handleAction}
+            action={actions.skip.handleMealPreference}
           />
         );
       }
-      case action.close.isModalOpen && action.close.handleModal !== undefined: {
+      case actions.close.isModalOpen &&
+        actions.close.handleModal !== undefined: {
         return (
           <CloseConfirmModal
-            closeModal={action.close.handleMealPreference}
-            closeConfirmModal={action.close.handleModal}
+            closeModal={actions.close.handleMealPreference}
+            closeConfirmModal={actions.close.handleModal}
           />
         );
       }
-      case action.save.isModalOpen: {
+      case actions.save.isModalOpen: {
         return (
           <SaveConfirmModal
-            action={action.save.handleMealPreference}
+            action={actions.save.handleMealPreference}
             closeModal={() => setShowSaveConfirmModal(false)}
-            activeTab={activeTab}
-            mealSave={true}
+            isUserMealSave={true}
+            handleTriggerUserPreference={handleTriggerUserPreference}
+            saveMealPreferenceLoading={saveMealPreferenceLoading}
           />
         );
       }
@@ -113,17 +115,14 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = ({
     }
   };
 
-  const mealItems = scheduledMealStore.getMealDayData(
-    formatDate(UserMealStore.data!)
-  )[type as MealTypeEnum];
-  if (ModalStore.typeOfMeal && mealItems) {
+  if (mealType && mealItems) {
     return (
       <Modal>
         <div className={mealPreferenceContainer}>
-          {headerSection()}
-          {mealTabSection()}
-          {mealsSection()}
-          {buttonsSection()}
+          {renderHeaderSection()}
+          {renderMealTabSection()}
+          {renderMealsSection()}
+          {renderButtonsSection()}
         </div>
         {renderConfirmModal()}
       </Modal>

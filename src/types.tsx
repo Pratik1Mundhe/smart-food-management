@@ -162,13 +162,20 @@ export interface MealCardProps {
   mealItems: MealFoodItemModel[];
   mealTime: string;
   actions: PreferenceTypeAction;
-  fetchScheduleMealStatus: JSX.Element | null;
+  userPreference: MealPreferenceEnum | null;
+  fetchScheduleMealStatus: (
+    renderSuccessView: () => JSX.Element
+  ) => JSX.Element;
 }
 export interface MealPreferenceModalPropsType {
+  mealType: MealTypeEnum;
   activeTab: MealPreferenceEnum;
   handleActiveTab: (activeType: MealPreferenceEnum) => void;
   setShowSaveConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
-  action: Modals;
+  mealItems: MealFoodItemModel[];
+  actions: Modals;
+  handleTriggerUserPreference: () => void;
+  saveMealPreferenceLoading: boolean;
 }
 
 export interface Modals {

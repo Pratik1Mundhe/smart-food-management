@@ -1,71 +1,40 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
-import {
-  MealStatusEnum,
-  ReactElementType,
-  VoidFunctionType,
-} from "../../types";
-import scheduledMealStore from "../../store/ScheduledMealStore";
-import { MEAL_DAY_KEY_FORMAT } from "../../constants";
-import useMutateUserPreference from "../../apis/mutations/userPreferenceMeal/useMutateUserPreferenceMeal";
-import ModalStore from "../../store/ModalStore";
-import formatQuantityData from "../../utils/formatQuantityData";
-import UserMealStore from "../../store/UserMealStore";
+import { ReactElementType, VoidFunctionType } from "../../types";
+
 import Loader from "../loader/Loader";
-import { formatDate } from "../../utils/formatDate";
 
 interface ConfirmModalPropsType {
   closeModal: VoidFunctionType;
   action: VoidFunctionType;
-  activeTab: string;
-  mealSave?: boolean;
+  isUserMealSave?: boolean;
+  handleTriggerUserPreference?: () => void;
+  saveMealPreferenceLoading?: boolean;
 }
 
 const SaveConfirmModal: React.FC<ConfirmModalPropsType> = ({
   action,
   closeModal,
-  activeTab,
-  mealSave,
+  isUserMealSave,
+  handleTriggerUserPreference,
+  saveMealPreferenceLoading,
 }) => {
-  const { triggerUserPreference, loading } = useMutateUserPreference(
-    ModalStore.typeOfMeal!,
-    action
-  );
   const { t } = useTranslation();
   const handleClickSave: VoidFunctionType = () => {
-    if (!mealSave) {
+    const isSaveMeal = isUserMealSave && handleTriggerUserPreference;
+    if (isSaveMeal) {
+      handleTriggerUserPreference();
+    } else {
       action();
       closeModal();
-    } else {
-      const variables = {
-        date: formatDate(UserMealStore.data!),
-        mealId: scheduledMealStore.getMealId(
-          dayjs(formatDate(UserMealStore.data!)).format(MEAL_DAY_KEY_FORMAT),
-          ModalStore.typeOfMeal!
-        ),
-        mealItems: formatQuantityData(
-          scheduledMealStore.getMealItems(
-            dayjs(formatDate(UserMealStore.data!)).format(MEAL_DAY_KEY_FORMAT),
-            ModalStore.typeOfMeal!
-          ),
-          activeTab,
-          ModalStore.typeOfMeal
-        ),
-        mealPreference: activeTab.toUpperCase(),
-        mealStatus: MealStatusEnum.NULL.toUpperCase(),
-        mealType: ModalStore.typeOfMeal.toUpperCase(),
-      };
-      triggerUserPreference(variables);
-      UserMealStore.setUserPreference(activeTab, ModalStore.typeOfMeal);
     }
   };
 
   const renderButtons: ReactElementType = () => {
-    if (loading) {
+    if (saveMealPreferenceLoading) {
       return <Loader color="blue" />;
     }
     return (

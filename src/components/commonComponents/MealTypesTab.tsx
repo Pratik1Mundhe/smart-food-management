@@ -23,11 +23,12 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
   const { t } = useTranslation();
 
   const fullMealButton = () => {
+    const fullMealTabStyle = `${mealButtonFull} ${
+      activeTab === MealPreferenceEnum.FULL ? activeMealTab : fullMealTab
+    }`;
     return (
       <li
-        className={`${mealButtonFull} ${
-          activeTab === MealPreferenceEnum.FULL ? activeMealTab : fullMealTab
-        }`}
+        className={fullMealTabStyle}
         onClick={() => handelActiveTab(MealPreferenceEnum.FULL)}
       >
         {t("fullMeal")}
@@ -36,13 +37,11 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
   };
 
   const halfMealButton = () => {
+    const halfMealTabStyle =
+      activeTab === MealPreferenceEnum.HALF ? activeMealTabHalf : halfMealTab;
     return (
       <li
-        className={
-          activeTab === MealPreferenceEnum.HALF
-            ? activeMealTabHalf
-            : halfMealTab
-        }
+        className={halfMealTabStyle}
         onClick={() => handelActiveTab(MealPreferenceEnum.HALF)}
       >
         {t("halfMeal")}
@@ -51,13 +50,13 @@ const MealTypesTab: React.FC<MealTabProp> = (prop) => {
   };
 
   const customMealButton = () => {
+    const customMealTabStyle =
+      activeTab === MealPreferenceEnum.CUSTOM
+        ? activeMealTabCustom
+        : customMealTab;
     return (
       <li
-        className={
-          activeTab === MealPreferenceEnum.CUSTOM
-            ? activeMealTabCustom
-            : customMealTab
-        }
+        className={customMealTabStyle}
         onClick={() => handelActiveTab(MealPreferenceEnum.CUSTOM)}
       >
         {t("custom")}

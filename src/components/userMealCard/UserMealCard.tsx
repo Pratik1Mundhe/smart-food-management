@@ -7,7 +7,6 @@ import IconMeal from "../iconMeal/IconMeal";
 import Loader from "../loader/Loader";
 import UserMealStore from "../../store/UserMealStore";
 import Button from "../commonComponents/Button";
-import MealPreferenceController from "../../Controllers/MealPreferenceController";
 import { MealCardProps, MealPreferenceEnum } from "../../types";
 import {
   buttonContent,
@@ -23,11 +22,17 @@ import {
 } from "./styles";
 
 const UserMealCard: React.FC<MealCardProps> = (props) => {
-  const { mealType, mealItems, mealTime, actions, fetchScheduleMealStatus } =
-    props;
+  const {
+    mealType,
+    mealItems,
+    mealTime,
+    actions,
+    userPreference,
+    fetchScheduleMealStatus,
+  } = props;
   const { t } = useTranslation();
 
-  const mealTypeAndTime = (): JSX.Element => {
+  const renderMealTypeAndTime = (): JSX.Element => {
     return (
       <div className={timeDetailsContainer}>
         <div className="border-2 p-2 rounded-sm">
@@ -43,34 +48,31 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     );
   };
 
-  const mealPreference = (): JSX.Element => {
-    const userPreference = UserMealStore.mealPreference[mealType];
-    const isCustom = userPreference === MealPreferenceEnum.CUSTOM;
-    const isFull = userPreference === MealPreferenceEnum.FULL;
-    const fullOrHalfMeal = isFull ? t("fullMeal") : t("halfMeal");
-    if (isCustom) {
-      return <p className={customMeals}>{t("custom")}</p>;
+  const renderMealPreferences = () => {
+    if (!userPreference) return null;
+
+    switch (userPreference) {
+      case MealPreferenceEnum.CUSTOM:
+        return <p className={customMeals}>{t("custom")}</p>;
+      case MealPreferenceEnum.FULL:
+        return <p className={halfFullMeals}>{t("fullMeal")}</p>;
+      case MealPreferenceEnum.HALF:
+        return <p className={halfFullMeals}>{t("halfMeal")}</p>;
+      default:
+        return null;
     }
-    return <p className={halfFullMeals}>{fullOrHalfMeal}</p>;
-  };
-  const mealPreferenceContainer = (): JSX.Element | null => {
-    const userPreference = UserMealStore.mealPreference[mealType];
-    if (userPreference) {
-      return mealPreference();
-    }
-    return null;
   };
 
-  const headerContainer = (): JSX.Element => {
+  const renderHeaderContainer = (): JSX.Element => {
     return (
       <div className={header}>
-        {mealTypeAndTime()}
-        {mealPreferenceContainer()}
+        {renderMealTypeAndTime()}
+        {renderMealPreferences()}
       </div>
     );
   };
 
-  const mealsNotScheduleMessage = (): JSX.Element => {
+  const renderMealsNotScheduleMessage = (): JSX.Element => {
     return (
       <div className="flex items-center justify-center my-auto">
         <h1 className="font-semibold text-slate-800">{t("emptyMeal")}</h1>
@@ -78,7 +80,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     );
   };
 
-  const meals = (): JSX.Element => {
+  const renderMeals = (): JSX.Element => {
     return (
       <>
         {mealItems.map((item, index) => {
@@ -94,20 +96,20 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       </>
     );
   };
-  //is Name Fit
-  const mealsContainer = (): JSX.Element => {
+
+  const renderMealsContainer = (): JSX.Element => {
     if (mealItems.length === 0) {
-      return mealsNotScheduleMessage();
+      return renderMealsNotScheduleMessage();
     }
     return (
       <ul className={foodItems}>
-        {meals()}
-        <div className={mealButtonsContainer}>{mealActionButtons()}</div>
+        {renderMeals()}
+        <div className={mealButtonsContainer}>{renderMealActionButtons()}</div>
       </ul>
     );
   };
 
-  const editButtonContent = (): JSX.Element => {
+  const renderEditButtonContent = (): JSX.Element => {
     return (
       <>
         <span>{t("edit")}</span>
@@ -116,7 +118,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       </>
     );
   };
-  const editButton = (): JSX.Element => {
+  const renderEditButton = (): JSX.Element => {
     return (
       <>
         <Button
@@ -124,13 +126,13 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
           onClick={actions.edit.onClick}
           disable={!actions.edit.isDisable}
         >
-          <div className={buttonContent}>{editButtonContent()}</div>
+          <div className={buttonContent}>{renderEditButtonContent()}</div>
         </Button>
       </>
     );
   };
 
-  const mealStatusButtons = (): JSX.Element => {
+  const renderMealStatusButtons = (): JSX.Element => {
     if (actions.skip.isDisable) {
       return <Loader color="blue" />;
     }
@@ -146,34 +148,28 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     );
   };
 
-  const mealActionButtons = (): JSX.Element => {
+  const renderMealActionButtons = (): JSX.Element => {
     const showStatusButtons =
       actions.skip.isMealTimeCompleted && UserMealStore.inCampusStatus;
     if (showStatusButtons) {
       {
-        mealStatusButtons();
+        renderMealStatusButtons();
       }
     }
-    return <div className="absolute top-[360px]">{editButton()}</div>;
+    return <div className="absolute top-[360px]">{renderEditButton()}</div>;
   };
 
-  const mealCard = (): JSX.Element => {
-    if (fetchScheduleMealStatus) {
-      return fetchScheduleMealStatus;
-    }
-    return (
-      <>
-        {headerContainer()}
-        {mealsContainer()}
-      </>
-    );
-  };
-  return (
-    <div className={cardContainer}>
-      <MealPreferenceController />
-      {mealCard()}
-    </div>
+  const renderSuccessView = () => (
+    <>
+      {renderHeaderContainer()}
+      {renderMealsContainer()}
+    </>
   );
+
+  const renderMealCard = (): JSX.Element => {
+    return fetchScheduleMealStatus(renderSuccessView);
+  };
+  return <div className={cardContainer}>{renderMealCard()}</div>;
 };
 
 export default observer(UserMealCard);
