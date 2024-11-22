@@ -7,11 +7,8 @@ import IconMeal from "../iconMeal/IconMeal";
 import Loader from "../loader/Loader";
 import UserMealStore from "../../store/UserMealStore";
 import Button from "../commonComponents/Button";
-import {
-  MealCardProps,
-  MealPreferenceEnum,
-  ReactElementType,
-} from "../../types";
+import MealPreferenceController from "../../Controllers/MealPreferenceController";
+import { MealCardProps, MealPreferenceEnum } from "../../types";
 import {
   buttonContent,
   cardContainer,
@@ -24,17 +21,13 @@ import {
   time,
   timeDetailsContainer,
 } from "./styles";
-import MealPreferenceController from "../../Controllers/MealPreferenceController";
 
-const UserMealCard: React.FC<MealCardProps> = ({
-  mealType,
-  mealItems,
-  mealTime,
-  action,
-  fetchScheduleMealStatus,
-}) => {
+const UserMealCard: React.FC<MealCardProps> = (props) => {
+  const { mealType, mealItems, mealTime, actions, fetchScheduleMealStatus } =
+    props;
   const { t } = useTranslation();
-  const mealTypeAndTime: ReactElementType = () => {
+
+  const mealTypeAndTime = (): JSX.Element => {
     return (
       <div className={timeDetailsContainer}>
         <div className="border-2 p-2 rounded-sm">
@@ -49,51 +42,51 @@ const UserMealCard: React.FC<MealCardProps> = ({
       </div>
     );
   };
-  const mealPreference: ReactElementType = () => {
-    const preferenceStyle =
-      UserMealStore.mealPreference[mealType] === MealPreferenceEnum.CUSTOM
-        ? customMeals
-        : halfFullMeals;
-    const fullOrHalfMeal =
-      UserMealStore.mealPreference[mealType] === MealPreferenceEnum.FULL
-        ? t("fullMeal")
-        : t("halfMeal");
-    return (
-      <>
-        {UserMealStore.mealPreference[mealType] ? (
-          <p className={preferenceStyle}>
-            {UserMealStore.mealPreference[mealType] === "custom"
-              ? t("custom")
-              : fullOrHalfMeal}
-          </p>
-        ) : undefined}
-      </>
-    );
+
+  const mealPreference = (): JSX.Element => {
+    const userPreference = UserMealStore.mealPreference[mealType];
+    const isCustom = userPreference === MealPreferenceEnum.CUSTOM;
+    const isFull = userPreference === MealPreferenceEnum.FULL;
+    const fullOrHalfMeal = isFull ? t("fullMeal") : t("halfMeal");
+    if (isCustom) {
+      return <p className={customMeals}>{t("custom")}</p>;
+    }
+    return <p className={halfFullMeals}>{fullOrHalfMeal}</p>;
   };
-  const headerSection: ReactElementType = () => {
+  const mealPreferenceContainer = (): JSX.Element | null => {
+    const userPreference = UserMealStore.mealPreference[mealType];
+    if (userPreference) {
+      return mealPreference();
+    }
+    return null;
+  };
+
+  const headerContainer = (): JSX.Element => {
     return (
       <div className={header}>
         {mealTypeAndTime()}
-        {mealPreference()}
+        {mealPreferenceContainer()}
       </div>
     );
   };
-  const mealsEmptyContent: ReactElementType = () => {
+
+  const mealsNotScheduleMessage = (): JSX.Element => {
     return (
       <div className="flex items-center justify-center my-auto">
         <h1 className="font-semibold text-slate-800">{t("emptyMeal")}</h1>
       </div>
     );
   };
-  const meals: ReactElementType = () => {
+
+  const meals = (): JSX.Element => {
     return (
       <>
         {mealItems.map((item, index) => {
           const { id, name } = item;
-          const alignment = index % 2 !== 0 ? "text-right" : "text-left";
-
+          const mealNameAlignment =
+            index % 2 !== 0 ? "text-right" : "text-left";
           return (
-            <li key={id} className={`${mealItem} ${alignment}`}>
+            <li key={id} className={`${mealItem} ${mealNameAlignment}`}>
               {name}
             </li>
           );
@@ -101,18 +94,20 @@ const UserMealCard: React.FC<MealCardProps> = ({
       </>
     );
   };
-  const mealsContainer: ReactElementType = () => {
+  //is Name Fit
+  const mealsContainer = (): JSX.Element => {
     if (mealItems.length === 0) {
-      return mealsEmptyContent();
+      return mealsNotScheduleMessage();
     }
     return (
       <ul className={foodItems}>
         {meals()}
-        <div className={mealButtonsContainer}>{mealStatusButtons()}</div>
+        <div className={mealButtonsContainer}>{mealActionButtons()}</div>
       </ul>
     );
   };
-  const editButtonContent: ReactElementType = () => {
+
+  const editButtonContent = (): JSX.Element => {
     return (
       <>
         <span>{t("edit")}</span>
@@ -121,48 +116,54 @@ const UserMealCard: React.FC<MealCardProps> = ({
       </>
     );
   };
-  const editButton: ReactElementType = () => {
-    const editAction = action.find((action) => action.type === "EDIT");
-
-    if (!editAction) return <></>;
+  const editButton = (): JSX.Element => {
     return (
       <>
         <Button
-          isEditable={editAction.isDisable && UserMealStore.inCampusStatus}
-          onClick={editAction.onClick}
-          disable={!editAction.isDisable}
+          isEditable={actions.edit.isDisable && UserMealStore.inCampusStatus}
+          onClick={actions.edit.onClick}
+          disable={!actions.edit.isDisable}
         >
           <div className={buttonContent}>{editButtonContent()}</div>
         </Button>
       </>
     );
   };
-  const mealStatusButtons: ReactElementType = () => {
-    if (action[1].isHidden && UserMealStore.inCampusStatus) {
-      if (action[1].isDisable) {
-        return <Loader color="blue" />;
+
+  const mealStatusButtons = (): JSX.Element => {
+    if (actions.skip.isDisable) {
+      return <Loader color="blue" />;
+    }
+    return (
+      <p className=" absolute top-[360px] flex self-center gap-6">
+        <Button skip onClick={() => actions.ate.onClick}>
+          {t("iAte")}
+        </Button>
+        <Button outline onClick={() => actions.skip.onClick}>
+          {t("iSkip")}
+        </Button>
+      </p>
+    );
+  };
+
+  const mealActionButtons = (): JSX.Element => {
+    const showStatusButtons =
+      actions.skip.isMealTimeCompleted && UserMealStore.inCampusStatus;
+    if (showStatusButtons) {
+      {
+        mealStatusButtons();
       }
-      return (
-        <p className=" absolute top-[360px] flex self-center gap-6">
-          <Button skip onClick={() => action[1].onClick}>
-            {t("iAte")}
-          </Button>
-          <Button outline onClick={() => action[2].onClick}>
-            {t("iSkip")}
-          </Button>
-        </p>
-      );
     }
     return <div className="absolute top-[360px]">{editButton()}</div>;
   };
 
-  const cardContent = (): JSX.Element => {
+  const mealCard = (): JSX.Element => {
     if (fetchScheduleMealStatus) {
       return fetchScheduleMealStatus;
     }
     return (
       <>
-        {headerSection()}
+        {headerContainer()}
         {mealsContainer()}
       </>
     );
@@ -170,7 +171,7 @@ const UserMealCard: React.FC<MealCardProps> = ({
   return (
     <div className={cardContainer}>
       <MealPreferenceController />
-      {cardContent()}
+      {mealCard()}
     </div>
   );
 };

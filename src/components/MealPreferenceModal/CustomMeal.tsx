@@ -1,8 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 
-import { mealContainer, mealItem } from "./styles";
 import CustomMealItemModel from "../../models/CustomMealItemModel";
+import { MAX_QUANTITY_LIMIT, MIN_QUANTITY_LIMIT } from "../../constants";
+import {
+  counterStyle,
+  mealContainer,
+  mealItem,
+  quantityTextStyle,
+} from "./styles";
 
 interface CustomProp {
   eachMeal: CustomMealItemModel;
@@ -18,22 +24,20 @@ const CustomMeal = (props: CustomProp) => {
   }
   const { t } = useTranslation();
 
-  const quantityChangerButtons = (): React.ReactElement => {
+  const quantityChangeButtons = (): React.ReactElement => {
     return (
       <p>
         <button
-          className="p-2 border-[1px] text-gray-400"
-          disabled={eachMeal.customMealQuantity === 0}
+          className={counterStyle}
+          disabled={eachMeal.customMealQuantity === MIN_QUANTITY_LIMIT}
           onClick={handelDecreaseQuantity}
         >
           -
         </button>
-        <span className="p-2 border-[1px] text-gray-400">
-          {eachMeal.customMealQuantity}
-        </span>
+        <span className={counterStyle}>{eachMeal.customMealQuantity}</span>
         <button
-          className="p-2 border-[1px] text-gray-400"
-          disabled={eachMeal.customMealQuantity >= 5}
+          className={counterStyle}
+          disabled={eachMeal.customMealQuantity >= MAX_QUANTITY_LIMIT}
           onClick={handelIncreaseQuantity}
         >
           +
@@ -44,13 +48,10 @@ const CustomMeal = (props: CustomProp) => {
 
   return (
     <li key={eachMeal.id} className={mealContainer}>
-      <p className={mealItem}>
-        {eachMeal.name}
-        <br />
-      </p>
-      <div className={`flex flex-row gap-2`}>
-        {quantityChangerButtons()}
-        <span className="text-gray-300 text-[12px] ml-3">{t("quantity")}</span>
+      <p className={mealItem}>{eachMeal.name}</p>
+      <div className="flex flex-row gap-2">
+        {quantityChangeButtons()}
+        <span className={quantityTextStyle}>{t("quantity")}</span>
       </div>
     </li>
   );

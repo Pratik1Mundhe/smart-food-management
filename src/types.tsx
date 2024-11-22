@@ -143,19 +143,25 @@ export interface FoodItemsSelectPropsType {
     React.SetStateAction<FoodItemType | null>
   >;
 }
-interface Action {
+
+export interface PreferenceTypeAction {
+  edit: Action;
+  ate: Action;
+  skip: Action;
+}
+
+export interface Action {
   type: "I_ATE" | "I_SKIP" | "EDIT";
   isDisable: boolean;
-  isHidden: boolean;
+  isMealTimeCompleted: boolean;
   onClick: () => void;
-  isLoading?: boolean;
 }
 
 export interface MealCardProps {
   mealType: MealTypeEnum;
   mealItems: MealFoodItemModel[];
   mealTime: string;
-  action: Action[];
+  actions: PreferenceTypeAction;
   fetchScheduleMealStatus: JSX.Element | null;
 }
 export interface MealPreferenceModalPropsType {

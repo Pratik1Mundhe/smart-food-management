@@ -24,3 +24,5 @@ export const backButton =
   "px-5 py-2 border-2 border-gray-300 text-sm hover:bg-gray-100 rounded";
 export const saveButton =
   "px-5 py-2 bg-green-500 text-white text-sm hover:bg-green-600 rounded";
+export const quantityTextStyle = "text-gray-300 text-[12px] ml-3";
+export const counterStyle = "p-2 border-[1px] text-gray-400";

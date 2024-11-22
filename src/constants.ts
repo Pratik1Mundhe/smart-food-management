@@ -38,3 +38,6 @@ export const LOGOUT_URL = BACKEND_URL + "api/meals/logout/";
 export const TOASTER_POSITION = "top-center";
 export const SUCCESS_STATUS = 200;
 export const LOADING_STATUS = 100;
+
+export const MAX_QUANTITY_LIMIT = 5;
+export const MIN_QUANTITY_LIMIT = 0;

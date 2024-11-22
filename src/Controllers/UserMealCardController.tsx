@@ -7,7 +7,7 @@ import useFetchScheduledMeal from "../apis/queries/getScheduledMeal/useFetchSche
 import useSaveMealStatus from "../apis/mutations/saveMealStatus/useSaveMealStatus";
 import UserMealStore from "../store/UserMealStore";
 import ModalStore from "../store/ModalStore";
-import { MealTypeEnum, MealStatusEnum } from "../types";
+import { MealTypeEnum, MealStatusEnum, PreferenceTypeAction } from "../types";
 import { formatDate } from "../utils/formatDate";
 import Loader from "../components/loader/Loader";
 import { VoidFunctionType } from "../types";
@@ -106,43 +106,36 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
     });
   }
 
-  const action: Action[] = [
-    {
+  const actions: PreferenceTypeAction = {
+    edit: {
       type: "EDIT",
       isDisable: isEditable,
-      isHidden: isMealAteStatus,
+      isMealTimeCompleted: isMealAteStatus,
       onClick: handelEditButton,
     },
-    {
+    ate: {
       type: "I_ATE",
       isDisable: saveMealStatusAPI.loading,
-      isHidden: isMealAteStatus,
+      isMealTimeCompleted: isMealAteStatus,
       onClick: () => handelTriggerSaveMealStatus(MealStatusEnum.ATE),
     },
-    {
+    skip: {
       type: "I_SKIP",
       isDisable: saveMealStatusAPI.loading,
-      isHidden: isMealAteStatus,
+      isMealTimeCompleted: isMealAteStatus,
       onClick: () => handelTriggerSaveMealStatus(MealStatusEnum.ATE),
     },
-  ];
+  };
 
   return (
     <UserMealCard
       mealType={type}
       mealTime={mealTime}
       mealItems={mealItems}
-      action={action}
+      actions={actions}
       fetchScheduleMealStatus={fetchScheduleMealStatus()}
     />
   );
 };
 
 export default UserMealCardController;
-
-interface Action {
-  type: "I_ATE" | "I_SKIP" | "EDIT";
-  isDisable: boolean;
-  isHidden: boolean;
-  onClick: () => void;
-}
