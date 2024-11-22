@@ -43,11 +43,32 @@ export enum MealStatusEnum {
   SKIP = "skipped",
 }
 
+export enum PasswordStrengthEnum {
+  STRONG = "strong",
+  WEAK = "weak",
+  MEDIUM = "medium",
+}
+
 export enum PageRoutesEnum {
   HOME_PAGE = "/",
   ADMIN_HOME_PAGE = "/admin",
   LOGIN_PAGE = "/login",
   WEEKLY_MENU_PAGE = "/weekly-menu",
+  REGISTER_PAGE = "/register",
+  PROFILE_PAGE = "/profile",
+}
+
+export enum ProfileDepartmentsEnum {
+  INTERNAL = "internal",
+  HR = "hr",
+  TECHNICAL = "technical",
+  NON_TECHNICAL = "nonTechnical",
+}
+
+export enum GenderEnum {
+  MALE = "male",
+  FEMALE = "female",
+  OTHER = "other",
 }
 
 export interface MealDetailsType {
@@ -219,7 +240,7 @@ export interface FoodItemsModalPropsType {
   currentMealTab: MealTypeEnum;
 }
 
-export interface useFetchScheduledMealType {
+export interface UseFetchScheduledMealType {
   (date: string, mealType: MealTypeEnum): {
     mealsLoading: boolean;
     error: ApolloError | undefined;
@@ -228,3 +249,93 @@ export interface useFetchScheduledMealType {
     ) => Promise<ApolloQueryResult<any>>;
   };
 }
+
+export interface FormErrors {
+  username: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+  passwordWarnings: string[];
+}
+export interface FormDataType {
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface RegisterPropsType {
+  formData: FormDataType;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+  errors: FormErrors;
+  registerLoading: boolean;
+  passwordStrength: PasswordStrengthEnum | null;
+}
+
+export interface ProfilePropsType {
+  profileFormData: ProfileFormDataType;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+  errors: ProfileErrorsType;
+  handleFileInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+export interface RenderNameInputElementType {
+  (type: string, inputType: string): React.ReactElement;
+}
+
+export interface RenderSelectInputElementType {
+  (
+    type: string,
+    options: ProfileDepartmentsEnum[] | GenderEnum[]
+  ): React.ReactElement;
+}
+
+export interface ProfileFormDataType {
+  name: string;
+  profileImage: string;
+  jobRole: string;
+  email: string;
+  department: ProfileDepartmentsEnum | string;
+  gender: GenderEnum | string;
+}
+
+export interface ProfileErrorsType {
+  name: string | null;
+  profileImage: string | null;
+  jobRole: string | null;
+  email: string | null;
+  department: string | null;
+  gender: string | null;
+}
+
+export interface RegisterInputPropsType {
+  type: string;
+  inputType: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string | string[] | null;
+  inputValue: string;
+}
+
+export interface ProfileInputPropsType {
+  type: string;
+  inputType: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string | null;
+  inputValue: string;
+}
+
+export interface ProfileSelectInputPropsType {
+  type: string;
+  options: ProfileDepartmentsEnum[] | GenderEnum[];
+  inputValue: string;
+  error: string | null;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+}
+
+export interface PasswordStrengthBarPropsType {
+  passwordStrength: PasswordStrengthEnum | null;
+}
+export interface ProfileInputPropsType {}

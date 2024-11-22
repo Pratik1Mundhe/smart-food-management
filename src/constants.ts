@@ -1,4 +1,4 @@
-import { MealTypeEnum } from "./types";
+import { GenderEnum, MealTypeEnum, ProfileDepartmentsEnum } from "./types";
 
 export const PORTAL_RENDER_ID = "modal";
 export const ERROR_ICON = "ErrorIcon.png";
@@ -34,7 +34,6 @@ export const MEAL_TYPES: MealTypeEnum[] = [
 
 export const MEAL_DAY_KEY_FORMAT = "DD/MM/YYYY";
 export const BACKEND_URL = "https://hardkpentium.loca.lt/";
-export const USER_ACCESS_TOKEN = "23b73e81-aa67-40e1-9b33-9564d3e64a77";
 export const GRAPHQL_URL = BACKEND_URL + "graphql";
 export const LOGIN_URL = BACKEND_URL + "api/meals/login/";
 export const LOGOUT_URL = BACKEND_URL + "api/meals/logout/";
@@ -48,3 +47,46 @@ export const LANGUAGES = [
 ];
 
 export const QUERY_NOT_EXIST_ERROR = "Meal matching query does not exist.";
+
+export const REGISTER_INPUT_NAMES = {
+  password: "password",
+  confirmPassword: "confirmPassword",
+  username: "username",
+};
+
+export const PROFILE_INPUT_NAMES = {
+  name: "name",
+  jobRole: "jobRole",
+  email: "email",
+  department: "department",
+  gender: "gender",
+  profileImage: "profileImage",
+};
+
+export const REGISTER_INPUT_TYPES = {
+  text: "text",
+  password: "password",
+  file: "file",
+};
+
+export const PROFILE_INPUT_TYPES = {
+  text: "text",
+  email: "email",
+};
+
+export const DEPARTMENT_OPTIONS: ProfileDepartmentsEnum[] = [
+  ProfileDepartmentsEnum.HR,
+  ProfileDepartmentsEnum.INTERNAL,
+  ProfileDepartmentsEnum.NON_TECHNICAL,
+  ProfileDepartmentsEnum.TECHNICAL,
+];
+
+export const GENDER_OPTIONS: GenderEnum[] = [
+  GenderEnum.MALE,
+  GenderEnum.FEMALE,
+  GenderEnum.OTHER,
+];
+
+export const MINIMUM_PASSWORD_LENGTH = 8;
+export const NAME_MINIMUM_LENGTH = 3;
+export const JOB_ROLE_MINIMUM_LENGTH = 3;

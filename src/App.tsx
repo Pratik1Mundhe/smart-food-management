@@ -7,9 +7,11 @@ import Home from "./pages/home/Home";
 import WeeklyMenu from "./pages/weeklyMenu/WeeklyMenu";
 import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
-import { PageRoutesEnum } from "./types";
 import LoginPage from "./pages/loginPage/LoginPage";
+import RegisterController from "./controllers/RegisterController";
 import { TOASTER_POSITION } from "./constants";
+import { PageRoutesEnum } from "./types";
+import ProfileController from "./controllers/ProfileController";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -61,6 +63,14 @@ const App: React.FC = () => {
               <WeeklyMenu />
             </ComponentWrapper>
           }
+        />
+        <Route
+          path={PageRoutesEnum.REGISTER_PAGE}
+          element={<RegisterController />}
+        />
+        <Route
+          path={PageRoutesEnum.PROFILE_PAGE}
+          element={<ProfileController />}
         />
       </Routes>
       <Toaster position={TOASTER_POSITION} reverseOrder={true} />

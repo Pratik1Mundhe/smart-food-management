@@ -63,6 +63,43 @@
           }
         }
       }
+    },
+    "register": {
+      "title": "Hi there, please sign up",
+      "labels": {
+        "username": "USERNAME",
+        "password": "PASSWORD",
+        "confirmPassword": "CONFIRM PASSWORD"
+      },
+      "buttons": {
+        "signup": "SIGNUP",
+        "login": "Log in"
+      },
+      "passwordStrength": {
+        "strong": "Strong",
+        "weak": "Weak"
+      },
+      "errors": {
+        "usernameErrors": {
+          "lengthError": "Username must be at least 3 characters long",
+          "alienLettersError": "Username can only contain letters, numbers, and underscores"
+        },
+        "passwordErrors": {
+          "lengthError": "Password must be at least 8 characters long"
+        }
+      },
+      "warnings": {
+        "passwordWarnings": {
+          "uppercaseWarning": "Password should contain at least one uppercase letter",
+          "digitWarning": "Password should contain at least one number",
+          "specialLetterWarning": "Password should contain at least one special character"
+        }
+      },
+      "toast": {
+        "success": "Registered Successfully",
+        "failure": "Something went wrong !"
+      },
+      "note": "Already have an account?"
     }
   },
   "components": {

@@ -3,9 +3,9 @@ import { useQuery, NetworkStatus } from "@apollo/client";
 import { GET_SCHEDULE_MEAL } from "./query";
 import scheduledMealStore from "../../../store/ScheduledMealStore";
 import { onSuccess } from "./responseHandler";
-import { MealTypeEnum, useFetchScheduledMealType } from "../../../types";
+import { MealTypeEnum, UseFetchScheduledMealType } from "../../../types";
 
-const useFetchScheduledMeal: useFetchScheduledMealType = (
+const useFetchScheduledMeal: UseFetchScheduledMealType = (
   date: string,
   mealType: MealTypeEnum
 ) => {
