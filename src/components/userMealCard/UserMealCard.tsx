@@ -141,7 +141,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     }
     return (
       <p className=" absolute top-[360px] flex self-center gap-6">
-        <Button filled onClick={actions.ate.onClick} color="blue">
+        <Button filled onClick={actions.ate.onClick} color="bg-blue-500">
           {t("iAte")}
         </Button>
         <Button outline onClick={actions.skip.onClick}>

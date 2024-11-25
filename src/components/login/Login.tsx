@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import Input from "../commonComponents/Input";
 import Loader from "../loader/Loader";
 import {
@@ -43,12 +45,14 @@ const Login: React.FC<LoginTypes> = (props) => {
     loginLoading,
   } = props;
 
+  const { t } = useTranslation();
+
   const headerSection = () => (
     <div>
       <img src={GLOBAL_LOGO_URL} className={logo} alt={GLOBAL_LOGO_ALT} />
       <h1 className={heading}>
-        Hi there, <br />
-        login
+        {t("Hi there")}, <br />
+        {t("login")}
       </h1>
     </div>
   );
@@ -82,7 +86,7 @@ const Login: React.FC<LoginTypes> = (props) => {
         {headerSection()}
         {inputsSection()}
         <Button type="submit" disable={loginLoading}>
-          {loginLoading ? <Loader /> : "Login"}
+          {loginLoading ? <Loader /> : t("login")}
         </Button>
       </div>
     </form>
