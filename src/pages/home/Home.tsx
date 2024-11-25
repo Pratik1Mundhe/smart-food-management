@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
 import { MealTypeEnum, PageRoutesEnum } from "../../types";
-import MealPreferenceController from "../../Controllers/MealPreferenceController";
+import MealPreferenceController from "../../controllers/MealPreferenceController";
 import MealDate from "../../components/mealDate/MealDate";
 import {
   ACCESS_TOKEN,
@@ -13,7 +13,7 @@ import {
   DINNER_TIME,
   LUNCH_TIME,
 } from "../../constants";
-import UserMealCardController from "../../Controllers/UserMealCardController";
+import UserMealCardController from "../../controllers/UserMealCardController";
 import UserMealStore from "../../store/UserMealStore";
 import { formatDate } from "../../utils/formatDate";
 

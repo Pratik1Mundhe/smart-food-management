@@ -30,7 +30,7 @@ const LogoutController: React.FC<LogoutControllerType> = (props) => {
         removeItemLocalStorage(ADMIN_TOKEN);
         handleCloseLogoutConfirmModal();
         navigate(PageRoutesEnum.LOGIN_PAGE);
-        CustomMealStore.meals = [];
+        CustomMealStore.clearStore();
       }
       setLoading(false);
     }

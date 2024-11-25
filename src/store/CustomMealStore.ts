@@ -19,6 +19,11 @@ class _CustomMealStore {
   setMealData(data: CustomMealType[]) {
     this.meals = data.map((eachMeal) => new CustomMealModel(eachMeal));
   }
+
+  clearStore() {
+    this.date = null;
+    this.meals = [];
+  }
 }
 
 const CustomMealStore = new _CustomMealStore();

@@ -1,64 +1,61 @@
 import { useState } from "react";
 
 import Login from "../components/login/Login";
-import { PASSWORD_INITIAL_VALUE, USERNAME_INITIAL_VALUE } from "../constants";
+import {
+  EMPTY_PASSWORD_ERROR_MSG,
+  EMPTY_USERNAME_ERROR_MSG,
+} from "../constants";
 import useLoginApi from "../utils/loginApi";
 
 const LoginController = () => {
-  const [usernameDetails, setUsernameDetails] = useState<string>(
-    USERNAME_INITIAL_VALUE
-  );
-  const [passwordDetails, setPasswordDetails] = useState<string>(
-    PASSWORD_INITIAL_VALUE
-  );
-  const [userNameError, setUsernameError] = useState<boolean>(false);
-  const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
-  const { triggerLogin } = useLoginApi();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [userNameError, setUsernameError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const { triggerLogin, loading } = useLoginApi();
 
-  function handleUsername(event: React.ChangeEvent<HTMLInputElement>) {
-    let newValue = event.target.value.trim();
-    setUsernameDetails(newValue);
+  function handleUsername(value: string) {
+    let newValue = value.trim();
+    setUsername(newValue);
     if (newValue === "") {
-      setUsernameError(true);
+      setUsernameError(EMPTY_USERNAME_ERROR_MSG);
     } else {
-      setUsernameError(false);
+      setUsernameError("");
     }
   }
-  function handelPassword(event: React.ChangeEvent<HTMLInputElement>) {
-    let newValue = event.target.value.trim();
-    setPasswordDetails(newValue);
+  function handelPassword(value: string) {
+    let newValue = value.trim();
+    setPassword(newValue);
     if (newValue === "") {
-      setPasswordError(true);
+      setPasswordError(EMPTY_PASSWORD_ERROR_MSG);
     } else {
-      setPasswordError(false);
+      setPasswordError("");
     }
   }
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const isUserNameEmpty = usernameDetails === "";
-    const isPasswordEmpty = passwordDetails === "";
+    const isUserNameEmpty = username === "";
+    const isPasswordEmpty = password === "";
 
-    setUsernameError(isUserNameEmpty);
-    setPasswordError(isPasswordEmpty);
+    setUsernameError(EMPTY_USERNAME_ERROR_MSG);
+    setPasswordError(EMPTY_PASSWORD_ERROR_MSG);
     if (isUserNameEmpty || isPasswordEmpty) return;
 
     const data = {
-      username: usernameDetails,
-      password: passwordDetails,
+      username: username,
+      password: password,
     };
-    await triggerLogin(data, setUsernameError, setPasswordError, setLoading);
-    setLoading(true);
+    await triggerLogin(data, setUsernameError, setPasswordError);
   }
 
   return (
     <Login
       userNameError={userNameError}
-      usernameDetails={usernameDetails}
+      username={username}
       handleUsername={handleUsername}
       passwordError={passwordError}
-      passwordDetails={passwordDetails}
+      password={password}
       handelPassword={handelPassword}
       handleLogin={handleLogin}
       loginLoading={loading}

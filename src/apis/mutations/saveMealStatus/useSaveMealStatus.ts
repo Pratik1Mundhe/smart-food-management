@@ -20,11 +20,6 @@ function useSaveMealStatus(action?: VoidFunctionType) {
       },
     });
   }
-  if (error) {
-    if (action) {
-      action();
-    }
-  }
   function handelSuccess(mealStatus: MealStatusEnum) {
     UserMealStore.setMealStatus(mealStatus, ModalStore.typeOfMeal);
     if (action) {

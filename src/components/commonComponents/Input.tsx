@@ -7,15 +7,14 @@ interface InputProp {
   style: string;
   inputType: string;
   value: string;
-  isError: boolean;
-  onChangeFunction: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  errorMsg: string;
+  onChange: (value: string) => void;
 }
 
 const Input: React.FC<InputProp> = (prop) => {
-  const { label, id, style, inputType, value, isError, onChangeFunction } =
-    prop;
+  const { label, id, style, inputType, value, errorMsg, onChange } = prop;
 
-  if (isError) {
+  if (errorMsg !== "") {
     return (
       <div className="flex flex-col">
         <label htmlFor={id} className="text-gray-600 text-sm">
@@ -27,15 +26,13 @@ const Input: React.FC<InputProp> = (prop) => {
             className={style}
             type={inputType}
             value={value}
-            onChange={onChangeFunction}
+            onChange={(e) => onChange(e.target.value)}
           />
           <div className={errorIcon}>
             <img src={ERROR_ICON} className="h-4 w-4 " />
           </div>
         </div>
-        <p className="text-red-500 mt-1 text-sm">
-          {inputType === "text" ? "Invalid Username" : "Invalid Password"}
-        </p>
+        <p className="text-red-500 mt-1 text-sm">{errorMsg}</p>
       </div>
     );
   }
@@ -50,7 +47,7 @@ const Input: React.FC<InputProp> = (prop) => {
           className={style}
           type={inputType}
           value={value}
-          onChange={onChangeFunction}
+          onChange={(e) => onChange(e.target.value)}
         />
       </div>
     </div>

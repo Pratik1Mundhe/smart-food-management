@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import { ACCESS_TOKEN, ADMIN_TOKEN } from "../../constants";
 import { PageRoutesEnum } from "../../types";
-import LoginController from "../../Controllers/LoginController";
+import LoginController from "../../controllers/LoginController";
 
 const LoginPage: React.FC = () => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);

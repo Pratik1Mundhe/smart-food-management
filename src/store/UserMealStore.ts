@@ -22,7 +22,7 @@ class _UserMealStore {
     //Use null type for no value cases
     this.mealId = null;
     //Remove NULL from the enum
-    this.inCampusStatus = true;
+    this.inCampusStatus = false;
     this.mealStatus = {
       breakfast: null,
       lunch: null,

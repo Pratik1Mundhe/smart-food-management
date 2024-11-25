@@ -72,9 +72,10 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
           {t("back")}
         </Button>
         <Button
+          filled
+          color="bg-green-500"
+          hoverColor="hover:bg-green-600"
           onClick={actions.save.handleAction}
-          outline
-          styles="bg-green-500 hover:bg-green-600 border-0 text-white"
         >
           {t("save")}
         </Button>

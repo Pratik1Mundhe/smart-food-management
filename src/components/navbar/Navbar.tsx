@@ -20,7 +20,7 @@ import {
   headerMenuOption,
   redButton,
 } from "./styles";
-import LogoutController from "../../Controllers/LogoutController";
+import LogoutController from "../../controllers/LogoutController";
 
 const Navbar: React.FC = () => {
   const navigate: NavigateFunction = useNavigate();

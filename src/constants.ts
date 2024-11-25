@@ -21,8 +21,8 @@ export const ACCESS_TOKEN = "accessToken";
 export const ADMIN_TOKEN = "admin";
 
 export const DINNER_TIME = "20:00 - 22:00";
-export const LUNCH_TIME = "20:00 - 22:00";
-export const BREAKFAST_TIME = "20:00 - 22:00";
+export const LUNCH_TIME = "12:00 - 14:00";
+export const BREAKFAST_TIME = "08:00 - 10:00";
 
 export const MEAL_TYPES: MealTypeEnum[] = [
   MealTypeEnum.BREAKFAST,
@@ -41,3 +41,9 @@ export const LOADING_STATUS = 100;
 
 export const MAX_QUANTITY_LIMIT = 5;
 export const MIN_QUANTITY_LIMIT = 0;
+
+export const EMPTY_USERNAME_ERROR_MSG = "Username Required";
+export const EMPTY_PASSWORD_ERROR_MSG = "Password Required";
+
+export const INVALID_USERNAME_ERROR_MSG = "Invalid Username";
+export const INVALID_PASSWORD_ERROR_MSG = "Invalid Password";

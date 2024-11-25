@@ -121,9 +121,13 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     return (
       <>
         <Button
-          isEditable={actions.edit.isDisable && UserMealStore.inCampusStatus}
+          filled
+          color="bg-blue-500"
+          height="h-[35px]"
+          width="w-[300px]"
+          hoverColor="hover:bg-blue-600"
           onClick={actions.edit.onClick}
-          disable={!actions.edit.isDisable}
+          disable={!actions.edit.isDisable || !UserMealStore.inCampusStatus}
         >
           <div className={buttonContent}>{renderEditButtonContent()}</div>
         </Button>
@@ -137,23 +141,21 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     }
     return (
       <p className=" absolute top-[360px] flex self-center gap-6">
-        <Button skip onClick={() => actions.ate.onClick}>
+        <Button filled onClick={actions.ate.onClick} color="blue">
           {t("iAte")}
         </Button>
-        <Button outline onClick={() => actions.skip.onClick}>
+        <Button outline onClick={actions.skip.onClick}>
           {t("iSkip")}
         </Button>
       </p>
     );
   };
 
-  const renderMealActionButtons = (): JSX.Element => {
+  const renderMealActionButtons = () => {
     const showStatusButtons =
       actions.skip.isMealTimeCompleted && UserMealStore.inCampusStatus;
     if (showStatusButtons) {
-      {
-        renderMealStatusButtons();
-      }
+      return renderMealStatusButtons();
     }
     return <div className="absolute top-[360px]">{renderEditButton()}</div>;
   };

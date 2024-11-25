@@ -8,19 +8,23 @@ import {
   LOADING_STATUS,
   LOGIN_METHOD,
   LOGIN_URL,
+  INVALID_USERNAME_ERROR_MSG,
+  INVALID_PASSWORD_ERROR_MSG,
 } from "../constants";
 import { addItemLocalStorage } from "./localStorageUtils/addItem";
 import { successToast } from "./toastUtils/successToast";
 import { failureToast } from "./toastUtils/failureToast";
 import { PageRoutesEnum } from "../types";
+import { useState } from "react";
 
 function useLoginApi() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   async function triggerLogin(
     data: { username: string; password: string },
-    setUsernameError: React.Dispatch<React.SetStateAction<boolean>>,
-    setPasswordError: React.Dispatch<React.SetStateAction<boolean>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setUsernameError: React.Dispatch<React.SetStateAction<string>>,
+    setPasswordError: React.Dispatch<React.SetStateAction<string>>
   ) {
     try {
       const response = await fetch(LOGIN_URL, {
@@ -59,9 +63,9 @@ function useLoginApi() {
     } catch (err: unknown) {
       if (err instanceof Error) {
         if (err.message === INVALID_USERNAME_RESPONSE) {
-          setUsernameError(true);
+          setUsernameError(INVALID_USERNAME_ERROR_MSG);
         } else if (err.message === INVALID_PASSWORD_RESPONSE) {
-          setPasswordError(true);
+          setPasswordError(INVALID_PASSWORD_ERROR_MSG);
         } else {
           failureToast("Failed to Login");
         }
@@ -71,7 +75,7 @@ function useLoginApi() {
       setLoading(false);
     }
   }
-  return { triggerLogin };
+  return { triggerLogin, loading };
 }
 
 export default useLoginApi;

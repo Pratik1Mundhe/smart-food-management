@@ -21,12 +21,12 @@ import Button from "../commonComponents/Button";
 import React from "react";
 
 interface LoginTypes {
-  userNameError: boolean;
-  usernameDetails: string;
-  handleUsername: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  passwordError: boolean;
-  passwordDetails: string;
-  handelPassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  userNameError: string;
+  username: string;
+  handleUsername: (value: string) => void;
+  passwordError: string;
+  password: string;
+  handelPassword: (value: string) => void;
   handleLogin: (event: React.FormEvent<HTMLFormElement>) => void;
   loginLoading: boolean;
 }
@@ -34,10 +34,10 @@ interface LoginTypes {
 const Login: React.FC<LoginTypes> = (props) => {
   const {
     userNameError,
-    usernameDetails,
+    username: usernameDetails,
     handleUsername,
     passwordError,
-    passwordDetails,
+    password: passwordDetails,
     handelPassword,
     handleLogin,
     loginLoading,
@@ -61,8 +61,8 @@ const Login: React.FC<LoginTypes> = (props) => {
         style={userNameError ? errorInput : input}
         inputType={USERNAME_ID}
         value={usernameDetails}
-        onChangeFunction={handleUsername}
-        isError={userNameError}
+        onChange={handleUsername}
+        errorMsg={userNameError}
       />
       <Input
         label={PASSWORD_LABEL}
@@ -70,8 +70,8 @@ const Login: React.FC<LoginTypes> = (props) => {
         style={passwordError ? errorInput : input}
         inputType={PASSWORD}
         value={passwordDetails}
-        isError={passwordError}
-        onChangeFunction={handelPassword}
+        errorMsg={passwordError}
+        onChange={handelPassword}
       />
     </>
   );
