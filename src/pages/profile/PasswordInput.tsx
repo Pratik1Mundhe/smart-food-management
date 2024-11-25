@@ -1,20 +1,21 @@
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 import { PiWarningCircle } from "react-icons/pi";
-import { REGISTER_INPUT_NAMES } from "../../constants";
-import { ReactElementType, RegisterInputPropsType } from "../../types";
 
-const RegisterInput: React.FC<RegisterInputPropsType> = ({
+import { ReactElementType, RegisterPasswordInputPropsType } from "../../types";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { PROFILE_INPUT_TYPES } from "../../constants";
+
+const PasswordInput: React.FC<RegisterPasswordInputPropsType> = ({
   type,
-  inputType,
   handleInputChange,
   error,
   inputValue,
+  showPassword,
+  handleToggleShowPassword,
 }) => {
-  const labelText =
-    type === REGISTER_INPUT_NAMES.confirmPassword
-      ? "CONFIRM PASSWORD"
-      : type.toUpperCase();
+  const { t } = useTranslation();
+  const tPath = "pages.profile.changePasswordModal";
 
   const renderInputError: ReactElementType = () => {
     if (error) {
@@ -23,13 +24,15 @@ const RegisterInput: React.FC<RegisterInputPropsType> = ({
     return <></>;
   };
 
-  const renderWarningIcon: ReactElementType = () => {
+  const renderIcon: ReactElementType = () => {
     if (error) {
-      return (
-        <div className="w-[10%]">
-          <PiWarningCircle className="text-error text-xl" />
-        </div>
-      );
+      return <PiWarningCircle className="text-error text-xl" />;
+    }
+    if (showPassword && type === "password") {
+      return <VscEyeClosed onClick={handleToggleShowPassword} />;
+    }
+    if (!showPassword && type === "password") {
+      return <VscEye onClick={handleToggleShowPassword} />;
     }
     return <></>;
   };
@@ -42,16 +45,18 @@ const RegisterInput: React.FC<RegisterInputPropsType> = ({
         }`}
       >
         <input
-          type={inputType}
+          type={
+            showPassword
+              ? PROFILE_INPUT_TYPES.text
+              : PROFILE_INPUT_TYPES.password
+          }
           id={type}
           value={inputValue}
           onChange={handleInputChange}
           name={type}
-          className={`h-[40px] pl-4 text-gray-700 bg-transparent outline-none ${
-            error ? "w-[90%]" : "w-full"
-          }`}
+          className={`h-[40px] pl-4 text-gray-700 bg-transparent outline-none w-[90%]`}
         />
-        {renderWarningIcon()}
+        <button className="w-[10%]">{renderIcon()}</button>
       </div>
     );
   };
@@ -62,7 +67,7 @@ const RegisterInput: React.FC<RegisterInputPropsType> = ({
         htmlFor="username"
         className="block text-secondary text-xs font-semibold mb-2"
       >
-        {labelText}
+        {t(tPath + `.labels.${type}`)}
       </label>
     );
   };
@@ -76,4 +81,4 @@ const RegisterInput: React.FC<RegisterInputPropsType> = ({
   );
 };
 
-export default RegisterInput;
+export default PasswordInput;

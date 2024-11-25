@@ -1,6 +1,7 @@
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { ProfileSelectInputPropsType, ReactElementType } from "../../types";
+import { useTranslation } from "react-i18next";
 
 const ProfileSelectInput: React.FC<ProfileSelectInputPropsType> = ({
   type,
@@ -9,13 +10,15 @@ const ProfileSelectInput: React.FC<ProfileSelectInputPropsType> = ({
   error,
   handleInputChange,
 }) => {
+  const { t } = useTranslation();
+  const tPath = "pages.profile";
   const renderInputLabel: ReactElementType = () => {
     return (
       <label
         htmlFor="username"
         className="block text-secondary text-xs font-semibold mb-2"
       >
-        {type.toUpperCase()}
+        {t(tPath + `.labels.${type}`)}
       </label>
     );
   };

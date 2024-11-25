@@ -3,9 +3,12 @@ import {
   ApolloQueryResult,
   OperationVariables,
 } from "@apollo/client";
+import { TFunction } from "i18next";
+
+import UserPreferredMealModel from "./models/UserPreferredMealModel";
 import MealFoodItemModel from "./models/MealFoodItemModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
-import UserPreferredMealModel from "./models/UserPreferredMealModel";
+
 export enum FoodItemCategoryEnum {
   RICE = "rice",
   PAN_CAKE = "pancake",
@@ -186,6 +189,11 @@ export interface ModalPropsTypes {
   close: () => void;
   children: React.ReactElement;
 }
+
+export interface ConfirmModalPropsTypes {
+  close: () => void;
+  action: VoidFunctionType;
+}
 export interface MealTabsPropsType {
   currentMealTab: string;
   handleTabChange: (meal: MealTypeEnum) => void;
@@ -269,6 +277,8 @@ export interface RegisterPropsType {
   errors: FormErrors;
   registerLoading: boolean;
   passwordStrength: PasswordStrengthEnum | null;
+  handleToggleShowPassword: VoidFunctionType;
+  showPassword: boolean;
 }
 
 export interface ProfilePropsType {
@@ -276,10 +286,22 @@ export interface ProfilePropsType {
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  handleSubmit: (e: React.FormEvent) => void;
+  handleSubmitProfileFormData: VoidFunctionType;
   errors: ProfileErrorsType;
   handleFileInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCloseSaveConfirmModal: VoidFunctionType;
+  showSaveConfirmModal: boolean;
+  handleSubmitProfileForm: (e: React.FormEvent) => void;
+  handlePasswordInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOpenChangePasswordModal: VoidFunctionType;
+  handleCloseChangePasswordModal: VoidFunctionType;
+  handleSubmitUpdatedPassword: (e: React.FormEvent) => void;
+  passwordStrength: PasswordStrengthEnum | null;
+  showChangePasswordModal: boolean;
+  passwordErrors: ProfilePasswordErrorType;
+  passwordFormData: ProfilePasswordFormDataType;
 }
+
 export interface RenderNameInputElementType {
   (type: string, inputType: string): React.ReactElement;
 }
@@ -309,12 +331,22 @@ export interface ProfileErrorsType {
   gender: string | null;
 }
 
-export interface RegisterInputPropsType {
+export interface InputPropsType {
   type: string;
   inputType: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error: string | string[] | null;
   inputValue: string;
+}
+
+export interface RegisterPasswordInputPropsType {
+  type: string;
+  inputType: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string | string[] | null;
+  inputValue: string;
+  showPassword: boolean;
+  handleToggleShowPassword: VoidFunctionType;
 }
 
 export interface ProfileInputPropsType {
@@ -338,4 +370,42 @@ export interface ProfileSelectInputPropsType {
 export interface PasswordStrengthBarPropsType {
   passwordStrength: PasswordStrengthEnum | null;
 }
-export interface ProfileInputPropsType {}
+
+export interface ValidatePasswordType {
+  (value: string, t: TFunction<"translation", undefined>): {
+    error: string | null;
+    warnings: string[];
+    strength: PasswordStrengthEnum | null;
+  };
+}
+
+export interface CalculatePasswordStrengthType {
+  (
+    hasUppercaseLetter: boolean,
+    hasDigit: boolean,
+    hasSpecialLetter: boolean
+  ): PasswordStrengthEnum;
+}
+
+export interface ProfilePasswordFormDataType {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface ProfilePasswordErrorType {
+  passwordError: string | null;
+  confirmPasswordError: string | null;
+}
+
+export interface ProfileChangePasswordModalPropsType {
+  handlePasswordInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  passwordStrength: PasswordStrengthEnum | null;
+  passwordErrors: ProfilePasswordErrorType;
+  passwordFormData: ProfilePasswordFormDataType;
+  handleCloseChangePasswordModal: VoidFunctionType;
+  handleSubmitUpdatedPassword: (e: React.FormEvent) => void;
+}
+
+export interface RenderInputElementType {
+  (type: string, inputType: string): React.ReactElement;
+}

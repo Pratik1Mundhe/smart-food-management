@@ -61,6 +61,8 @@ export const PROFILE_INPUT_NAMES = {
   department: "department",
   gender: "gender",
   profileImage: "profileImage",
+  password: "password",
+  confirmPassword: "confirmPassword",
 };
 
 export const REGISTER_INPUT_TYPES = {
@@ -72,6 +74,7 @@ export const REGISTER_INPUT_TYPES = {
 export const PROFILE_INPUT_TYPES = {
   text: "text",
   email: "email",
+  password: "password",
 };
 
 export const DEPARTMENT_OPTIONS: ProfileDepartmentsEnum[] = [

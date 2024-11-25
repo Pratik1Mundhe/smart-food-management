@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { IoIosCloseCircle } from "react-icons/io";
 
 import {
@@ -18,16 +19,31 @@ import {
 } from "../../constants";
 import ProfileInput from "./ProfileInput";
 import ProfileSelectInput from "./ProfileSelectInput";
-import logo from "../../assets/global-logo.png";
 import UploadIcon from "../../icons/UploadIcon";
+import ConfirmModal from "../../components/modal/ConfirmModal";
+import logo from "../../assets/global-logo.png";
+import ProfileChangePasswordModal from "./ProfileChangePasswordModal";
 
 const Profile: React.FC<ProfilePropsType> = ({
   profileFormData,
   handleInputChange,
-  handleSubmit,
+  handleSubmitProfileFormData,
   errors,
   handleFileInput,
+  handleCloseSaveConfirmModal,
+  showSaveConfirmModal,
+  handleSubmitProfileForm,
+  showChangePasswordModal,
+  passwordErrors,
+  passwordFormData,
+  passwordStrength,
+  handleCloseChangePasswordModal,
+  handleSubmitUpdatedPassword,
+  handlePasswordInputChange,
+  handleOpenChangePasswordModal,
 }) => {
+  const { t } = useTranslation();
+  const tPath = "pages.profile";
   const renderNameInputElement: RenderNameInputElementType = (
     type,
     inputType
@@ -65,27 +81,27 @@ const Profile: React.FC<ProfilePropsType> = ({
       <div className="flex items-center mt-10 gap-6 text-sm">
         <button
           type="submit"
-          className="rounded font-semibold px-5 py-2 text-white bg-primary "
+          className="rounded font-semibold px-5 py-2 text-white bg-primary"
         >
-          UPDATE
+          {t(tPath + ".buttons.update")}
         </button>
         <button
+          onClick={handleOpenChangePasswordModal}
           type="button"
           className="rounded font-semibold px-5 py-2 text-white bg-[#00B2CA]"
         >
-          CHANGE PASSWORD
+          {t(tPath + ".buttons.changePassword")}
         </button>
         <button
           type="button"
           className="rounded border-2 px-5 py-2 text-general bg-transparent"
         >
-          LOGOUT
+          {t(tPath + ".buttons.logout")}
         </button>
       </div>
     );
   };
   const renderProfilePicture: ReactElementType = () => {
-    // const image = profileFormData.profileImage;
     return (
       <div className="w-1/4 flex flex-col items-center">
         <div className="h-[300px] flex items-center justify-center">
@@ -97,7 +113,7 @@ const Profile: React.FC<ProfilePropsType> = ({
         >
           <UploadIcon />
           <label htmlFor="file" className="cursor-pointer">
-            Change photo
+            {t(tPath + ".buttons.changePhoto")}
           </label>
         </button>
         <input
@@ -147,16 +163,45 @@ const Profile: React.FC<ProfilePropsType> = ({
       </button>
     );
   };
+  const renderSaveConfirmModal: ReactElementType = () => {
+    if (showSaveConfirmModal) {
+      return (
+        <ConfirmModal
+          action={handleSubmitProfileFormData}
+          close={handleCloseSaveConfirmModal}
+        />
+      );
+    }
+    return <></>;
+  };
+  const renderChangePasswordModal: ReactElementType = () => {
+    if (showChangePasswordModal) {
+      return (
+        <ProfileChangePasswordModal
+          passwordFormData={passwordFormData}
+          handlePasswordInputChange={handlePasswordInputChange}
+          passwordErrors={passwordErrors}
+          handleCloseChangePasswordModal={handleCloseChangePasswordModal}
+          passwordStrength={passwordStrength}
+          handleSubmitUpdatedPassword={handleSubmitUpdatedPassword}
+        />
+      );
+    }
+    return <></>;
+  };
+
   return (
     <div className="min-h-dvh flex flex-col">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitProfileForm}
         className="relative flex items-start gap-4 rounded-md shadow-lg w-full max-w-7xl mx-auto py-16 px-12 mt-10"
       >
         {renderProfilePicture()}
         {renderProfileFields()}
         {renderProfileFormCloseButton()}
       </form>
+      {renderSaveConfirmModal()}
+      {renderChangePasswordModal()}
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import { TFunction } from "i18next";
+
 import {
   JOB_ROLE_MINIMUM_LENGTH,
   NAME_MINIMUM_LENGTH,
@@ -6,43 +8,49 @@ import {
 import emailValidation from "./emailValidation";
 import imageValidation from "./imageValidation";
 
-export const profileValidation = (name: string, value: string) => {
-  let error: string | null = null;
+interface ProfileValidationType {
+  (name: string, value: string, t: TFunction<"translation", undefined>):
+    | string
+    | null;
+}
 
+export const profileValidation: ProfileValidationType = (name, value, t) => {
+  let error: string | null = null;
+  const tPath = "pages.profile.errors";
   switch (name) {
     case PROFILE_INPUT_NAMES.name:
       if (!value.trim()) {
-        error = "Name is required.";
+        error = t(tPath + ".nameError.emptyError");
       } else if (value.length < NAME_MINIMUM_LENGTH) {
-        error = "Name must be at least 3 characters long.";
+        error = t(tPath + ".nameError.lengthError");
       }
       break;
 
     case PROFILE_INPUT_NAMES.profileImage:
-      error = imageValidation(value);
+      error = imageValidation(value, t);
       break;
 
     case PROFILE_INPUT_NAMES.jobRole:
       if (!value.trim()) {
-        error = "Job role is required.";
+        error = t(tPath + ".jobRoleError.emptyError");
       } else if (value.length < JOB_ROLE_MINIMUM_LENGTH) {
-        error = "Job role must be at least 2 characters long.";
+        error = t(tPath + ".jobRoleError.lengthError");
       }
       break;
 
     case PROFILE_INPUT_NAMES.email:
-      error = emailValidation(value);
+      error = emailValidation(value, t);
       break;
 
     case PROFILE_INPUT_NAMES.department:
       if (!value) {
-        error = "Department is required.";
+        error = t(tPath + ".departmentError.emptyError");
       }
       break;
 
     case PROFILE_INPUT_NAMES.gender:
       if (!value) {
-        error = "Gender is required.";
+        error = t(tPath + ".genderError.emptyError");
       }
       break;
 

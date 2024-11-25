@@ -1,10 +1,10 @@
 import React from "react";
-import { PiWarningCircle } from "react-icons/pi";
 
-import { ProfileInputPropsType, ReactElementType } from "../../types";
+import { PiWarningCircle } from "react-icons/pi";
+import { InputPropsType, ReactElementType } from "../../types";
 import { useTranslation } from "react-i18next";
 
-const ProfileInput: React.FC<ProfileInputPropsType> = ({
+const Input: React.FC<InputPropsType> = ({
   type,
   inputType,
   handleInputChange,
@@ -12,7 +12,7 @@ const ProfileInput: React.FC<ProfileInputPropsType> = ({
   inputValue,
 }) => {
   const { t } = useTranslation();
-  const tPath = "pages.profile";
+  const tPath = "pages.register";
 
   const renderInputError: ReactElementType = () => {
     if (error) {
@@ -21,7 +21,7 @@ const ProfileInput: React.FC<ProfileInputPropsType> = ({
     return <></>;
   };
 
-  const renderWarningIcon: ReactElementType = () => {
+  const renderIcon: ReactElementType = () => {
     if (error) {
       return (
         <div className="w-[10%]">
@@ -29,13 +29,14 @@ const ProfileInput: React.FC<ProfileInputPropsType> = ({
         </div>
       );
     }
+
     return <></>;
   };
 
-  const renderInput: ReactElementType = () => {
+  const renderRegisterInput: ReactElementType = () => {
     return (
       <div
-        className={`flex items-center focus:outline-none h-[40px] border-2 rounded  appearance-none ${
+        className={`flex items-center focus:outline-none h-[40px] border rounded shadow appearance-none ${
           error ? "border-red-500 bg-[#FF0B370D]" : ""
         }`}
       >
@@ -49,7 +50,7 @@ const ProfileInput: React.FC<ProfileInputPropsType> = ({
             error ? "w-[90%]" : "w-full"
           }`}
         />
-        {renderWarningIcon()}
+        {renderIcon()}
       </div>
     );
   };
@@ -66,12 +67,12 @@ const ProfileInput: React.FC<ProfileInputPropsType> = ({
   };
 
   return (
-    <div className={`w-2/5`}>
+    <div className={`${error && error?.length > 0 ? "mb-3" : "mb-6"}`}>
       {renderInputLabel()}
-      {renderInput()}
+      {renderRegisterInput()}
       {renderInputError()}
     </div>
   );
 };
 
-export default ProfileInput;
+export default Input;

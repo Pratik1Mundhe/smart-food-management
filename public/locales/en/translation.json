@@ -80,13 +80,12 @@
         "weak": "Weak"
       },
       "errors": {
-        "usernameErrors": {
+        "usernameError": {
           "lengthError": "Username must be at least 3 characters long",
           "alienLettersError": "Username can only contain letters, numbers, and underscores"
         },
-        "passwordErrors": {
-          "lengthError": "Password must be at least 8 characters long"
-        }
+        "passwordError": "Password must be at least 8 characters long",
+        "confirmPasswordError": "Confirm password and password must match"
       },
       "warnings": {
         "passwordWarnings": {
@@ -100,6 +99,54 @@
         "failure": "Something went wrong !"
       },
       "note": "Already have an account?"
+    },
+    "profile": {
+      "buttons": {
+        "update": "UPDATE",
+        "changePassword": "CHANGE PASSWORD",
+        "logout": "LOGOUT",
+        "changePhoto": "Change photo"
+      },
+      "labels": {
+        "name": "NAME",
+        "email": "EMAIL",
+        "jobRole": "JOB ROLE",
+        "department": "DEPARTMENT",
+        "gender": "GENDER"
+      },
+      "errors": {
+        "nameError": {
+          "emptyError": "Name is required.",
+          "lengthError": "Name must be at least 3 characters long."
+        },
+        "imageError": {
+          "emptyError": "Profile image URL is required.",
+          "invalidUrlError": "Profile image must be a valid URL ending with jpg, jpeg, png, gif, or webp."
+        },
+        "jobRoleError": {
+          "emptyError": "Job role is required.",
+          "lengthError": "Job role must be at least 2 characters long."
+        },
+        "emailError": {
+          "emptyError": "Email is required.",
+          "invalidEmailError": "Email must be a valid email address."
+        },
+        "departmentError": {
+          "emptyError": "Department is required."
+        },
+        "genderError": {
+          "emptyError": "Gender is required."
+        }
+      },
+      "changePasswordModal": {
+        "labels": {
+          "password": "NEW PASSWORD",
+          "confirmPassword": "CONFIRM PASSWORD"
+        },
+        "buttons": {
+          "changePassword": "Change Password"
+        }
+      }
     }
   },
   "components": {

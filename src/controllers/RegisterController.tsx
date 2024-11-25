@@ -15,6 +15,7 @@ import {
   PasswordStrengthEnum,
   VoidFunctionType,
 } from "../types";
+import { useTranslation } from "react-i18next";
 
 const RegisterController: React.FC = () => {
   const [formData, setFormData] = useState<FormDataType>({
@@ -28,9 +29,13 @@ const RegisterController: React.FC = () => {
     confirmPassword: "",
     passwordWarnings: [],
   });
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [passwordStrength, setPasswordStrength] =
     useState<PasswordStrengthEnum | null>(null);
   const navigate: NavigateFunction = useNavigate();
+  const { t } = useTranslation();
+  const tPath = "pages.register";
+
   const handleRegisterSuccess: VoidFunctionType = () => {
     successToast("Registered Successfully");
     navigate(PageRoutesEnum.HOME_PAGE);
@@ -49,18 +54,17 @@ const RegisterController: React.FC = () => {
   const validateUpdatedInputField = (name: string, value: string): void => {
     const { username, password, confirmPassword } = REGISTER_INPUT_NAMES;
     let fieldErrors: Partial<FormErrors> = {};
-
     switch (name) {
       case username:
-        const usernameError = validateUsername(value);
-        fieldErrors.username = usernameError;
+        const error = validateUsername(value, t);
+        fieldErrors.username = error;
         break;
       case password:
         const {
           error: passwordError,
           warnings: passwordWarnings,
           strength,
-        } = validatePassword(value);
+        } = validatePassword(value, t);
         setPasswordStrength(strength);
         fieldErrors.password = passwordError;
         fieldErrors.passwordWarnings = passwordWarnings;
@@ -68,7 +72,7 @@ const RegisterController: React.FC = () => {
       case confirmPassword:
         fieldErrors.confirmPassword =
           value !== formData.password
-            ? "Confirm password and password must match"
+            ? t(tPath + ".errors.passwordErrors.confirmPasswordError")
             : null;
         break;
       default:
@@ -86,14 +90,18 @@ const RegisterController: React.FC = () => {
     validateUpdatedInputField(name, value);
   };
 
+  const handleToggleShowPassword: VoidFunctionType = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleFormDataValidation = (): boolean => {
     const { username, password, confirmPassword } = formData;
-    const usernameError = validateUsername(username);
+    const usernameError = validateUsername(username, t);
     const { error: passwordError, warnings: passwordWarnings } =
-      validatePassword(password);
+      validatePassword(password, t);
     const confirmPasswordError =
       confirmPassword !== password
-        ? "Confirm password and password must match"
+        ? t(tPath + ".errors.passwordErrors.confirmPasswordError")
         : null;
     setErrors({
       username: usernameError,
@@ -120,6 +128,8 @@ const RegisterController: React.FC = () => {
       errors={errors}
       registerLoading={registerLoading}
       passwordStrength={passwordStrength}
+      handleToggleShowPassword={handleToggleShowPassword}
+      showPassword={showPassword}
     />
   );
 };

@@ -1,21 +1,9 @@
 import { MINIMUM_PASSWORD_LENGTH } from "../../constants";
-import { PasswordStrengthEnum } from "../../types";
-
-interface ValidatePasswordType {
-  (value: string): {
-    error: string | null;
-    warnings: string[];
-    strength: PasswordStrengthEnum | null;
-  };
-}
-
-interface CalculatePasswordStrengthType {
-  (
-    hasUppercaseLetter: boolean,
-    hasDigit: boolean,
-    hasSpecialLetter: boolean
-  ): PasswordStrengthEnum;
-}
+import {
+  CalculatePasswordStrengthType,
+  PasswordStrengthEnum,
+  ValidatePasswordType,
+} from "../../types";
 
 const calculatePasswordStrength: CalculatePasswordStrengthType = (
   hasUppercaseLetter,
@@ -35,12 +23,13 @@ const calculatePasswordStrength: CalculatePasswordStrengthType = (
   }
 };
 
-const validatePassword: ValidatePasswordType = (value) => {
+const validatePassword: ValidatePasswordType = (value, t) => {
+  const tPath = "pages.register";
   const warnings: string[] = [];
   let error: string | null = null;
   let strength: PasswordStrengthEnum | null = null;
   if (value.length < MINIMUM_PASSWORD_LENGTH) {
-    error = "Password must be at least 8 characters long";
+    error = t(tPath + ".errors.passwordError");
   } else {
     const hasUppercaseLetter = /[A-Z]/.test(value);
     const hasDigit = /\d/.test(value);
@@ -51,6 +40,7 @@ const validatePassword: ValidatePasswordType = (value) => {
       hasDigit,
       hasSpecialLetter
     );
+
     if (!hasUppercaseLetter)
       warnings.push("Password should contain at least one uppercase letter");
     if (!hasDigit) warnings.push("Password should contain at least one number");

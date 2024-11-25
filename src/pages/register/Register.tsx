@@ -8,6 +8,7 @@ import {
   PageRoutesEnum,
   ReactElementType,
   RegisterPropsType,
+  RenderInputElementType,
   VoidFunctionType,
 } from "../../types";
 import {
@@ -16,12 +17,9 @@ import {
   REGISTER_INPUT_TYPES,
 } from "../../constants";
 import PasswordStrengthBar from "../../components/passwordStrengthBar/PasswordStrengthBar";
-import RegisterInput from "./RegisterInput";
 import Loader from "../../components/loader/Loader";
-
-interface RenderInputElementType {
-  (type: string, inputType: string): React.ReactElement;
-}
+import { useTranslation } from "react-i18next";
+import Input from "../../components/inputComponents/Input";
 
 const Register: React.FC<RegisterPropsType> = ({
   formData,
@@ -32,12 +30,14 @@ const Register: React.FC<RegisterPropsType> = ({
   passwordStrength,
 }) => {
   const navigate: NavigateFunction = useNavigate();
+  const { t } = useTranslation();
+  const tPath = "pages.register";
 
   const renderInputElement: RenderInputElementType = (type, inputType) => {
     const inputValue = formData[type as keyof FormDataType];
     const error = errors[type as keyof FormErrors];
     return (
-      <RegisterInput
+      <Input
         type={type}
         inputType={inputType}
         error={error}
@@ -54,7 +54,7 @@ const Register: React.FC<RegisterPropsType> = ({
     if (registerLoading) {
       return <Loader />;
     }
-    return "SIGNUP";
+    return t(tPath + ".buttons.signup");
   };
 
   const renderSubmitButton: ReactElementType = () => {
@@ -70,9 +70,9 @@ const Register: React.FC<RegisterPropsType> = ({
           onClick={navigateLogin}
           className="mt-8 text-sm text-center text-general"
         >
-          Already have an account?
+          {t(tPath + ".note")}
           <span className="text-primary hover:text-blue-600 ml-1 font-medium cursor-pointer">
-            Log in
+            {t(tPath + ".buttons.login")}
           </span>
         </p>
       </>
@@ -94,7 +94,7 @@ const Register: React.FC<RegisterPropsType> = ({
       >
         <img src={logo} className="w-[90px] h-[90px] self-center" alt="Logo" />
         <h2 className="text-3xl self-center my-6 mb-9 text-general">
-          Hi there, please sign up
+          {t(tPath + ".title")}
         </h2>
         {renderInputElement(
           REGISTER_INPUT_NAMES.username,
