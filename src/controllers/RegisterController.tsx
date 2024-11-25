@@ -37,7 +37,7 @@ const RegisterController: React.FC = () => {
   const tPath = "pages.register";
 
   const handleRegisterSuccess: VoidFunctionType = () => {
-    successToast("Registered Successfully");
+    successToast(t(tPath + ".toast.success"));
     navigate(PageRoutesEnum.HOME_PAGE);
   };
 
