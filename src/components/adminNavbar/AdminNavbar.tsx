@@ -32,7 +32,7 @@ const AdminNavbar: React.FC = () => {
 
   const path = window.location.pathname;
   const tPath = "components.adminNavbar";
-  const adminUsername = getItemLocalStorage(USERNAME_KEY);
+  const adminUsername = getItemLocalStorage(USERNAME_KEY) || "Admin";
 
   const handleOpenLogoutConfirmModal: VoidFunctionType = () => {
     setLogoutConfirmModal(true);
@@ -74,9 +74,16 @@ const AdminNavbar: React.FC = () => {
     return <></>;
   };
 
+  const navigateProfile = () => {
+    navigate(PageRoutesEnum.PROFILE_PAGE);
+  };
+
   const renderUserProfile: ReactElementType = () => {
     return (
-      <li className="flex items-center gap-2 relative">
+      <li
+        onClick={navigateProfile}
+        className="flex items-center gap-2 relative cursor-pointer"
+      >
         <LuUserCircle className="h-5 w-5" />
         <h1 className="text-general text-sm font-medium first-letter:capitalize">
           {adminUsername}

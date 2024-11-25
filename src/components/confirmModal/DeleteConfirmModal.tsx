@@ -1,9 +1,9 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
+import { useTranslation } from "react-i18next";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
 import { MealTypeEnum, ReactElementType, VoidFunctionType } from "../../types";
-import { observer } from "mobx-react-lite";
-import { useTranslation } from "react-i18next";
 import MealFoodItemModel from "../../models/MealFoodItemModel";
 
 interface ConfirmModalPropsType {

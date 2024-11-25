@@ -1,4 +1,11 @@
-import { GenderEnum, MealTypeEnum, ProfileDepartmentsEnum } from "./types";
+import {
+  BaseSizeUnitEnum,
+  FoodItemCategoryEnum,
+  GenderEnum,
+  MealTypeEnum,
+  ProfileDepartmentsEnum,
+  ServingSizeUnitEnum,
+} from "./types";
 
 export const PORTAL_RENDER_ID = "modal";
 export const ERROR_ICON = "ErrorIcon.png";
@@ -18,7 +25,7 @@ export const LOGIN_METHOD = "POST";
 export const INVALID_USERNAME_RESPONSE = "INVALID_USERNAME";
 export const INVALID_PASSWORD_RESPONSE = "INVALID_PASSWORD";
 export const USERNAME_KEY = "username";
-export const ACCESS_TOKEN = "accessToken";
+export const ACCESS_TOKEN_KEY = "accessToken";
 export const ADMIN_TOKEN = "admin";
 export const USER_TOKEN = "userId";
 
@@ -65,6 +72,13 @@ export const PROFILE_INPUT_NAMES = {
   confirmPassword: "confirmPassword",
 };
 
+export const CREATE_FOOD_ITEM_NAMES = {
+  name: "name",
+  category: "category",
+  baseSize: "baseSize",
+  servingSize: "servingSize",
+};
+
 export const REGISTER_INPUT_TYPES = {
   text: "text",
   password: "password",
@@ -88,6 +102,24 @@ export const GENDER_OPTIONS: GenderEnum[] = [
   GenderEnum.MALE,
   GenderEnum.FEMALE,
   GenderEnum.OTHER,
+];
+
+export const BASE_SIZE_UNIT_OPTIONS: BaseSizeUnitEnum[] = [
+  BaseSizeUnitEnum.KG,
+  BaseSizeUnitEnum.LITTERS,
+  BaseSizeUnitEnum.PISCES,
+];
+
+export const FOOD_CATEGORY_OPTIONS: FoodItemCategoryEnum[] = [
+  FoodItemCategoryEnum.BEVERAGES,
+  FoodItemCategoryEnum.PAN_CAKE,
+  FoodItemCategoryEnum.RICE,
+];
+
+export const FOOD_SERVING_UNIT_OPTIONS: ServingSizeUnitEnum[] = [
+  ServingSizeUnitEnum.GLASS,
+  ServingSizeUnitEnum.LADDLE,
+  ServingSizeUnitEnum.PISCES,
 ];
 
 export const MINIMUM_PASSWORD_LENGTH = 8;

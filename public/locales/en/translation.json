@@ -147,6 +147,31 @@
           "changePassword": "Change Password"
         }
       }
+    },
+    "createFoodItem": {
+      "title": "Create food item",
+      "labels": {
+        "name": "Food Items",
+        "baseSize": "Base size unit",
+        "category": "Food item category",
+        "servingSize": "Serving size unit"
+      },
+      "name": {
+        "baseSize": "base size",
+        "servingSize": "serving size",
+        "category": "category",
+        "name": "name"
+      },
+      "buttons": {
+        "back": "Back",
+        "submit": "Submit"
+      },
+      "errors": {
+        "name": "Food item name is required.",
+        "category": "Category is required.",
+        "baseSize": "Base size is required.",
+        "servingSize": "Serving size is required."
+      }
     }
   },
   "components": {

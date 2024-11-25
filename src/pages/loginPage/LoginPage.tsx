@@ -2,14 +2,14 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 import Login from "../../components/login/Login";
-import { ACCESS_TOKEN } from "../../constants";
+import { ACCESS_TOKEN_KEY } from "../../constants";
 import { PageRoutesEnum } from "../../types";
 
 const LoginPage: React.FC = () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
   const isAdmin = localStorage.getItem("admin");
 
-  if (accessToken === null && !isAdmin) {
+  if (accessToken === null) {
     return <Login />;
   }
   if (isAdmin) {

@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.11.10",
     "dayjs": "^1.11.13",
+    "http-server": "^14.1.1",
     "i18next": "^23.16.5",
     "i18next-http-backend": "^2.6.2",
     "mobx": "^6.13.5",

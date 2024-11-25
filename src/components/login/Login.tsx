@@ -28,12 +28,12 @@ import {
   PASSWORD_LABEL,
   INVALID_USERNAME_RESPONSE,
   INVALID_PASSWORD_RESPONSE,
-  ACCESS_TOKEN,
   ADMIN_TOKEN,
   USER_TOKEN,
   LOGIN_URL,
   USERNAME_KEY,
   LOGIN_METHOD,
+  ACCESS_TOKEN_KEY,
 } from "../../constants";
 
 interface LoginDataType {
@@ -117,13 +117,13 @@ const Login: React.FC = () => {
         if (result.response.is_admin) {
           addItemLocalStorage(ADMIN_TOKEN, result.response.is_admin);
           addItemLocalStorage(
-            ACCESS_TOKEN,
+            ACCESS_TOKEN_KEY,
             JSON.stringify(result.response.access_token)
           );
           navigate(PageRoutesEnum.ADMIN_HOME_PAGE);
         } else {
           addItemLocalStorage(
-            ACCESS_TOKEN,
+            ACCESS_TOKEN_KEY,
             JSON.stringify(result.response.access_token)
           );
           addItemLocalStorage(USERNAME_KEY, "admin");

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import Modal from "../../components/modal/Modal";
 import IdmLogo from "../../icons/idmLogo";
@@ -17,7 +18,6 @@ import {
   PROFILE_INPUT_TYPES,
 } from "../../constants";
 import Input from "../../components/inputComponents/Input";
-import { useTranslation } from "react-i18next";
 
 const ProfileChangePasswordModal: React.FC<
   ProfileChangePasswordModalPropsType
@@ -79,6 +79,7 @@ const ProfileChangePasswordModal: React.FC<
         handleInputChange={handlePasswordInputChange}
         error={confirmPasswordError}
         inputValue={inputValue}
+        tPath="pages.profile.changePasswordModal"
       />
     );
   };

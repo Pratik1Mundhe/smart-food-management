@@ -57,6 +57,7 @@ const ProfileController: React.FC = () => {
       [name]: error,
     }));
   };
+
   const handleFileInput = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -65,6 +66,7 @@ const ProfileController: React.FC = () => {
       console.log(imageFile);
     }
   };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ): void => {
@@ -93,7 +95,7 @@ const ProfileController: React.FC = () => {
       newErrors[fieldName] = error;
       if (error) isFormValid = false;
     });
-    setErrors(newErrors); // Update all errors in one go
+    setErrors(newErrors);
     return isFormValid;
   };
 
@@ -110,16 +112,19 @@ const ProfileController: React.FC = () => {
   const handleOpenSaveConfirmModal: VoidFunctionType = () => {
     setShowSaveConfirmModal(true);
   };
-  const handleSubmitProfileForm = (e: React.FormEvent) => {
+  const handleSubmitProfileForm = (e: React.FormEvent): void => {
     e.preventDefault();
     handleOpenSaveConfirmModal();
   };
-  const handleSubmitProfileFormData = () => {
+  const handleSubmitProfileFormData: VoidFunctionType = () => {
     handleProfileFormData();
     handleCloseSaveConfirmModal();
   };
 
-  const handleUpdatedPasswordValidation = (name: string, value: string) => {
+  const handleUpdatedPasswordValidation = (
+    name: string,
+    value: string
+  ): string | null => {
     let passwordError: string | null = null;
     let confirmPasswordError: string | null = null;
     const { password } = passwordFormData;
@@ -155,7 +160,7 @@ const ProfileController: React.FC = () => {
 
   const handlePasswordInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     const { name, value } = e.target;
     setPasswordFormData({ ...passwordFormData, [name]: value });
     handleUpdatedPasswordValidation(name, value);
@@ -169,7 +174,7 @@ const ProfileController: React.FC = () => {
     setShowChangePasswordModal(false);
   };
 
-  const handlePasswordFormDataValidation = () => {
+  const handlePasswordFormDataValidation = (): boolean => {
     const { password, confirmPassword } = passwordFormData;
     const passwordError = handleUpdatedPasswordValidation(
       PROFILE_INPUT_NAMES.password,
@@ -186,9 +191,8 @@ const ProfileController: React.FC = () => {
     return true;
   };
 
-  const handleSubmitUpdatedPassword = (e: React.FormEvent) => {
+  const handleSubmitUpdatedPassword = (e: React.FormEvent): void => {
     e.preventDefault();
-
     if (handlePasswordFormDataValidation()) {
       console.log(passwordFormData);
     }

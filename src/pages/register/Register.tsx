@@ -43,6 +43,7 @@ const Register: React.FC<RegisterPropsType> = ({
         error={error}
         inputValue={inputValue}
         handleInputChange={handleInputChange}
+        tPath="pages.register"
       />
     );
   };

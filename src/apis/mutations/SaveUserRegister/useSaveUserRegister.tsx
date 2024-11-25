@@ -27,6 +27,7 @@ export const useSaveUserRegister: SaveUserRegisterType = (
     try {
       // Simulate a successful registration after 2 seconds
       await new Promise((resolve) => setTimeout(resolve, 2000)).then(() => {
+        console.log(formData);
         onSuccess(handleRegisterSuccess);
       });
       setLoading(false);

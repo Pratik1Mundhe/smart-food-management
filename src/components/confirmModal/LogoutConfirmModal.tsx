@@ -8,7 +8,7 @@ import {
   ReactElementType,
   VoidFunctionType,
 } from "../../types";
-import { ACCESS_TOKEN, ADMIN_TOKEN, LOGOUT_URL } from "../../constants";
+import { ACCESS_TOKEN_KEY, ADMIN_TOKEN, LOGOUT_URL } from "../../constants";
 import Loader from "../loader/Loader";
 import { removeItemLocalStorage } from "../../utils/localStorageUtils/removeItem";
 
@@ -25,7 +25,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
   const tPath = "components.confirmModal.logout";
 
   function handleLogoutModal(): void {
-    const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN)!);
+    const accessToken = JSON.parse(localStorage.getItem(ACCESS_TOKEN_KEY)!);
     async function logout() {
       setLoading(true);
       const response = await fetch(LOGOUT_URL, {
@@ -35,7 +35,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = ({
         },
       });
       if (response.ok) {
-        removeItemLocalStorage(ACCESS_TOKEN);
+        removeItemLocalStorage(ACCESS_TOKEN_KEY);
         removeItemLocalStorage(ADMIN_TOKEN);
         handleCloseLogoutConfirmModal();
         navigate(PageRoutesEnum.LOGIN_PAGE);

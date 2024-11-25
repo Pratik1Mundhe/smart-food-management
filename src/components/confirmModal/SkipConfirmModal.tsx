@@ -1,14 +1,9 @@
 import React from "react";
 
 import ConfirmModal from "../commonComponents/ConfirmModal";
-import {
-  MealStatusEnum,
-  ReactElementType,
-  VoidFunctionType,
-} from "../../types";
+import { ReactElementType, VoidFunctionType } from "../../types";
 import { observer } from "mobx-react-lite";
-import useSaveMealStatus from "../../apis/mutations/SaveDayMealStatus/useSaveMealStatus";
-import UserMealStore from "../../store/UserMealStore";
+
 import { useTranslation } from "react-i18next";
 
 interface ConfirmModalPropsType {
@@ -22,14 +17,9 @@ const SkipConfirmModal: React.FC<ConfirmModalPropsType> = ({
 }) => {
   const { t } = useTranslation();
   const tPath = "components.confirmModal.skip";
-  // const { triggerSaveMealStatue, loading, error } = useSaveMealStatus();
 
   function handelSkipButton() {
     action();
-    // triggerSaveMealStatue({
-    //   mealId: UserMealStore.mealId,
-    //   status: MealStatusEnum.SKIP,
-    // });
   }
 
   const renderButtons: ReactElementType = () => {

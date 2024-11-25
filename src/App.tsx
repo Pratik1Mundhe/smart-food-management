@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import Navbar from "./components/navbar/Navbar";
-import Home from "./pages/home/Home";
 import WeeklyMenu from "./pages/weeklyMenu/WeeklyMenu";
 import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
@@ -12,6 +11,7 @@ import RegisterController from "./controllers/RegisterController";
 import { TOASTER_POSITION } from "./constants";
 import { PageRoutesEnum } from "./types";
 import ProfileController from "./controllers/ProfileController";
+import CreateFoodItemController from "./controllers/CreateFoodItemController";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -42,9 +42,9 @@ const App: React.FC = () => {
         <Route
           path={PageRoutesEnum.HOME_PAGE}
           element={
-            <ComponentWrapper>
-              <Home />
-            </ComponentWrapper>
+            <AdminComponentWrapper>
+              <AdminHome />
+            </AdminComponentWrapper>
           }
         />
         <Route
@@ -70,7 +70,19 @@ const App: React.FC = () => {
         />
         <Route
           path={PageRoutesEnum.PROFILE_PAGE}
-          element={<ProfileController />}
+          element={
+            <AdminComponentWrapper>
+              <ProfileController />
+            </AdminComponentWrapper>
+          }
+        />
+        <Route
+          path={PageRoutesEnum.FOOD_ITEM}
+          element={
+            <AdminComponentWrapper>
+              <CreateFoodItemController />
+            </AdminComponentWrapper>
+          }
         />
       </Routes>
       <Toaster position={TOASTER_POSITION} reverseOrder={true} />

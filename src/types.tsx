@@ -59,6 +59,7 @@ export enum PageRoutesEnum {
   WEEKLY_MENU_PAGE = "/weekly-menu",
   REGISTER_PAGE = "/register",
   PROFILE_PAGE = "/profile",
+  FOOD_ITEM = "/food-item",
 }
 
 export enum ProfileDepartmentsEnum {
@@ -337,6 +338,7 @@ export interface InputPropsType {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error: string | string[] | null;
   inputValue: string;
+  tPath: string;
 }
 
 export interface RegisterPasswordInputPropsType {
@@ -360,6 +362,16 @@ export interface ProfileInputPropsType {
 export interface ProfileSelectInputPropsType {
   type: string;
   options: ProfileDepartmentsEnum[] | GenderEnum[];
+  inputValue: string;
+  error: string | null;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+}
+
+export interface CreateFoodItemSelectInputPropsType {
+  type: string;
+  options: FoodItemCategoryEnum[] | BaseSizeUnitEnum[] | ServingSizeUnitEnum[];
   inputValue: string;
   error: string | null;
   handleInputChange: (
@@ -408,4 +420,27 @@ export interface ProfileChangePasswordModalPropsType {
 
 export interface RenderInputElementType {
   (type: string, inputType: string): React.ReactElement;
+}
+
+export interface FoodItemDataType {
+  name: string;
+  category: FoodItemCategoryEnum | string;
+  baseSize: BaseSizeUnitEnum | string;
+  servingSize: ServingSizeUnitEnum | string;
+}
+
+export interface FoodItemDataErrorsType {
+  name: null | string;
+  category: null | string;
+  baseSize: null | string;
+  servingSize: null | string;
+}
+
+export interface CreateFoodItemPropsType {
+  foodItemData: FoodItemDataType;
+  errors: FoodItemDataErrorsType;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  handleSubmitFoodItem: (e: React.FormEvent) => void;
 }

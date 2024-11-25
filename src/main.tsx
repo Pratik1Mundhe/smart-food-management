@@ -8,10 +8,10 @@ import {
 import "./i18n.ts"; // Import this to initialize i18n
 import "./index.css";
 import App from "./App.tsx";
-import { ACCESS_TOKEN, GRAPHQL_URL } from "./constants.ts";
+import { ACCESS_TOKEN_KEY, GRAPHQL_URL } from "./constants.ts";
 import { getItemLocalStorage } from "./utils/localStorageUtils/getItem.ts";
 
-let accessToken = getItemLocalStorage(ACCESS_TOKEN);
+let accessToken = getItemLocalStorage(ACCESS_TOKEN_KEY);
 if (accessToken) {
   accessToken = JSON.parse(accessToken);
 }
