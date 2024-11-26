@@ -6,10 +6,9 @@ import ModalStore from "../../../store/ModalStore";
 import { VoidFunctionType } from "../../../types";
 
 function useSaveMealStatus(action?: VoidFunctionType) {
-  const [saveMealStatus, { data, loading, error }] = useMutation(
-    SAVE_MEAL_STATUS,
-    { onCompleted: ({ mealStatus }) => handelSuccess(mealStatus) }
-  );
+  const [saveMealStatus, { loading, error }] = useMutation(SAVE_MEAL_STATUS, {
+    onCompleted: ({ mealStatus }) => handelSuccess(mealStatus),
+  });
   function triggerSaveMealStatue(data: {
     status: MealStatusEnum;
     mealId: string | null | undefined;

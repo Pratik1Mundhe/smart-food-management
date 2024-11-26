@@ -16,18 +16,18 @@ import {
   GLOBAL_LOGO_URL,
   GLOBAL_LOGO_ALT,
   USERNAME_LABEL,
-  USERNAME_ID,
+  USERNAME_INPUT_TYPE,
   PASSWORD_LABEL,
 } from "../../constants";
 import Button from "../commonComponents/Button";
 import React from "react";
 
 interface LoginTypes {
-  userNameError: string;
-  username: string;
+  userNameError: string | null;
+  username: string | null;
   handleUsername: (value: string) => void;
-  passwordError: string;
-  password: string;
+  passwordError: string | null;
+  password: string | null;
   handelPassword: (value: string) => void;
   handleLogin: (event: React.FormEvent<HTMLFormElement>) => void;
   loginLoading: boolean;
@@ -63,8 +63,8 @@ const Login: React.FC<LoginTypes> = (props) => {
         label={USERNAME_LABEL}
         id={USERNAME}
         style={userNameError ? errorInput : input}
-        inputType={USERNAME_ID}
-        value={usernameDetails}
+        inputType={USERNAME_INPUT_TYPE}
+        value={usernameDetails ? usernameDetails : ""}
         onChange={handleUsername}
         errorMsg={userNameError}
       />
@@ -73,7 +73,7 @@ const Login: React.FC<LoginTypes> = (props) => {
         id={PASSWORD}
         style={passwordError ? errorInput : input}
         inputType={PASSWORD}
-        value={passwordDetails}
+        value={passwordDetails ? passwordDetails : ""}
         errorMsg={passwordError}
         onChange={handelPassword}
       />
@@ -85,8 +85,16 @@ const Login: React.FC<LoginTypes> = (props) => {
       <div className={loginContainer}>
         {headerSection()}
         {inputsSection()}
-        <Button type="submit" disable={loginLoading}>
-          {loginLoading ? <Loader /> : t("login")}
+        <Button
+          type="submit"
+          filled
+          color="bg-blue-500"
+          height="h-[35px]"
+          width="w-[300px]"
+          hoverColor="hover:bg-blue-600"
+          disable={loginLoading}
+        >
+          {loginLoading ? <Loader /> : "Login"}
         </Button>
       </div>
     </form>

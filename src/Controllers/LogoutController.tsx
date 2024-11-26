@@ -5,6 +5,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { PageRoutesEnum } from "../types";
 import LogoutConfirmModal from "../components/confirmModal/LogoutConfirmModal";
 import CustomMealStore from "../store/CustomMealStore";
+import { observer } from "mobx-react";
 
 interface LogoutControllerType {
   handleCloseLogoutConfirmModal: () => void;
@@ -45,4 +46,4 @@ const LogoutController: React.FC<LogoutControllerType> = (props) => {
   );
 };
 
-export default LogoutController;
+export default observer(LogoutController);

@@ -19,6 +19,7 @@ import {
   mealTypeHeading,
   skipMealButton,
 } from "./styles";
+import ModalStore from "../../store/ModalStore";
 
 const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
   const { t } = useTranslation();
@@ -33,6 +34,7 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
     saveMealPreferenceLoading,
     handelSkipStatus,
     saveStatusLoading,
+    isOpen,
   } = props;
 
   const renderHeader: ReactElementType = () => {
@@ -121,7 +123,7 @@ const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
 
   if (mealType && mealItems) {
     return (
-      <Modal>
+      <Modal isOpen={isOpen}>
         <div className={mealPreferenceContainer}>
           {renderHeader()}
           {renderMealTab()}

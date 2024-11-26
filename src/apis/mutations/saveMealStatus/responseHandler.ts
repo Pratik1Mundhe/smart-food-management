@@ -1,3 +1,0 @@
-function useResponseHandler() {
-  const handelUserStatus = () => {};
-}

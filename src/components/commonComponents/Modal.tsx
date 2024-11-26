@@ -2,26 +2,26 @@ import { createPortal } from "react-dom";
 import React, { useRef, useEffect } from "react";
 import { observer } from "mobx-react";
 
-import ModalStore from "../../store/ModalStore";
 import { PORTAL_RENDER_ID } from "../../constants";
 
 interface ModalProp {
   children: React.ReactNode;
+  isOpen: boolean;
 }
 
 const ConfirmModal: React.FC<ModalProp> = (props) => {
-  const { children } = props;
+  const { children, isOpen } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     if (dialogRef.current) {
-      if (ModalStore.isModalOpen) {
+      if (isOpen) {
         dialogRef.current.showModal();
       } else {
         dialogRef.current.close();
       }
     }
-  }, [ModalStore.isModalOpen]);
+  }, [isOpen]);
 
   const modalRenderContainer = document.getElementById(PORTAL_RENDER_ID);
   if (!modalRenderContainer) {

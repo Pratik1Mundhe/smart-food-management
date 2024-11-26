@@ -19,6 +19,7 @@ import {
   mealErrorMsgContainer,
   retryButton,
 } from "../components/userMealCard/styles";
+import { observer } from "mobx-react";
 
 interface UserMealCardControllerType {
   date: string;
@@ -139,4 +140,4 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
   );
 };
 
-export default UserMealCardController;
+export default observer(UserMealCardController);

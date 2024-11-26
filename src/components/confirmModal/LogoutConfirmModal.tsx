@@ -6,9 +6,9 @@ import { ReactElementType } from "../../types";
 import Loader from "../loader/Loader";
 
 interface LogoutConfirmModalType {
-  handleLogoutModal: () => void;
+  handleLogoutModal?: () => void;
   handleCloseLogoutConfirmModal: () => void;
-  logoutLoading: boolean;
+  logoutLoading?: boolean;
 }
 
 const LogoutConfirmModal: React.FC<LogoutConfirmModalType> = (props) => {

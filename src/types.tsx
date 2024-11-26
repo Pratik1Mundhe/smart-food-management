@@ -135,13 +135,11 @@ export interface UserPreferenceDataType {
 export interface FoodItemsModalPropsType {
   setShowFoodItemsModal: React.Dispatch<React.SetStateAction<boolean>>;
   currentMealTab: MealTypeEnum;
-  addFoodItem: (food: FoodItemType) => void;
+  addFoodItem: (food: MealFoodItemModel) => void;
 }
 
 export interface FoodItemsSelectPropsType {
-  setSelectedFoodItem: React.Dispatch<
-    React.SetStateAction<FoodItemType | null>
-  >;
+  setSelectedFoodItem: React.Dispatch<React.SetStateAction<any | null>>;
 }
 
 export interface PreferenceTypeAction {
@@ -178,6 +176,7 @@ export interface MealPreferenceModalPropsType {
   saveMealPreferenceLoading: boolean;
   handelSkipStatus: () => void;
   saveStatusLoading: boolean;
+  isOpen: boolean;
 }
 
 export interface Modals {

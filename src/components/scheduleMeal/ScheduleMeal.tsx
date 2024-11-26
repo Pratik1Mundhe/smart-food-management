@@ -24,6 +24,7 @@ import useFetchScheduledMeal from "../../apis/queries/getScheduledMeal/useFetchS
 import Loader from "../loader/Loader";
 import scheduledMealStore from "../../store/ScheduledMealStore";
 import { blueButton, greenButton, header, viewContainer } from "./styles";
+import MealFoodItemModel from "../../models/MealFoodItemModel";
 
 const ScheduleMeal: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<Date>(getTomorrowDate());
@@ -51,7 +52,7 @@ const ScheduleMeal: React.FC = () => {
 
   const { loading, error, setSchedule } = useScheduleMeal();
 
-  const addFoodItem = (food: FoodItemType): void => {
+  const addFoodItem = (food: MealFoodItemModel): void => {
     const isFoodExist = foodData[currentMealTab].some(
       (item) => item.id === food.id
     );
@@ -184,15 +185,15 @@ const ScheduleMeal: React.FC = () => {
   };
 
   const renderMealItems: ReactElementType = () => {
-    // if (mealsLoading) {
-    //   return renderLoadingView();
-    // }
-    // if (error) {
-    //   return renderMealSaveErrorView();
-    // }
-    // if (foodData[currentMealTab].length === 0) {
-    //   return renderMealsEmptyView();
-    // }
+    if (mealsLoading) {
+      return renderLoadingView();
+    }
+    if (error) {
+      return renderMealSaveErrorView();
+    }
+    if (foodData[currentMealTab].length === 0) {
+      return renderMealsEmptyView();
+    }
     return renderScheduleFoodItems();
   };
 

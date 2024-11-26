@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
 import CustomMealModel, { CustomMealType } from "../models/CustomMealModel";
-import CustomMealItemModel from "../models/CustomMealItemModel";
 
 class _CustomMealStore {
   //Remove string type and use null for no date case

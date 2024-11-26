@@ -7,14 +7,14 @@ interface InputProp {
   style: string;
   inputType: string;
   value: string;
-  errorMsg: string;
+  errorMsg: string | null;
   onChange: (value: string) => void;
 }
 
 const Input: React.FC<InputProp> = (prop) => {
   const { label, id, style, inputType, value, errorMsg, onChange } = prop;
 
-  if (errorMsg !== "") {
+  if (errorMsg !== null && errorMsg !== "") {
     return (
       <div className="flex flex-col">
         <label htmlFor={id} className="text-gray-600 text-sm">

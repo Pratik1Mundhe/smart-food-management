@@ -112,9 +112,9 @@ const Meals: React.FC<MealsPropsType> = (props) => {
         </div>
       );
     }
-    // case error !== undefined: {
-    //   return customMealErrorMessage();
-    // }
+    case error !== undefined: {
+      return customMealErrorMessage();
+    }
     case activeTab === MealPreferenceEnum.CUSTOM: {
       return customMealsContainer();
     }

@@ -20,6 +20,7 @@ import {
   time,
   timeDetailsContainer,
 } from "./styles";
+import ModalStore from "../../store/ModalStore";
 
 const UserMealCard: React.FC<MealCardProps> = (props) => {
   const {
@@ -47,7 +48,6 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       </div>
     );
   };
-
   const renderMealPreferences = () => {
     if (!userPreference) return null;
 
@@ -95,7 +95,6 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       </>
     );
   };
-
   const renderMealsContainer = (): JSX.Element => {
     if (mealItems.length === 0) {
       return renderMealsNotScheduleMessage();
@@ -136,16 +135,22 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
   };
 
   const renderMealStatusButtons = (): JSX.Element => {
-    if (actions.skip.isDisable) {
+    if (actions.skip.isDisable && UserMealStore.mealStatus === null) {
       return <Loader color="blue" />;
     }
     return (
       <p className=" absolute top-[360px] flex self-center gap-6">
-        <Button filled onClick={actions.ate.onClick} color="bg-blue-500">
+        {/* <Button filled onClick={actions.ate.onClick} color="bg-blue-500">
           {t("iAte")}
         </Button>
         <Button outline onClick={actions.skip.onClick}>
           {t("iSkip")}
+        </Button> */}
+        <Button
+          outline
+          onClick={() => ModalStore.openReviewModalModal(mealType)}
+        >
+          {t("reviewFood")}
         </Button>
       </p>
     );

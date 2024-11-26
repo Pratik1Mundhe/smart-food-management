@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { DATE_FORMAT } from "../../constants";
 import { VoidFunctionType } from "../../types";
@@ -17,10 +19,33 @@ const MealDate: React.FC<MealDatePropsType> = ({
 }) => {
   const today: boolean = currentDate.getDate() == new Date().getDate();
   const { t } = useTranslation();
+  const [showCalender, setShowCalender] = useState(false);
+
   const handleNextDate: VoidFunctionType = () => {
     const nextDate = new Date(currentDate);
     nextDate.setDate(currentDate.getDate() + 1);
     setCurrentDate(nextDate);
+  };
+  const handelOnChangeCalenderDate = (date: Date | null) => {
+    if (date) {
+      setCurrentDate(date);
+      setShowCalender(false);
+      return;
+    }
+  };
+
+  const showDatePicker = () => {
+    if (showCalender) {
+      return (
+        <div className="absolute  top-0 left-[120px] transform -translate-x-1/2 z-10">
+          <DatePicker
+            selected={currentDate}
+            onChange={(date: Date | null) => handelOnChangeCalenderDate(date)}
+            inline
+          />
+        </div>
+      );
+    }
   };
 
   const handlePreviousDate: VoidFunctionType = () => {
@@ -56,8 +81,15 @@ const MealDate: React.FC<MealDatePropsType> = ({
         />
       </button>
 
-      <div className="py-2 border-2 w-[140px]">
-        <p className="text-sm text-secondary text-center">{renderDayText()}</p>
+      <div className="relative py-2 border-2 w-[140px]">
+        <p
+          className="text-sm text-secondary text-center cursor-pointer"
+          onClick={() => setShowCalender(!showCalender)}
+        >
+          {renderDayText()}
+        </p>
+
+        {showDatePicker()}
       </div>
 
       <button

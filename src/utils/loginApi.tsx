@@ -23,10 +23,11 @@ function useLoginApi() {
 
   async function triggerLogin(
     data: { username: string; password: string },
-    setUsernameError: React.Dispatch<React.SetStateAction<string>>,
-    setPasswordError: React.Dispatch<React.SetStateAction<string>>
+    setUsernameError: React.Dispatch<React.SetStateAction<string | null>>,
+    setPasswordError: React.Dispatch<React.SetStateAction<string | null>>
   ) {
     try {
+      setLoading(true);
       const response = await fetch(LOGIN_URL, {
         method: LOGIN_METHOD,
         headers: {

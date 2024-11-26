@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
 import { MealTypeEnum, PageRoutesEnum } from "../../types";
-import MealPreferenceController from "../../controllers/MealPreferenceController";
+import MealPreferenceController from "../../Controllers/MealPreferenceController";
 import MealDate from "../../components/mealDate/MealDate";
 import {
   ACCESS_TOKEN,
@@ -13,9 +13,12 @@ import {
   DINNER_TIME,
   LUNCH_TIME,
 } from "../../constants";
-import UserMealCardController from "../../controllers/UserMealCardController";
+import UserMealCardController from "../../Controllers/UserMealCardController";
 import UserMealStore from "../../store/UserMealStore";
 import { formatDate } from "../../utils/formatDate";
+import ReviewModal from "../../components/reviewModal/ReviewModal";
+import ModalStore from "../../store/ModalStore";
+import ReviewModalController from "../../Controllers/ReviewModalController";
 
 const Home: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -31,6 +34,18 @@ const Home: React.FC = () => {
   if (isAdmin) {
     return <Navigate to={PageRoutesEnum.ADMIN_HOME_PAGE} replace />;
   }
+  function modalFunction() {
+    if (ModalStore.isModalOpen) {
+      return <MealPreferenceController date={date} />;
+    } else {
+      return (
+        <>
+          <ReviewModalController date={date} />{" "}
+        </>
+      );
+    }
+  }
+
   return (
     <div className="flex flex-col py-4">
       <div className="mx-auto mb-4">
@@ -52,7 +67,7 @@ const Home: React.FC = () => {
           type={MealTypeEnum.DINNER}
           mealTime={DINNER_TIME}
         />
-        <MealPreferenceController date={date} />
+        {modalFunction()}
       </div>
     </div>
   );

@@ -27,8 +27,8 @@ const Button: React.FC<ButtonProps> = (props) => {
     width = 30,
     hoverColor,
   } = props;
-  const filledButton = `flex flex-row justify-center items-center  text-sm px-5 py-1 rounded-sm text-white mt-4 ${color} ${height} ${width} ${hoverColor}`;
-  const disableEditButton = `bg-gray-300 ${height} ${width} rounded-sm text-white font-normal cursor-not-allowed mt-4`;
+  const filledButton = `flex flex-row justify-center items-center  text-sm px-5 py-2 rounded-md text-white mt-4 ${color} ${height} ${width} ${hoverColor}`;
+  const disableEditButton = `bg-gray-300 ${height} ${width} rounded-md text-white font-normal cursor-not-allowed mt-4`;
   let style: string;
   switch (true) {
     case disable: {

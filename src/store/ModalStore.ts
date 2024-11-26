@@ -5,10 +5,12 @@ class _ModalStore {
   isModalOpen: boolean;
   typeOfMeal: MealTypeEnum;
   isConfirmModalOpen: boolean;
+  isReviewModalOpen: boolean;
 
   constructor() {
     this.isModalOpen = false;
     this.typeOfMeal = MealTypeEnum.BREAKFAST;
+    this.isReviewModalOpen = false;
     this.isConfirmModalOpen = false;
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -20,6 +22,15 @@ class _ModalStore {
   }
   closeModal(): void {
     this.isModalOpen = false;
+  }
+  openReviewModalModal(type?: MealTypeEnum): void {
+    if (type) {
+      this.typeOfMeal = type;
+    }
+    this.isReviewModalOpen = true;
+  }
+  closeReviewModalModal(): void {
+    this.isReviewModalOpen = false;
   }
 
   openConfirmModal(): void {

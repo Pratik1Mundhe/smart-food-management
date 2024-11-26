@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 
 import globalLogo from "../../assets/global-logo.png";
 import ToggleSwitch from "../toggleButton/ToggleButton";
-import LogoutConfirmModal from "../confirmModal/LogoutConfirmModal";
 import {
   PageRoutesEnum,
   ReactElementType,
@@ -20,7 +19,7 @@ import {
   headerMenuOption,
   redButton,
 } from "./styles";
-import LogoutController from "../../controllers/LogoutController";
+import LogoutController from "../../Controllers/LogoutController";
 
 const Navbar: React.FC = () => {
   const navigate: NavigateFunction = useNavigate();

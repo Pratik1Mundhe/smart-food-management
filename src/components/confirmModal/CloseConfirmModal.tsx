@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
 
-import ConfirmModal from "../commonComponents/Modal";
+import ConfirmModal from "../commonComponents/ConfirmModal";
 import { ReactElementType, VoidFunctionType } from "../../types";
 
 interface ConfirmModalPropsType {

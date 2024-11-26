@@ -12,8 +12,6 @@ const GET_CUSTOM_USER_MEAL = gql`
           items {
             id
             name
-            fullMealQuantity
-            halfMealQuantity
             customMealQuantity
           }
         }

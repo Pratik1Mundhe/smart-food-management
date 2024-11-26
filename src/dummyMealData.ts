@@ -2,7 +2,7 @@ import { MealTypeEnum } from "./types";
 
 const dummyMealData = [
   {
-    date: "2024-11-25",
+    date: "2024-11-26",
     mealId: "1",
     mealType: MealTypeEnum.BREAKFAST, // Enum or string
     items: [
@@ -25,16 +25,10 @@ const dummyMealData = [
         fullMealQuantity: 2,
         halfMealQuantity: 1,
       },
-      {
-        id: "22",
-        name: "Fruit Salad",
-        fullMealQuantity: 2,
-        halfMealQuantity: 1,
-      },
     ],
   },
   {
-    date: "2024-11-25",
+    date: "2024-11-26",
     mealId: "2",
     mealType: MealTypeEnum.LUNCH, // Enum or string
     items: [
@@ -62,16 +56,10 @@ const dummyMealData = [
         fullMealQuantity: 1,
         halfMealQuantity: 1,
       },
-      {
-        id: "82",
-        name: "Vegetable Soup",
-        fullMealQuantity: 1,
-        halfMealQuantity: 1,
-      },
     ],
   },
   {
-    date: "2024-11-25",
+    date: "2024-11-26",
     mealId: "3",
     mealType: MealTypeEnum.DINNER, // Enum or string
     items: [
@@ -95,12 +83,6 @@ const dummyMealData = [
       },
       {
         id: "12",
-        name: "Chocolate Pudding",
-        fullMealQuantity: 1,
-        halfMealQuantity: 0,
-      },
-      {
-        id: "121",
         name: "Chocolate Pudding",
         fullMealQuantity: 1,
         halfMealQuantity: 0,

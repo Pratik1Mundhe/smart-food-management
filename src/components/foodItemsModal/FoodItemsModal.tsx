@@ -3,15 +3,12 @@ import { FiChevronDown } from "react-icons/fi";
 import { observer } from "mobx-react-lite";
 
 import Modal from "../modal/Modal";
-import {
-  FoodItemType,
-  FoodItemsModalPropsType,
-  ReactElementType,
-} from "../../types";
+import { FoodItemsModalPropsType, ReactElementType } from "../../types";
 import useFetchFoodItems from "../../apis/queries/getFoodItems/useFetchFoodItems";
 import Loader from "../loader/Loader";
 import SelectFoodItems from "../selectFoodItems/SelectFoodItems";
 import { blueButton, selectArrowButton, greenButton } from "./styles";
+import MealFoodItemModel from "../../models/MealFoodItemModel";
 
 const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
   setShowFoodItemsModal,
@@ -19,9 +16,8 @@ const FoodItemsModal: React.FC<FoodItemsModalPropsType> = ({
   addFoodItem,
 }) => {
   const { loading, error, refetch, refetchloading } = useFetchFoodItems();
-  const [selectedFoodItem, setSelectedFoodItem] = useState<FoodItemType | null>(
-    null
-  );
+  const [selectedFoodItem, setSelectedFoodItem] =
+    useState<MealFoodItemModel | null>(null);
   const currentMealType: string =
     currentMealTab[0].toUpperCase() + currentMealTab.slice(1);
 

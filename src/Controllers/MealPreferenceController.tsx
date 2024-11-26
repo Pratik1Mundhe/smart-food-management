@@ -70,7 +70,7 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
 
   // Trigger UserPreference Meal Status Api
   const { triggerUserPreference, loading: saveMealPreferenceLoading } =
-    useMutateUserPreference(ModalStore.typeOfMeal!, handleMealPreferenceSave);
+    useMutateUserPreference(handleMealPreferenceSave, activeTab, type);
   const variables = {
     date: date,
     mealId: mealId,
@@ -126,6 +126,7 @@ const MealPreferenceController: React.FC<MealPreferenceControllerType> = ({
         saveMealPreferenceLoading={saveMealPreferenceLoading}
         handelSkipStatus={handelSkipStatus}
         saveStatusLoading={saveStatusLoading}
+        isOpen={ModalStore.isModalOpen}
       />
     </>
   );

@@ -3,6 +3,7 @@ import { MealPreferenceEnum, MealStatusEnum, MealTypeEnum } from "../types";
 
 class _UserMealStore {
   date: Date | null;
+  userAccessToken: string | null;
   mealId: string | null;
   inCampusStatus: boolean;
   mealStatus: {
@@ -21,6 +22,7 @@ class _UserMealStore {
     this.date = null;
     //Use null type for no value cases
     this.mealId = null;
+    this.userAccessToken = null;
     //Remove NULL from the enum
     this.inCampusStatus = false;
     this.mealStatus = {
@@ -57,6 +59,9 @@ class _UserMealStore {
       ...this.mealPreference,
       [mealType]: MealPreference,
     };
+  }
+  setUserAccessToken(token: string) {
+    this.userAccessToken = token;
   }
 }
 
