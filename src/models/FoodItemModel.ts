@@ -25,6 +25,18 @@ class FoodItemModel {
     this.servingSizeUnit = servingSizeUnit;
   }
 
+  updateFoodItem(
+    name: string,
+    category: FoodItemCategoryEnum,
+    baseSizeUnit: BaseSizeUnitEnum,
+    servingSizeUnit: ServingSizeUnitEnum
+  ) {
+    this.name = name;
+    this.category = category;
+    this.baseSizeUnit = baseSizeUnit;
+    this.servingSizeUnit = servingSizeUnit;
+  }
+
   static createFoodItemModal(
     id: string,
     name: string,

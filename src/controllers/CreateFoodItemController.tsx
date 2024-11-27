@@ -1,40 +1,32 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { v4 } from "uuid";
+import { observer } from "mobx-react-lite";
 
 import CreateFoodItem from "../pages/createFoodItem/CreateFoodItem";
 import handleValidateFoodItemField from "../utils/validationUtils/createFoodItemValidation";
 import {
-  BaseSizeUnitEnum,
   CreateFoodItemControllerPropsType,
-  FoodItemCategoryEnum,
+  FoodItemActionEnum,
   FoodItemDataErrorsType,
   FoodItemDataType,
-  ServingSizeUnitEnum,
+  ValidateUpdatedFoodItemFieldType,
+  VoidFunctionType,
 } from "../types";
-import { v4 } from "uuid";
-import { observer } from "mobx-react-lite";
-import toast from "react-hot-toast";
-
-interface ValidateUpdatedFoodItemFieldType {
-  (
-    name: string,
-    value:
-      | string
-      | FoodItemCategoryEnum
-      | BaseSizeUnitEnum
-      | ServingSizeUnitEnum
-  ): void;
-}
 
 const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
-  handleCloseCreateFoodItemModal,
-  addFoodItemIntoStore,
+  handleCloseFoodItemModal,
+  foodItemAction,
+  actionType,
+  initialFoodItemData,
 }) => {
+  const { name, category, baseSizeUnit, servingSizeUnit } =
+    initialFoodItemData!;
   const [foodItemData, setFoodItemData] = useState<FoodItemDataType>({
-    name: "",
-    category: FoodItemCategoryEnum.EMPTY,
-    baseSize: BaseSizeUnitEnum.EMPTY,
-    servingSize: ServingSizeUnitEnum.EMPTY,
+    name: name,
+    category: category,
+    baseSize: baseSizeUnit,
+    servingSize: servingSizeUnit,
   });
 
   const [errors, setErrors] = useState<FoodItemDataErrorsType>({
@@ -69,37 +61,56 @@ const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
   };
 
   const validateFoodItemForm = (): boolean => {
-    const newErrors: FoodItemDataErrorsType = {
-      name: null,
-      category: null,
-      baseSize: null,
-      servingSize: null,
-    };
+    //remove newErrors
+    let hasError = false;
     Object.keys(foodItemData).forEach((key) => {
       const fieldName = key as keyof FoodItemDataType;
       const value = foodItemData[fieldName];
       const error = handleValidateFoodItemField(fieldName, value, t);
-      newErrors[fieldName] = error;
+      if (error) {
+        hasError = true;
+      }
+      setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: error }));
     });
-    setErrors(newErrors);
-    return Object.values(newErrors).every((error) => !error);
+    return hasError;
+  };
+
+  const handleCreateFoodItem: VoidFunctionType = () => {
+    const { name, category, baseSize, servingSize } = foodItemData;
+    const foodItem = {
+      id: v4(),
+      name: name,
+      category: category,
+      baseSizeUnit: baseSize,
+      servingSizeUnit: servingSize,
+    };
+    foodItemAction(foodItem);
+    //handle mutation of add food item
+  };
+
+  const handleUpdateFoodItem: VoidFunctionType = () => {
+    const { id } = initialFoodItemData!;
+    const { name, category, baseSize, servingSize } = foodItemData;
+    const updatedFoodItem = {
+      id,
+      name,
+      category,
+      baseSizeUnit: baseSize,
+      servingSizeUnit: servingSize,
+    };
+    foodItemAction(updatedFoodItem);
   };
 
   const handleSubmitFoodItem = (e: React.FormEvent): void => {
     e.preventDefault();
-    if (validateFoodItemForm()) {
-      const { name, category, baseSize, servingSize } = foodItemData;
-      const foodItem = {
-        id: v4(),
-        name: name,
-        category: category,
-        baseSizeUnit: baseSize,
-        servingSizeUnit: servingSize,
-      };
-      addFoodItemIntoStore(foodItem);
-      //handle mutation of add food item
-      toast.success(`${name} is added`);
-      handleCloseCreateFoodItemModal();
+    if (!validateFoodItemForm()) {
+      //switch
+      if (actionType === FoodItemActionEnum.CREATE) {
+        handleCreateFoodItem();
+      } else if (actionType === FoodItemActionEnum.UPDATE) {
+        handleUpdateFoodItem();
+      }
+      handleCloseFoodItemModal();
     } else {
       console.log("Validation errors:", errors);
     }
@@ -107,11 +118,12 @@ const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
 
   return (
     <CreateFoodItem
+      actionType={actionType}
       foodItemData={foodItemData}
       errors={errors}
       handleInputChange={handleInputChange}
       handleSubmitFoodItem={handleSubmitFoodItem}
-      handleCloseCreateFoodItemModal={handleCloseCreateFoodItemModal}
+      handleCloseFoodItemModal={handleCloseFoodItemModal}
     />
   );
 };

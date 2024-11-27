@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import Modal from "../../components/modal/Modal";
-import IdmLogo from "../../icons/idmLogo";
+import IdmLogo from "../../icons/IdmLogo";
 import PasswordStrengthBar from "../../components/passwordStrengthBar/PasswordStrengthBar";
+import Input from "../../components/inputComponents/Input";
 import PasswordInput from "./PasswordInput";
 import {
   ProfileChangePasswordModalPropsType,
@@ -17,7 +18,6 @@ import {
   PROFILE_INPUT_NAMES,
   PROFILE_INPUT_TYPES,
 } from "../../constants";
-import Input from "../../components/inputComponents/Input";
 
 const ProfileChangePasswordModal: React.FC<
   ProfileChangePasswordModalPropsType

@@ -8,11 +8,10 @@ import AdminHome from "./pages/adminHome/AdminHome";
 import AdminNavbar from "./components/adminNavbar/AdminNavbar";
 import LoginPage from "./pages/loginPage/LoginPage";
 import RegisterController from "./controllers/RegisterController";
-import { TOASTER_POSITION } from "./constants";
-import { PageRoutesEnum } from "./types";
 import ProfileController from "./controllers/ProfileController";
 import FoodItemsControlller from "./controllers/FoodItemsController";
-import CreateFoodItemController from "./controllers/CreateFoodItemController";
+import { TOASTER_POSITION } from "./constants";
+import { PageRoutesEnum } from "./types";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,

@@ -135,7 +135,6 @@ const ProfileController: React.FC = () => {
         passwordError = error;
         break;
       case PROFILE_INPUT_NAMES.confirmPassword:
-        console.log([password, value]);
         if (password !== value || value.length === 0) {
           confirmPasswordError = "Confirm password and password must match";
         }

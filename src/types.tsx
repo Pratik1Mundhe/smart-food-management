@@ -17,6 +17,11 @@ export enum FoodItemCategoryEnum {
   EMPTY = "",
 }
 
+export enum FoodItemActionEnum {
+  CREATE = "create",
+  UPDATE = "update",
+}
+
 export enum BaseSizeUnitEnum {
   KG = "kg",
   PISCES = "pisces",
@@ -94,16 +99,11 @@ export interface MealFoodItemType {
   halfMealQuantity: number;
 }
 export interface FoodItemResponseType {
-  id: number;
-  name: string;
-  // __typename: string
-}
-
-export interface FoodItemType {
   id: string;
   name: string;
-  fullMealQuantity: number;
-  halfMealQuantity: number;
+  category: FoodItemCategoryEnum;
+  baseSizeUnit: BaseSizeUnitEnum;
+  servingSizeUnit: ServingSizeUnitEnum;
 }
 
 export interface MealFoodDataType {
@@ -120,7 +120,7 @@ export interface ReactElementType {
   (): React.ReactElement;
 }
 
-export interface FoodItemsResponseType {
+export interface FoodItemType {
   id: string;
   name: string;
   category: FoodItemCategoryEnum;
@@ -441,13 +441,14 @@ export interface FoodItemDataErrorsType {
 }
 
 export interface CreateFoodItemPropsType {
+  actionType: "create" | "update";
   foodItemData: FoodItemDataType;
   errors: FoodItemDataErrorsType;
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   handleSubmitFoodItem: (e: React.FormEvent) => void;
-  handleCloseCreateFoodItemModal: () => void;
+  handleCloseFoodItemModal: () => void;
 }
 
 export interface FoodItemsPropsType {
@@ -457,9 +458,32 @@ export interface FoodItemsPropsType {
   handleShowDeleteConfirmModal: (id: string) => void;
   handleCloseDeleteConfirmModal: VoidFunctionType;
   handleDeleteFoodItem: VoidFunctionType;
+  handleShowUpdateFoodItemData: (foodItem: FoodItemModel) => void;
 }
 
 export interface CreateFoodItemControllerPropsType {
-  handleCloseCreateFoodItemModal: () => void;
-  addFoodItemIntoStore: (foodItem: FoodItemsResponseType) => void;
+  handleCloseFoodItemModal: () => void;
+  foodItemAction: (foodItem: FoodItemType) => void;
+  actionType: FoodItemActionEnum;
+  initialFoodItemData: FoodItemType | null;
+}
+
+export interface ValidateUpdatedFoodItemFieldType {
+  (
+    name: string,
+    value:
+      | string
+      | FoodItemCategoryEnum
+      | BaseSizeUnitEnum
+      | ServingSizeUnitEnum
+  ): void;
+}
+
+export interface CreateFoodItemSelectFieldType {
+  (
+    type: string,
+    inputValue: string,
+    error: string | null,
+    options: ServingSizeUnitEnum[] | BaseSizeUnitEnum[] | FoodItemCategoryEnum[]
+  ): React.ReactElement;
 }

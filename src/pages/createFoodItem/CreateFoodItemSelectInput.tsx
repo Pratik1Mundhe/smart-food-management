@@ -1,11 +1,11 @@
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 import {
   CreateFoodItemSelectInputPropsType,
   ReactElementType,
 } from "../../types";
-import { useTranslation } from "react-i18next";
 
 const CreateFoodItemSelectInput: React.FC<
   CreateFoodItemSelectInputPropsType

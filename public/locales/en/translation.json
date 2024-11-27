@@ -149,7 +149,8 @@
       }
     },
     "createFoodItem": {
-      "title": "Create food item",
+      "createTitle": "Create food item",
+      "updateTitle": "Update food item",
       "labels": {
         "name": "Food Items",
         "baseSize": "Base size unit",
@@ -164,7 +165,8 @@
       },
       "buttons": {
         "back": "Back",
-        "submit": "Submit"
+        "submit": "Submit",
+        "update": "Update"
       },
       "errors": {
         "name": "Food item name is required.",

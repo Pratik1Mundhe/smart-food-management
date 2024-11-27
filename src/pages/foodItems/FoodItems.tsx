@@ -20,6 +20,7 @@ const FoodItems: React.FC<FoodItemsPropsType> = ({
   handleCloseDeleteConfirmModal,
   handleShowDeleteConfirmModal,
   handleDeleteFoodItem,
+  handleShowUpdateFoodItemData,
 }) => {
   const { t } = useTranslation();
   const tPath = "pages.foodItems";
@@ -46,6 +47,10 @@ const FoodItems: React.FC<FoodItemsPropsType> = ({
     const handleClickDeleteFoodItem = () => {
       handleShowDeleteConfirmModal(id);
     };
+
+    const handleClickUpdateFoodItem = () => {
+      handleShowUpdateFoodItemData(item);
+    };
     return (
       <li
         key={id}
@@ -55,7 +60,10 @@ const FoodItems: React.FC<FoodItemsPropsType> = ({
         <p className={foodItem}>{category}</p>
         <p className={foodItem}>{baseSizeUnit}</p>
         <p className={foodItem}>{servingSizeUnit}</p>
-        <button className={foodItemUpdateButton}>
+        <button
+          onClick={handleClickUpdateFoodItem}
+          className={foodItemUpdateButton}
+        >
           {t(tPath + ".buttons.update")}
         </button>
         <button

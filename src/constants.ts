@@ -79,6 +79,10 @@ export const CREATE_FOOD_ITEM_NAMES = {
   servingSize: "servingSize",
 };
 
+export const CREATE_FOOD_ITEM_TYPES = {
+  text: "text",
+};
+
 export const REGISTER_INPUT_TYPES = {
   text: "text",
   password: "password",

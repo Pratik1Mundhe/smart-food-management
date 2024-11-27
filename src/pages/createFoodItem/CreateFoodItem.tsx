@@ -4,37 +4,30 @@ import { useTranslation } from "react-i18next";
 import CreateFoodItemSelectInput from "./CreateFoodItemSelectInput";
 import CreateFoodItemInput from "./CreateFoodItemInput";
 import {
-  BaseSizeUnitEnum,
   CreateFoodItemPropsType,
-  FoodItemCategoryEnum,
+  CreateFoodItemSelectFieldType,
+  FoodItemActionEnum,
   ReactElementType,
-  ServingSizeUnitEnum,
 } from "../../types";
 import {
   BASE_SIZE_UNIT_OPTIONS,
   CREATE_FOOD_ITEM_NAMES,
+  CREATE_FOOD_ITEM_TYPES,
   FOOD_CATEGORY_OPTIONS,
   FOOD_SERVING_UNIT_OPTIONS,
 } from "../../constants";
 
-interface CreateFoodItemSelectFieldType {
-  (
-    type: string,
-    inputValue: string,
-    error: string | null,
-    options: ServingSizeUnitEnum[] | BaseSizeUnitEnum[] | FoodItemCategoryEnum[]
-  ): React.ReactElement;
-}
-
 const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
+  actionType,
   foodItemData,
   errors,
   handleInputChange,
   handleSubmitFoodItem,
-  handleCloseCreateFoodItemModal,
+  handleCloseFoodItemModal,
 }) => {
   const { t } = useTranslation();
   const tPath = "pages.createFoodItem";
+
   const renderFoodItemSelectInput: CreateFoodItemSelectFieldType = (
     type,
     inputValue,
@@ -66,11 +59,11 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
           {t(tPath + `.labels.name`)} :
         </p>
         <CreateFoodItemInput
-          type="name"
+          type={CREATE_FOOD_ITEM_NAMES.name}
           inputValue={inputValue}
           error={error}
           handleInputChange={handleInputChange}
-          inputType="text"
+          inputType={CREATE_FOOD_ITEM_TYPES.text}
           tPath={tPath}
         />
       </div>
@@ -104,10 +97,14 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
   };
 
   const renderCreateFoodItemButtons: ReactElementType = () => {
+    const buttonTypePath =
+      actionType === FoodItemActionEnum.CREATE
+        ? ".buttons.submit"
+        : ".buttons.update";
     return (
       <div className="flex items-center self-end gap-4 mt-20">
         <button
-          onClick={handleCloseCreateFoodItemModal}
+          onClick={handleCloseFoodItemModal}
           type="button"
           className="rounded border-2 px-5 py-2 text-general bg-transparent hover:bg-slate-100"
         >
@@ -117,11 +114,14 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
           type="submit"
           className="rounded font-semibold px-5 py-2 text-white bg-primary hover:bg-blue-600"
         >
-          {t(tPath + ".buttons.submit")}
+          {t(tPath + buttonTypePath)}
         </button>
       </div>
     );
   };
+
+  const titlePath =
+    actionType === FoodItemActionEnum.CREATE ? ".createTitle" : ".updateTitle";
 
   return (
     <div className="py-8">
@@ -130,7 +130,7 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
         className="flex flex-col w-full max-w-5xl rounded border-2 mx-auto py-8 px-12"
       >
         <h1 className="text-general text-3xl font-medium border-b w-fit border-b-primary pb-2">
-          {t(tPath + ".title")}
+          {t(tPath + titlePath)}
         </h1>
         {renderFoodItemFields()}
         {renderCreateFoodItemButtons()}

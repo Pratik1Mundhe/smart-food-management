@@ -3,6 +3,7 @@ import React from "react";
 import { PiWarningCircle } from "react-icons/pi";
 import { InputPropsType, ReactElementType } from "../../types";
 
+//reuse it
 const CreateFoodItemInput: React.FC<InputPropsType> = ({
   type,
   inputType,
