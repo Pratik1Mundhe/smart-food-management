@@ -1,10 +1,9 @@
 export const redButton =
   "bg-red-500 text-white text-sm hover:bg-red-600 p-2 rounded-md";
 
-export const headerMenuItem =
-  "text-general text-sm font-medium cursor-pointer ";
+export const headerMenuItem = "text-sm font-medium";
 
-export const menuContainer = "flex justify-between items-center gap-4 w-1/4";
+export const menuContainer = "flex justify-between items-center gap-4 w-2/4";
 
 export const headerContainer =
   "flex items-center justify-between px-10 border-b-[1px]";

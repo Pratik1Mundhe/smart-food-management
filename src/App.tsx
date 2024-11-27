@@ -11,6 +11,7 @@ import RegisterController from "./controllers/RegisterController";
 import { TOASTER_POSITION } from "./constants";
 import { PageRoutesEnum } from "./types";
 import ProfileController from "./controllers/ProfileController";
+import FoodItemsControlller from "./controllers/FoodItemsController";
 import CreateFoodItemController from "./controllers/CreateFoodItemController";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
@@ -77,10 +78,10 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path={PageRoutesEnum.FOOD_ITEM}
+          path={PageRoutesEnum.FOOD_ITEMS}
           element={
             <AdminComponentWrapper>
-              <CreateFoodItemController />
+              <FoodItemsControlller />
             </AdminComponentWrapper>
           }
         />

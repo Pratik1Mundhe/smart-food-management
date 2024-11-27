@@ -34,7 +34,7 @@ const AdminNavbar: React.FC = () => {
   const tPath = "components.adminNavbar";
   const adminUsername = getItemLocalStorage(USERNAME_KEY) || "Admin";
 
-  const handleOpenLogoutConfirmModal: VoidFunctionType = () => {
+  const handleOpenLogoutConfirmModal = () => {
     setLogoutConfirmModal(true);
     ModalStore.openConfirmModal();
   };
@@ -44,19 +44,24 @@ const AdminNavbar: React.FC = () => {
     ModalStore.closeConfirmModal();
   };
 
+  const handleToggleLogout = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowLogout(!showLogout);
+  };
+
   const renderLogout: ReactElementType = () => {
     if (showLogout) {
       return (
         <FaChevronUp
           className="text-sm cursor-pointer"
-          onClick={() => setShowLogout((prev) => !prev)}
+          onClick={handleToggleLogout}
         />
       );
     }
     return (
       <FaChevronDown
         className="text-sm cursor-pointer"
-        onClick={() => setShowLogout((prev) => !prev)}
+        onClick={handleToggleLogout}
       />
     );
   };
@@ -78,14 +83,29 @@ const AdminNavbar: React.FC = () => {
     navigate(PageRoutesEnum.PROFILE_PAGE);
   };
 
+  const navigateFoodItems = () => {
+    navigate(PageRoutesEnum.FOOD_ITEMS);
+  };
+
+  const navigateAdminHome = () => {
+    navigate(PageRoutesEnum.ADMIN_HOME_PAGE);
+  };
+
   const renderUserProfile: ReactElementType = () => {
+    const isProfilePath = path === PageRoutesEnum.PROFILE_PAGE;
     return (
       <li
         onClick={navigateProfile}
         className="flex items-center gap-2 relative cursor-pointer"
       >
-        <LuUserCircle className="h-5 w-5" />
-        <h1 className="text-general text-sm font-medium first-letter:capitalize">
+        <LuUserCircle
+          className={`h-5 w-5 ${isProfilePath ? "text-primary" : ""}`}
+        />
+        <h1
+          className={`text-sm font-medium first-letter:capitalize ${
+            isProfilePath ? "text-primary" : "text-general"
+          }`}
+        >
           {adminUsername}
         </h1>
         {renderLogout()}
@@ -107,18 +127,14 @@ const AdminNavbar: React.FC = () => {
 
   return (
     <div className={headerContainer}>
-      <img
-        onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
-        src={globalLogo}
-        className={logo}
-      />
+      <img onClick={navigateAdminHome} src={globalLogo} className={logo} />
 
       <ul className={menuContainer}>
         <li>
           <SelectLanguages />
         </li>
         <li
-          onClick={() => navigate(PageRoutesEnum.ADMIN_HOME_PAGE)}
+          onClick={navigateAdminHome}
           className={`${headerMenuItem} ${
             path === PageRoutesEnum.ADMIN_HOME_PAGE
               ? "text-primary"
@@ -126,6 +142,18 @@ const AdminNavbar: React.FC = () => {
           }`}
         >
           {t(tPath + ".menuOptions.home")}
+        </li>
+        <li onClick={navigateFoodItems}>
+          <button
+            className={`${headerMenuItem} ${
+              path === PageRoutesEnum.FOOD_ITEMS
+                ? "text-primary"
+                : "text-general"
+            }`}
+          >
+            {" "}
+            {t(tPath + ".menuOptions.foodItems")}
+          </button>
         </li>
         {renderUserProfile()}
       </ul>

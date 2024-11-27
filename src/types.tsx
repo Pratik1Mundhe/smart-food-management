@@ -8,23 +8,26 @@ import { TFunction } from "i18next";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
 import MealFoodItemModel from "./models/MealFoodItemModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
+import FoodItemModel from "./models/FoodItemModel";
 
 export enum FoodItemCategoryEnum {
   RICE = "rice",
-  PAN_CAKE = "pancake",
+  PANCAKE = "pancake",
   BEVERAGES = "beverages",
+  EMPTY = "",
 }
 
 export enum BaseSizeUnitEnum {
   KG = "kg",
   PISCES = "pisces",
-  LITTERS = "litters",
+  EMPTY = "",
 }
 
 export enum ServingSizeUnitEnum {
   PISCES = "pisces",
   LADDLE = "laddle",
   GLASS = "glass",
+  EMPTY = "",
 }
 
 export enum MealTypeEnum {
@@ -59,7 +62,8 @@ export enum PageRoutesEnum {
   WEEKLY_MENU_PAGE = "/weekly-menu",
   REGISTER_PAGE = "/register",
   PROFILE_PAGE = "/profile",
-  FOOD_ITEM = "/food-item",
+  FOOD_ITEMS = "/food-items",
+  CREATE_FOOD_ITEM = "/create-food-item",
 }
 
 export enum ProfileDepartmentsEnum {
@@ -122,7 +126,7 @@ export interface FoodItemsResponseType {
   category: FoodItemCategoryEnum;
   baseSizeUnit: BaseSizeUnitEnum;
   servingSizeUnit: ServingSizeUnitEnum;
-  __typename: string;
+  // __typename: string;
 }
 
 export interface MealFoodItemResponseType {
@@ -424,9 +428,9 @@ export interface RenderInputElementType {
 
 export interface FoodItemDataType {
   name: string;
-  category: FoodItemCategoryEnum | string;
-  baseSize: BaseSizeUnitEnum | string;
-  servingSize: ServingSizeUnitEnum | string;
+  category: FoodItemCategoryEnum;
+  baseSize: BaseSizeUnitEnum;
+  servingSize: ServingSizeUnitEnum;
 }
 
 export interface FoodItemDataErrorsType {
@@ -443,4 +447,19 @@ export interface CreateFoodItemPropsType {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   handleSubmitFoodItem: (e: React.FormEvent) => void;
+  handleCloseCreateFoodItemModal: () => void;
+}
+
+export interface FoodItemsPropsType {
+  foodItems: FoodItemModel[];
+  handleShowCreateFoodItemModal: () => void;
+  showDeleteConfirmModal: boolean;
+  handleShowDeleteConfirmModal: (id: string) => void;
+  handleCloseDeleteConfirmModal: VoidFunctionType;
+  handleDeleteFoodItem: VoidFunctionType;
+}
+
+export interface CreateFoodItemControllerPropsType {
+  handleCloseCreateFoodItemModal: () => void;
+  addFoodItemIntoStore: (foodItem: FoodItemsResponseType) => void;
 }

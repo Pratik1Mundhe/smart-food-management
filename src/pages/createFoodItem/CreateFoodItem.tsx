@@ -31,6 +31,7 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
   errors,
   handleInputChange,
   handleSubmitFoodItem,
+  handleCloseCreateFoodItemModal,
 }) => {
   const { t } = useTranslation();
   const tPath = "pages.createFoodItem";
@@ -106,14 +107,15 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
     return (
       <div className="flex items-center self-end gap-4 mt-20">
         <button
+          onClick={handleCloseCreateFoodItemModal}
           type="button"
-          className="rounded border-2 px-5 py-2 text-general bg-transparent"
+          className="rounded border-2 px-5 py-2 text-general bg-transparent hover:bg-slate-100"
         >
           {t(tPath + ".buttons.back")}
         </button>
         <button
           type="submit"
-          className="rounded font-semibold px-5 py-2 text-white bg-primary"
+          className="rounded font-semibold px-5 py-2 text-white bg-primary hover:bg-blue-600"
         >
           {t(tPath + ".buttons.submit")}
         </button>

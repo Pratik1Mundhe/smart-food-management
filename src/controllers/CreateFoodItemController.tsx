@@ -5,11 +5,15 @@ import CreateFoodItem from "../pages/createFoodItem/CreateFoodItem";
 import handleValidateFoodItemField from "../utils/validationUtils/createFoodItemValidation";
 import {
   BaseSizeUnitEnum,
+  CreateFoodItemControllerPropsType,
   FoodItemCategoryEnum,
   FoodItemDataErrorsType,
   FoodItemDataType,
   ServingSizeUnitEnum,
 } from "../types";
+import { v4 } from "uuid";
+import { observer } from "mobx-react-lite";
+import toast from "react-hot-toast";
 
 interface ValidateUpdatedFoodItemFieldType {
   (
@@ -22,12 +26,15 @@ interface ValidateUpdatedFoodItemFieldType {
   ): void;
 }
 
-const CreateFoodItemController: React.FC = () => {
+const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
+  handleCloseCreateFoodItemModal,
+  addFoodItemIntoStore,
+}) => {
   const [foodItemData, setFoodItemData] = useState<FoodItemDataType>({
     name: "",
-    category: "",
-    baseSize: "",
-    servingSize: "",
+    category: FoodItemCategoryEnum.EMPTY,
+    baseSize: BaseSizeUnitEnum.EMPTY,
+    servingSize: ServingSizeUnitEnum.EMPTY,
   });
 
   const [errors, setErrors] = useState<FoodItemDataErrorsType>({
@@ -80,10 +87,19 @@ const CreateFoodItemController: React.FC = () => {
 
   const handleSubmitFoodItem = (e: React.FormEvent): void => {
     e.preventDefault();
-
     if (validateFoodItemForm()) {
-      console.log("Food item data is valid:", foodItemData);
-      // Submit logic
+      const { name, category, baseSize, servingSize } = foodItemData;
+      const foodItem = {
+        id: v4(),
+        name: name,
+        category: category,
+        baseSizeUnit: baseSize,
+        servingSizeUnit: servingSize,
+      };
+      addFoodItemIntoStore(foodItem);
+      //handle mutation of add food item
+      toast.success(`${name} is added`);
+      handleCloseCreateFoodItemModal();
     } else {
       console.log("Validation errors:", errors);
     }
@@ -95,8 +111,9 @@ const CreateFoodItemController: React.FC = () => {
       errors={errors}
       handleInputChange={handleInputChange}
       handleSubmitFoodItem={handleSubmitFoodItem}
+      handleCloseCreateFoodItemModal={handleCloseCreateFoodItemModal}
     />
   );
 };
 
-export default CreateFoodItemController;
+export default observer(CreateFoodItemController);

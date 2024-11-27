@@ -4,7 +4,7 @@ import {
   ServingSizeUnitEnum,
 } from "../types";
 
-class FoodItemModal {
+class FoodItemModel {
   id: string;
   name: string;
   category: FoodItemCategoryEnum;
@@ -32,8 +32,8 @@ class FoodItemModal {
     baseSizeUnit: BaseSizeUnitEnum,
     servingSizeUnit: ServingSizeUnitEnum
   ) {
-    return new FoodItemModal(id, name, category, baseSizeUnit, servingSizeUnit);
+    return new FoodItemModel(id, name, category, baseSizeUnit, servingSizeUnit);
   }
 }
 
-export default FoodItemModal;
+export default FoodItemModel;

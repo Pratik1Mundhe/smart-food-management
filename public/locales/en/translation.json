@@ -172,6 +172,33 @@
         "baseSize": "Base size is required.",
         "servingSize": "Serving size is required."
       }
+    },
+    "foodItems": {
+      "title": "Food Items",
+      "headers": {
+        "foodItems": "FOOD ITEMS",
+        "foodItemCategory": "FOOD ITEM CATEGORY",
+        "baseSizeUnit": "BASE SIZE UNIT",
+        "servingSizeUnit": "SERVING SIZE UNIT",
+        "updateItem": "UPDATE ITEM",
+        "deleteItem": "DELETE ITEM"
+      },
+      "buttons": {
+        "update": "UPDATE",
+        "delete": "DELETE",
+        "createFoodItem": "Create food item"
+      },
+      "errors": {
+        "notSelected": "Item is not selected"
+      },
+      "toasts": {
+        "success": {
+          "delete": "Item is deleted"
+        },
+        "error": {
+          "delete": "Item is not deleted"
+        }
+      }
     }
   },
   "components": {
@@ -212,12 +239,22 @@
         }
       }
     },
+    "modal": {
+      "confirmModal": {
+        "title": "Do you want to save the changes?",
+        "buttons": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      }
+    },
     "adminNavbar": {
       "buttons": {
         "logout": "Logout"
       },
       "menuOptions": {
-        "home": "Home"
+        "home": "Home",
+        "foodItems": "Food items"
       }
     }
   }

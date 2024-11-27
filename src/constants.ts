@@ -106,13 +106,12 @@ export const GENDER_OPTIONS: GenderEnum[] = [
 
 export const BASE_SIZE_UNIT_OPTIONS: BaseSizeUnitEnum[] = [
   BaseSizeUnitEnum.KG,
-  BaseSizeUnitEnum.LITTERS,
   BaseSizeUnitEnum.PISCES,
 ];
 
 export const FOOD_CATEGORY_OPTIONS: FoodItemCategoryEnum[] = [
   FoodItemCategoryEnum.BEVERAGES,
-  FoodItemCategoryEnum.PAN_CAKE,
+  FoodItemCategoryEnum.PANCAKE,
   FoodItemCategoryEnum.RICE,
 ];
 
