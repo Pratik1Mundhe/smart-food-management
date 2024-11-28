@@ -1,11 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import FoodWastageModel from "../models/FoodWastageModel";
-import { MealTypeEnum } from "../types";
-export interface ReviewTypes {
-  breakfast: FoodWastageModel | null;
-  lunch: FoodWastageModel | null;
-  dinner: FoodWastageModel | null;
-}
+import { FoodItemsType, MealTypeEnum, ReviewTypes } from "../types";
 
 class _FoodWastageStore {
   foodWastageOnDate = new Map();
@@ -19,7 +14,11 @@ class _FoodWastageStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  setFoodWastageOnMealType(items: any, mealType: MealTypeEnum, date: string) {
+  setFoodWastageOnMealType(
+    items: FoodItemsType,
+    mealType: MealTypeEnum,
+    date: string
+  ) {
     this.foodWastageOnMealType[mealType] = new FoodWastageModel(items);
     this.foodWastageOnDate.set(date, this.foodWastageOnMealType);
   }

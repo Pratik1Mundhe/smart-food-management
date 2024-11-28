@@ -1,3 +1,5 @@
+import FoodWastageItemModel from "./models/FoodWastageItemModel";
+import FoodWastageModel from "./models/FoodWastageModel";
 import MealFoodItemModel from "./models/MealFoodItemModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
@@ -190,4 +192,28 @@ export interface ModalActions {
   handleAction: () => void;
   handleModal?: () => void;
   handleMealPreference: () => void;
+}
+export interface FoodWastageItemModelTypes {
+  id: string | null;
+  name: string | null;
+  foodPrepared: number;
+  foodWasted: number;
+}
+
+export interface ReviewTypes {
+  breakfast: FoodWastageModel | null;
+  lunch: FoodWastageModel | null;
+  dinner: FoodWastageModel | null;
+}
+
+export interface FoodItemsType {
+  totalFoodPrepared: number;
+  totalFoodWasted: number;
+  items: FoodWastageItemModelTypes[];
+}
+
+export interface FoodWastageModelType {
+  totalFoodPrepared: number;
+  totalFoodWasted: number;
+  items: FoodWastageItemModel[];
 }

@@ -1,10 +1,5 @@
 import { makeAutoObservable } from "mobx";
-interface FoodWastageItemModelTypes {
-  id: string | null;
-  name: string | null;
-  foodPrepared: number;
-  foodWasted: number;
-}
+import { FoodWastageItemModelTypes } from "../types";
 
 class FoodWastageItemModel {
   id: string | null;

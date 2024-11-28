@@ -1,11 +1,11 @@
-import { MealTypeEnum } from "../../types";
+import { observer } from "mobx-react";
+
+import { MealTypeEnum, ReviewTypes } from "../../types";
 import MealTabs from "../mealTabs/MealTabs";
 import MealDay from "../MealDay/MealDay";
 import FoodQuantityInput from "./FoodQuantityInput";
 import FoodWastageTable from "./FoodWastagetable";
 import Button from "../commonComponents/Button";
-import { observer } from "mobx-react";
-import { ReviewTypes } from "../../store/FoodWastageStore";
 
 interface FoodWastageLogType {
   currentMealTab: MealTypeEnum;
@@ -27,6 +27,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
     handelFoodPrepared,
     handelFoodWasted,
   } = props;
+
   const renderHeaderSection = () => {
     return (
       <div className="flex flex-row justify-between">
@@ -38,6 +39,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
       </div>
     );
   };
+
   const renderTotalMealWastageAndPrepared = () => {
     return (
       <ul className="flex flex-col gap-10 mt-10">
@@ -63,6 +65,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
       </ul>
     );
   };
+
   const renderButtonSection = () => {
     return (
       <p className="flex flex-row gap-4 justify-end align-bottom">
@@ -73,19 +76,28 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
       </p>
     );
   };
-  const renderEmptyMeal = () => {
+
+  const renderIsMealOrEmptyMsg = () => {
+    if (!mealWastageData) {
+      return (
+        <h1 className="text-center mt-40 text-2xl text-black font-bold">
+          No Meals
+        </h1>
+      );
+    }
     return (
       <>
         {renderTotalMealWastageAndPrepared()}
         <FoodWastageTable mealData={mealWastageData[currentMealTab]!.items} />
+        {renderButtonSection()}
       </>
     );
   };
+
   return (
     <div className="w-[920px] h-[600px] bg-white shadow-lg p-10">
       {renderHeaderSection()}
-      {renderEmptyMeal()}
-      {renderButtonSection()}
+      {renderIsMealOrEmptyMsg()}
     </div>
   );
 };

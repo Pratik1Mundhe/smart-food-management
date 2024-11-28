@@ -1,17 +1,12 @@
 import { makeAutoObservable } from "mobx";
 import FoodWastageItemModel from "./FoodWastageItemModel";
-
-interface FoodWastageModelType {
-  totalFoodPrepared: number;
-  totalFoodWasted: number;
-  items: FoodWastageItemModel[];
-}
+import { FoodItemsType } from "../types";
 
 class FoodWastageModel {
   totalFoodPrepared: number;
   totalFoodWasted: number;
   items: FoodWastageItemModel[];
-  constructor(foodWastage: FoodWastageModelType) {
+  constructor(foodWastage: FoodItemsType) {
     this.totalFoodPrepared = foodWastage.totalFoodPrepared;
     this.totalFoodWasted = foodWastage.totalFoodWasted;
     this.items = foodWastage.items.map(
