@@ -1,8 +1,7 @@
 import React from "react";
-
 import { PiWarningCircle } from "react-icons/pi";
+
 import { InputPropsType, ReactElementType } from "../../types";
-import { useTranslation } from "react-i18next";
 
 const Input: React.FC<InputPropsType> = ({
   type,
@@ -10,10 +9,9 @@ const Input: React.FC<InputPropsType> = ({
   handleInputChange,
   error,
   inputValue,
-  tPath,
+  styles,
+  placeholder,
 }) => {
-  const { t } = useTranslation();
-
   const renderInputError: ReactElementType = () => {
     if (error) {
       return <p className="text-error text-xs italic mt-2">{error}</p>;
@@ -33,10 +31,10 @@ const Input: React.FC<InputPropsType> = ({
     return <></>;
   };
 
-  const renderRegisterInput: ReactElementType = () => {
+  const renderInput: ReactElementType = () => {
     return (
       <div
-        className={`flex items-center focus:outline-none h-[40px] border rounded shadow appearance-none ${
+        className={`flex items-center focus:outline-none h-[40px] border-2 rounded appearance-none ${
           error ? "border-red-500 bg-[#FF0B370D]" : ""
         }`}
       >
@@ -46,7 +44,8 @@ const Input: React.FC<InputPropsType> = ({
           value={inputValue}
           onChange={handleInputChange}
           name={type}
-          className={`h-[40px] pl-4 text-gray-700 bg-transparent outline-none ${
+          placeholder={placeholder}
+          className={`h-[40px] pl-4 text-sm text-gray-700 bg-transparent outline-none placeholder:text-gray-800  ${
             error ? "w-[90%]" : "w-full"
           }`}
         />
@@ -55,21 +54,9 @@ const Input: React.FC<InputPropsType> = ({
     );
   };
 
-  const renderInputLabel: ReactElementType = () => {
-    return (
-      <label
-        htmlFor="username"
-        className="block text-secondary text-xs font-semibold mb-2"
-      >
-        {t(tPath + `.labels.${type}`)}
-      </label>
-    );
-  };
-
   return (
-    <div className={`${error && error?.length > 0 ? "mb-3" : "mb-6"}`}>
-      {renderInputLabel()}
-      {renderRegisterInput()}
+    <div className={`${styles}`}>
+      {renderInput()}
       {renderInputError()}
     </div>
   );

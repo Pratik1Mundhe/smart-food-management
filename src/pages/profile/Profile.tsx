@@ -2,6 +2,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosCloseCircle } from "react-icons/io";
 
+import UploadIcon from "../../icons/UploadIcon";
+import ConfirmModal from "../../components/modal/ConfirmModal";
+import ProfileChangePasswordModal from "./ProfileChangePasswordModal";
+import SelectInput from "../../components/inputComponents/SelectInput";
+import Input from "../../components/inputComponents/Input";
+import logo from "../../assets/global-logo.png";
 import {
   ProfileErrorsType,
   ProfileFormDataType,
@@ -17,12 +23,6 @@ import {
   PROFILE_INPUT_TYPES,
   REGISTER_INPUT_TYPES,
 } from "../../constants";
-import ProfileInput from "./ProfileInput";
-import ProfileSelectInput from "./ProfileSelectInput";
-import UploadIcon from "../../icons/UploadIcon";
-import ConfirmModal from "../../components/modal/ConfirmModal";
-import logo from "../../assets/global-logo.png";
-import ProfileChangePasswordModal from "./ProfileChangePasswordModal";
 
 const Profile: React.FC<ProfilePropsType> = ({
   profileFormData,
@@ -44,20 +44,32 @@ const Profile: React.FC<ProfilePropsType> = ({
 }) => {
   const { t } = useTranslation();
   const tPath = "pages.profile";
+
   const renderNameInputElement: RenderNameInputElementType = (
     type,
     inputType
   ) => {
     const inputValue = profileFormData[type as keyof ProfileFormDataType]!;
     const error = errors[type as keyof ProfileErrorsType];
+    const placeholder =
+      "Please enter " + t(tPath + `.labels.${type}`).toLowerCase();
     return (
-      <ProfileInput
-        type={type}
-        inputType={inputType}
-        error={error}
-        inputValue={inputValue}
-        handleInputChange={handleInputChange}
-      />
+      <div className={`w-2/5`}>
+        <label
+          htmlFor="username"
+          className="block text-secondary text-xs font-semibold mb-2"
+        >
+          {t(tPath + `.labels.${type}`)}
+        </label>
+        <Input
+          type={type}
+          inputType={inputType}
+          error={error}
+          inputValue={inputValue}
+          handleInputChange={handleInputChange}
+          placeholder={placeholder}
+        />
+      </div>
     );
   };
   const renderSelectInputElement: RenderSelectInputElementType = (
@@ -67,13 +79,22 @@ const Profile: React.FC<ProfilePropsType> = ({
     const inputValue = profileFormData[type as keyof ProfileFormDataType];
     const error = errors[type as keyof ProfileErrorsType];
     return (
-      <ProfileSelectInput
-        options={options}
-        type={type}
-        inputValue={inputValue}
-        error={error}
-        handleInputChange={handleInputChange}
-      />
+      <div className="w-2/5">
+        <label
+          htmlFor="username"
+          className="block text-secondary text-xs font-semibold mb-2"
+        >
+          {t(tPath + `.labels.${type}`)}
+        </label>
+        <SelectInput
+          options={options}
+          type={type}
+          inputValue={inputValue}
+          error={error}
+          handleInputChange={handleInputChange}
+          tPath={tPath + `.labels.${type}`}
+        />
+      </div>
     );
   };
   const renderProfileFormButtons: ReactElementType = () => {

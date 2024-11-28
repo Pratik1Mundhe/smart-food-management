@@ -1,8 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import CreateFoodItemSelectInput from "./CreateFoodItemSelectInput";
-import CreateFoodItemInput from "./CreateFoodItemInput";
 import {
   CreateFoodItemPropsType,
   CreateFoodItemSelectFieldType,
@@ -16,6 +14,8 @@ import {
   FOOD_CATEGORY_OPTIONS,
   FOOD_SERVING_UNIT_OPTIONS,
 } from "../../constants";
+import SelectInput from "../../components/inputComponents/SelectInput";
+import Input from "../../components/inputComponents/Input";
 
 const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
   actionType,
@@ -39,13 +39,16 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
         <p className="text-lg font-medium text-general">
           {t(tPath + `.labels.${type}`)} :
         </p>
-        <CreateFoodItemSelectInput
-          type={type}
-          inputValue={inputValue}
-          error={error}
-          options={options}
-          handleInputChange={handleInputChange}
-        />
+        <div className="w-80">
+          <SelectInput
+            type={type}
+            inputValue={inputValue}
+            error={error}
+            options={options}
+            handleInputChange={handleInputChange}
+            tPath={tPath + `.name.${type}`}
+          />
+        </div>
       </div>
     );
   };
@@ -58,13 +61,14 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
         <p className="text-lg font-medium text-general">
           {t(tPath + `.labels.name`)} :
         </p>
-        <CreateFoodItemInput
+        <Input
           type={CREATE_FOOD_ITEM_NAMES.name}
           inputValue={inputValue}
           error={error}
           handleInputChange={handleInputChange}
           inputType={CREATE_FOOD_ITEM_TYPES.text}
-          tPath={tPath}
+          placeholder="Please enter food name"
+          styles={"w-80"}
         />
       </div>
     );

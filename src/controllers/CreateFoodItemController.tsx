@@ -61,7 +61,6 @@ const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
   };
 
   const validateFoodItemForm = (): boolean => {
-    //remove newErrors
     let hasError = false;
     Object.keys(foodItemData).forEach((key) => {
       const fieldName = key as keyof FoodItemDataType;
@@ -104,11 +103,15 @@ const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
   const handleSubmitFoodItem = (e: React.FormEvent): void => {
     e.preventDefault();
     if (!validateFoodItemForm()) {
-      //switch
-      if (actionType === FoodItemActionEnum.CREATE) {
-        handleCreateFoodItem();
-      } else if (actionType === FoodItemActionEnum.UPDATE) {
-        handleUpdateFoodItem();
+      switch (actionType) {
+        case FoodItemActionEnum.CREATE:
+          handleCreateFoodItem();
+          break;
+        case FoodItemActionEnum.UPDATE:
+          handleUpdateFoodItem();
+          break;
+        default:
+          break;
       }
       handleCloseFoodItemModal();
     } else {

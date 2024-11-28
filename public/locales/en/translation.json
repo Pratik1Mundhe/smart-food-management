@@ -2,6 +2,10 @@
   "pages": {
     "adminHome": {
       "title": "Admin Portal",
+      "tabs": {
+        "scheduleMeal": "Schedule Meal",
+        "headCount": "Head Count"
+      },
       "scheduleMeal": {
         "header": "Schedule Meal",
         "mealItemsHeaders": {
@@ -200,6 +204,20 @@
         "error": {
           "delete": "Item is not deleted"
         }
+      }
+    },
+    "headCount": {
+      "items": "items",
+      "quantity": "quantity",
+      "headCount": "Head Count",
+      "summary": "Summary",
+      "mealHeadCount": {
+        "fullMeal": "Full Meal Head Count",
+        "halfMeal": "Half Meal Head Count",
+        "customMeal": "Custom Meal Head Count",
+        "skipMeal": "Skip Meal Head Count",
+        "totalMeal": "Total Meal Head Count",
+        "completedMeal": "Completed Meal Head Count"
       }
     }
   },

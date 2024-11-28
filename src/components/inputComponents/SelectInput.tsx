@@ -1,28 +1,18 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { FiChevronDown } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
-import { ProfileSelectInputPropsType, ReactElementType } from "../../types";
+import { ReactElementType, SelectInputPropsType } from "../../types";
 
-const ProfileSelectInput: React.FC<ProfileSelectInputPropsType> = ({
+const SelectInput: React.FC<SelectInputPropsType> = ({
   type,
   options,
   inputValue,
   error,
   handleInputChange,
+  tPath,
 }) => {
   const { t } = useTranslation();
-  const tPath = "pages.profile";
-  const renderInputLabel: ReactElementType = () => {
-    return (
-      <label
-        htmlFor="username"
-        className="block text-secondary text-xs font-semibold mb-2"
-      >
-        {t(tPath + `.labels.${type}`)}
-      </label>
-    );
-  };
 
   const renderInputError: ReactElementType = () => {
     if (error) {
@@ -32,16 +22,17 @@ const ProfileSelectInput: React.FC<ProfileSelectInputPropsType> = ({
   };
 
   const renderSelectInput: ReactElementType = () => {
+    const selectOption = t(tPath).toLowerCase();
     return (
       <select
         name={type}
         value={inputValue}
         onChange={handleInputChange}
-        className={`border-2 text-sm px-2 appearance-none rounded-lg h-[46px] text-slate-800 outline-none w-full ${
+        className={`border-2 text-sm pl-4 appearance-none rounded h-[46px] text-slate-800 outline-none w-full ${
           error ? "border-red-500 bg-[#FF0B370D]" : ""
         }`}
       >
-        <option value={""}>Please select {type}</option>
+        <option value={""}>Please select {selectOption}</option>
         {options.map((option) => {
           const formatOption = option[0].toUpperCase() + option.slice(1);
           return (
@@ -55,8 +46,7 @@ const ProfileSelectInput: React.FC<ProfileSelectInputPropsType> = ({
   };
 
   return (
-    <div className="w-2/5">
-      {renderInputLabel()}
+    <>
       <div className="relative flex flex-col gap-1 ">
         {renderSelectInput()}
         <button
@@ -68,8 +58,8 @@ const ProfileSelectInput: React.FC<ProfileSelectInputPropsType> = ({
         </button>
       </div>
       {renderInputError()}
-    </div>
+    </>
   );
 };
 
-export default ProfileSelectInput;
+export default SelectInput;

@@ -10,6 +10,11 @@ import MealFoodItemModel from "./models/MealFoodItemModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
 import FoodItemModel from "./models/FoodItemModel";
 
+export enum FoodItemActionEnum {
+  CREATE = "create",
+  UPDATE = "update",
+}
+
 export enum FoodItemCategoryEnum {
   RICE = "rice",
   PANCAKE = "pancake",
@@ -17,14 +22,10 @@ export enum FoodItemCategoryEnum {
   EMPTY = "",
 }
 
-export enum FoodItemActionEnum {
-  CREATE = "create",
-  UPDATE = "update",
-}
-
 export enum BaseSizeUnitEnum {
   KG = "kg",
   PISCES = "pisces",
+  GLASS = "glass",
   EMPTY = "",
 }
 
@@ -82,6 +83,11 @@ export enum GenderEnum {
   MALE = "male",
   FEMALE = "female",
   OTHER = "other",
+}
+
+export enum AdminHomeTabs {
+  SCHEDULE_MEAL = "scheduleMeal",
+  HEAD_COUNT = "headCount",
 }
 
 export interface MealDetailsType {
@@ -200,7 +206,7 @@ export interface ConfirmModalPropsTypes {
   action: VoidFunctionType;
 }
 export interface MealTabsPropsType {
-  currentMealTab: string;
+  currentMealTab: MealTypeEnum;
   handleTabChange: (meal: MealTypeEnum) => void;
 }
 
@@ -342,7 +348,8 @@ export interface InputPropsType {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error: string | string[] | null;
   inputValue: string;
-  tPath: string;
+  styles?: string;
+  placeholder: string;
 }
 
 export interface RegisterPasswordInputPropsType {
@@ -486,4 +493,45 @@ export interface CreateFoodItemSelectFieldType {
     error: string | null,
     options: ServingSizeUnitEnum[] | BaseSizeUnitEnum[] | FoodItemCategoryEnum[]
   ): React.ReactElement;
+}
+
+export interface HeadCountPropsType {
+  mealData: HeadCountMealDataType[];
+  currentMealTab: MealTypeEnum;
+  currentDate: Date;
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+  handleTabChange: (mealType: MealTypeEnum) => void;
+  completedMealHeadCountData: number;
+}
+
+export interface HeadCountMealDataType {
+  mealType: MealTypeEnum;
+  name: string;
+  category: FoodItemCategoryEnum;
+  quantity: { value: number; unit: BaseSizeUnitEnum };
+  preference: MealPreferenceEnum;
+  userId?: string;
+  mealDate?: string;
+}
+
+export interface HeadCountDayMealsDataType {
+  breakfast: HeadCountMealDataType[];
+  lunch: HeadCountMealDataType[];
+  dinner: HeadCountMealDataType[];
+}
+
+export interface SelectInputPropsType {
+  type: string;
+  options:
+    | FoodItemCategoryEnum[]
+    | BaseSizeUnitEnum[]
+    | ServingSizeUnitEnum[]
+    | ProfileDepartmentsEnum[]
+    | GenderEnum[];
+  inputValue: string;
+  error: string | null;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  tPath: string;
 }
