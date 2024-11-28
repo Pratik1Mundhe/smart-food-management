@@ -23,34 +23,9 @@ const FoodItemsController: React.FC = () => {
     useState<boolean>(false);
   const [showUpdateFoodItemModal, setShowUpdateFoodItemModal] =
     useState<boolean>(false);
-  const [showDeleteConfirmModal, setShowDeleteConfirmModal] =
-    useState<boolean>(false);
   const [deleteFoodItemId, setDeleteFoodItemId] = useState<string | null>(null);
   const { t } = useTranslation();
   const tPath = "pages.foodItems";
-
-  const handleShowCreateFoodItemModal: VoidFunctionType = () => {
-    setShowCreateFoodItemModal(true);
-  };
-  const handleShowUpdateFoodItemData = (foodItem: FoodItemModel) => {
-    setUpdateFoodItemData(foodItem);
-    setShowUpdateFoodItemModal(true);
-  };
-  const handleCloseCreateFoodItemModal: VoidFunctionType = () => {
-    setShowCreateFoodItemModal(false);
-  };
-  const handleCloseUpdateFoodItemModal: VoidFunctionType = () => {
-    setShowUpdateFoodItemModal(false);
-    setUpdateFoodItemData(null);
-  };
-  //move into components
-  const handleShowDeleteConfirmModal = (id: string) => {
-    setShowDeleteConfirmModal(true);
-    setDeleteFoodItemId(id);
-  };
-  const handleCloseDeleteConfirmModal: VoidFunctionType = () => {
-    setShowDeleteConfirmModal(false);
-  };
 
   const addFoodItemIntoStore = (foodItem: FoodItemType) => {
     foodItemsStore.addFoodItem(foodItem);
@@ -62,10 +37,8 @@ const FoodItemsController: React.FC = () => {
       toast.error(t(tPath + ".toasts.error.delete"));
       throw new Error(t(tPath + ".error.notSelected"));
     }
-    //mutation for deleting a food item
     foodItemsStore.removeFoodItem(deleteFoodItemId);
     toast.success(t(tPath + ".toasts.success.delete"));
-    handleCloseDeleteConfirmModal();
   };
 
   const updateFoodItem = (foodItem: FoodItemType) => {
@@ -76,7 +49,7 @@ const FoodItemsController: React.FC = () => {
   if (showCreateFoodItemModal) {
     return (
       <CreateFoodItemController
-        handleCloseFoodItemModal={handleCloseCreateFoodItemModal}
+        toggleModal={setShowCreateFoodItemModal}
         foodItemAction={addFoodItemIntoStore}
         actionType={FoodItemActionEnum.CREATE}
         initialFoodItemData={{
@@ -96,7 +69,7 @@ const FoodItemsController: React.FC = () => {
     }
     return (
       <CreateFoodItemController
-        handleCloseFoodItemModal={handleCloseUpdateFoodItemModal}
+        toggleModal={setShowUpdateFoodItemModal}
         foodItemAction={updateFoodItem}
         actionType={FoodItemActionEnum.UPDATE}
         initialFoodItemData={updateFoodItemData}
@@ -107,12 +80,11 @@ const FoodItemsController: React.FC = () => {
   return (
     <FoodItems
       foodItems={foodItemsStore.getFoodItems()}
-      handleShowCreateFoodItemModal={handleShowCreateFoodItemModal}
-      showDeleteConfirmModal={showDeleteConfirmModal}
-      handleShowDeleteConfirmModal={handleShowDeleteConfirmModal}
-      handleCloseDeleteConfirmModal={handleCloseDeleteConfirmModal}
+      setShowCreateFoodItemModal={setShowCreateFoodItemModal}
       handleDeleteFoodItem={handleDeleteFoodItem}
-      handleShowUpdateFoodItemData={handleShowUpdateFoodItemData}
+      setShowUpdateFoodItemModal={setShowUpdateFoodItemModal}
+      setDeleteFoodItemId={setDeleteFoodItemId}
+      setUpdateFoodItemData={setUpdateFoodItemData}
     />
   );
 };

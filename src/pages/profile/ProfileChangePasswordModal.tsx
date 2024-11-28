@@ -5,7 +5,7 @@ import Modal from "../../components/modal/Modal";
 import IdmLogo from "../../icons/IdmLogo";
 import PasswordStrengthBar from "../../components/passwordStrengthBar/PasswordStrengthBar";
 import Input from "../../components/inputComponents/Input";
-import PasswordInput from "./PasswordInput";
+import PasswordInput from "../../components/inputComponents/PasswordInput";
 import {
   ProfileChangePasswordModalPropsType,
   ProfilePasswordFormDataType,
@@ -53,15 +53,23 @@ const ProfileChangePasswordModal: React.FC<
     const inputValue =
       passwordFormData[type as keyof ProfilePasswordFormDataType];
     return (
-      <PasswordInput
-        type={type}
-        inputType={inputType}
-        handleInputChange={handlePasswordInputChange}
-        error={passwordError}
-        inputValue={inputValue}
-        showPassword={showPassword}
-        handleToggleShowPassword={handleToggleShowPassword}
-      />
+      <div className="">
+        <label
+          htmlFor="username"
+          className="block text-secondary text-xs font-semibold mb-2"
+        >
+          {t(tPath + `.labels.${type}`)}
+        </label>
+        <PasswordInput
+          type={type}
+          inputType={inputType}
+          handleInputChange={handlePasswordInputChange}
+          error={passwordError}
+          inputValue={inputValue}
+          showPassword={showPassword}
+          handleToggleShowPassword={handleToggleShowPassword}
+        />
+      </div>
     );
   };
 
@@ -73,14 +81,22 @@ const ProfileChangePasswordModal: React.FC<
     const inputValue =
       passwordFormData[type as keyof ProfilePasswordFormDataType];
     return (
-      <Input
-        type={type}
-        inputType={inputType}
-        handleInputChange={handlePasswordInputChange}
-        error={confirmPasswordError}
-        inputValue={inputValue}
-        tPath="pages.profile.changePasswordModal"
-      />
+      <div className="mt-4">
+        <label
+          htmlFor="username"
+          className="block text-secondary text-xs font-semibold mb-2"
+        >
+          {t(tPath + `.labels.${type}`)}
+        </label>
+        <Input
+          type={type}
+          inputType={inputType}
+          handleInputChange={handlePasswordInputChange}
+          error={confirmPasswordError}
+          inputValue={inputValue}
+          placeholder=""
+        />
+      </div>
     );
   };
 

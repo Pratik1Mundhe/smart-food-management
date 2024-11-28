@@ -12,6 +12,7 @@ import ProfileController from "./controllers/ProfileController";
 import FoodItemsControlller from "./controllers/FoodItemsController";
 import { TOASTER_POSITION } from "./constants";
 import { PageRoutesEnum } from "./types";
+import Home from "./pages/home/Home";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -42,9 +43,9 @@ const App: React.FC = () => {
         <Route
           path={PageRoutesEnum.HOME_PAGE}
           element={
-            <AdminComponentWrapper>
-              <AdminHome />
-            </AdminComponentWrapper>
+            <ComponentWrapper>
+              <Home />
+            </ComponentWrapper>
           }
         />
         <Route

@@ -15,7 +15,7 @@ import {
 } from "../types";
 
 const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
-  handleCloseFoodItemModal,
+  toggleModal,
   foodItemAction,
   actionType,
   initialFoodItemData,
@@ -113,7 +113,7 @@ const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
         default:
           break;
       }
-      handleCloseFoodItemModal();
+      toggleModal(false);
     } else {
       console.log("Validation errors:", errors);
     }
@@ -126,7 +126,7 @@ const CreateFoodItemController: React.FC<CreateFoodItemControllerPropsType> = ({
       errors={errors}
       handleInputChange={handleInputChange}
       handleSubmitFoodItem={handleSubmitFoodItem}
-      handleCloseFoodItemModal={handleCloseFoodItemModal}
+      toggleModal={toggleModal}
     />
   );
 };

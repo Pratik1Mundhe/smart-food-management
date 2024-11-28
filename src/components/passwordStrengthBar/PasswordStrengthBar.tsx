@@ -58,7 +58,7 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarPropsType> = ({
   };
 
   return (
-    <div className="w-full h-[3px] mb-6 flex items-center">
+    <div className="w-full h-[3px] flex items-center my-4">
       <p className="text-xs text-secondary">{t(tPath + ".weak")}</p>
       <div className="h-[3px] flex-grow flex items-center mx-2">
         {renderWeakBar()}

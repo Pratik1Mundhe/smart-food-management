@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { PiWarningCircle } from "react-icons/pi";
 
 import { ReactElementType, RegisterPasswordInputPropsType } from "../../types";
@@ -14,12 +13,9 @@ const PasswordInput: React.FC<RegisterPasswordInputPropsType> = ({
   showPassword,
   handleToggleShowPassword,
 }) => {
-  const { t } = useTranslation();
-  const tPath = "pages.profile.changePasswordModal";
-
   const renderInputError: ReactElementType = () => {
     if (error) {
-      return <p className="text-error text-xs italic mt-2">{error}</p>;
+      return <p className="text-error text-xs italic mt-3">{error}</p>;
     }
     return <></>;
   };
@@ -37,7 +33,7 @@ const PasswordInput: React.FC<RegisterPasswordInputPropsType> = ({
     return <></>;
   };
 
-  const renderRegisterInput: ReactElementType = () => {
+  const renderInput: ReactElementType = () => {
     return (
       <div
         className={`flex items-center focus:outline-none h-[40px] border rounded shadow appearance-none ${
@@ -56,28 +52,18 @@ const PasswordInput: React.FC<RegisterPasswordInputPropsType> = ({
           name={type}
           className={`h-[40px] pl-4 text-gray-700 bg-transparent outline-none w-[90%]`}
         />
-        <button className="w-[10%]">{renderIcon()}</button>
+        <button type="button" className="w-[10%] outline-none">
+          {renderIcon()}
+        </button>
       </div>
     );
   };
 
-  const renderInputLabel: ReactElementType = () => {
-    return (
-      <label
-        htmlFor="username"
-        className="block text-secondary text-xs font-semibold mb-2"
-      >
-        {t(tPath + `.labels.${type}`)}
-      </label>
-    );
-  };
-
   return (
-    <div className={`${error && error?.length > 0 ? "mb-3" : "mb-6"}`}>
-      {renderInputLabel()}
-      {renderRegisterInput()}
+    <>
+      {renderInput()}
       {renderInputError()}
-    </div>
+    </>
   );
 };
 

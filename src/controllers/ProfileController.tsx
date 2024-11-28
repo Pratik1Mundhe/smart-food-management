@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import Profile from "../pages/profile/Profile";
+import { profileValidation } from "../utils/validationUtils/profileValidation";
+import validatePassword from "../utils/validationUtils/passwordValidation";
+import { PROFILE_INPUT_NAMES } from "../constants";
 import {
   PasswordStrengthEnum,
   ProfileErrorsType,
@@ -10,9 +13,6 @@ import {
   ProfilePasswordFormDataType,
   VoidFunctionType,
 } from "../types";
-import { profileValidation } from "../utils/validationUtils/profileValidation";
-import validatePassword from "../utils/validationUtils/passwordValidation";
-import { PROFILE_INPUT_NAMES } from "../constants";
 
 const ProfileController: React.FC = () => {
   const [profileFormData, setProfileFormData] = useState<ProfileFormDataType>({
@@ -36,10 +36,6 @@ const ProfileController: React.FC = () => {
       password: "",
       confirmPassword: "",
     });
-  const [showSaveConfirmModal, setShowSaveConfirmModal] =
-    useState<boolean>(false);
-  const [showChangePasswordModal, setShowChangePasswordModal] =
-    useState<boolean>(false);
   const [passwordErrors, setPasswordErrors] =
     useState<ProfilePasswordErrorType>({
       passwordError: null,
@@ -57,7 +53,6 @@ const ProfileController: React.FC = () => {
       [name]: error,
     }));
   };
-
   const handleFileInput = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -66,7 +61,6 @@ const ProfileController: React.FC = () => {
       console.log(imageFile);
     }
   };
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ): void => {
@@ -77,50 +71,24 @@ const ProfileController: React.FC = () => {
     });
     validateProfileField(name, value);
   };
-
   const handleProfileFormValidation = (): boolean => {
     let isFormValid = true;
-    const newErrors: ProfileErrorsType = {
-      name: null,
-      profileImage: null,
-      jobRole: null,
-      email: null,
-      department: null,
-      gender: null,
-    };
     Object.keys(profileFormData).forEach((key) => {
       const fieldName = key as keyof ProfileFormDataType;
       const value = profileFormData[fieldName];
       const error = profileValidation(fieldName, value, t);
-      newErrors[fieldName] = error;
+      setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: error }));
       if (error) isFormValid = false;
     });
-    setErrors(newErrors);
     return isFormValid;
   };
-
-  const handleProfileFormData = (): void => {
+  const handleSubmitProfile: VoidFunctionType = () => {
     if (handleProfileFormValidation()) {
       console.log("Profile submitted successfully:", profileFormData);
     } else {
       console.log("Validation failed:", errors);
     }
   };
-  const handleCloseSaveConfirmModal: VoidFunctionType = () => {
-    setShowSaveConfirmModal(false);
-  };
-  const handleOpenSaveConfirmModal: VoidFunctionType = () => {
-    setShowSaveConfirmModal(true);
-  };
-  const handleSubmitProfileForm = (e: React.FormEvent): void => {
-    e.preventDefault();
-    handleOpenSaveConfirmModal();
-  };
-  const handleSubmitProfileFormData: VoidFunctionType = () => {
-    handleProfileFormData();
-    handleCloseSaveConfirmModal();
-  };
-
   const handleUpdatedPasswordValidation = (
     name: string,
     value: string
@@ -156,7 +124,6 @@ const ProfileController: React.FC = () => {
     }));
     return hasError;
   };
-
   const handlePasswordInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -164,57 +131,40 @@ const ProfileController: React.FC = () => {
     setPasswordFormData({ ...passwordFormData, [name]: value });
     handleUpdatedPasswordValidation(name, value);
   };
-
-  const handleOpenChangePasswordModal: VoidFunctionType = () => {
-    setShowChangePasswordModal(true);
-  };
-
-  const handleCloseChangePasswordModal: VoidFunctionType = () => {
-    setShowChangePasswordModal(false);
-  };
-
   const handlePasswordFormDataValidation = (): boolean => {
     const { password, confirmPassword } = passwordFormData;
-    const passwordError = handleUpdatedPasswordValidation(
+    const passwordError: string | null = handleUpdatedPasswordValidation(
       PROFILE_INPUT_NAMES.password,
       password
     );
-    const confirmPasswordError = handleUpdatedPasswordValidation(
+    const confirmPasswordError: string | null = handleUpdatedPasswordValidation(
       PROFILE_INPUT_NAMES.confirmPassword,
       confirmPassword
     );
-    const hasError = passwordError || confirmPasswordError;
+    const hasError: string | null = passwordError || confirmPasswordError;
     if (hasError) {
       return false;
     }
     return true;
   };
-
   const handleSubmitUpdatedPassword = (e: React.FormEvent): void => {
     e.preventDefault();
     if (handlePasswordFormDataValidation()) {
       console.log(passwordFormData);
     }
   };
-
   return (
     <Profile
       profileFormData={profileFormData}
       passwordStrength={passwordStrength}
       passwordFormData={passwordFormData}
-      showChangePasswordModal={showChangePasswordModal}
-      errors={errors}
       passwordErrors={passwordErrors}
+      errors={errors}
       handleInputChange={handleInputChange}
-      handleSubmitProfileFormData={handleSubmitProfileFormData}
       handleFileInput={handleFileInput}
-      handleCloseSaveConfirmModal={handleCloseSaveConfirmModal}
-      showSaveConfirmModal={showSaveConfirmModal}
-      handleSubmitProfileForm={handleSubmitProfileForm}
       handlePasswordInputChange={handlePasswordInputChange}
-      handleOpenChangePasswordModal={handleOpenChangePasswordModal}
-      handleCloseChangePasswordModal={handleCloseChangePasswordModal}
       handleSubmitUpdatedPassword={handleSubmitUpdatedPassword}
+      handleSubmitProfile={handleSubmitProfile}
     />
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Register from "../pages/register/Register";
 import validatePassword from "../utils/validationUtils/passwordValidation";
@@ -15,7 +16,6 @@ import {
   PasswordStrengthEnum,
   VoidFunctionType,
 } from "../types";
-import { useTranslation } from "react-i18next";
 
 const RegisterController: React.FC = () => {
   const [formData, setFormData] = useState<FormDataType>({
@@ -72,7 +72,7 @@ const RegisterController: React.FC = () => {
       case confirmPassword:
         fieldErrors.confirmPassword =
           value !== formData.password
-            ? t(tPath + ".errors.passwordErrors.confirmPasswordError")
+            ? t(tPath + ".errors.confirmPasswordError")
             : null;
         break;
       default:

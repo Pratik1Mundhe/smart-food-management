@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosCloseCircle } from "react-icons/io";
 
@@ -15,6 +15,7 @@ import {
   ReactElementType,
   RenderNameInputElementType,
   RenderSelectInputElementType,
+  VoidFunctionType,
 } from "../../types";
 import {
   DEPARTMENT_OPTIONS,
@@ -26,25 +27,44 @@ import {
 
 const Profile: React.FC<ProfilePropsType> = ({
   profileFormData,
-  handleInputChange,
-  handleSubmitProfileFormData,
-  errors,
-  handleFileInput,
-  handleCloseSaveConfirmModal,
-  showSaveConfirmModal,
-  handleSubmitProfileForm,
-  showChangePasswordModal,
   passwordErrors,
   passwordFormData,
   passwordStrength,
-  handleCloseChangePasswordModal,
+  errors,
+  handleInputChange,
+  handleFileInput,
   handleSubmitUpdatedPassword,
   handlePasswordInputChange,
-  handleOpenChangePasswordModal,
+  handleSubmitProfile,
 }) => {
+  const [showSaveConfirmModal, setShowSaveConfirmModal] =
+    useState<boolean>(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] =
+    useState<boolean>(false);
+
   const { t } = useTranslation();
   const tPath = "pages.profile";
 
+  const handleOpenChangePasswordModal: VoidFunctionType = () => {
+    setShowChangePasswordModal(true);
+  };
+  const handleCloseChangePasswordModal: VoidFunctionType = () => {
+    setShowChangePasswordModal(false);
+  };
+  const handleCloseSaveConfirmModal: VoidFunctionType = () => {
+    setShowSaveConfirmModal(false);
+  };
+  const handleOpenSaveConfirmModal: VoidFunctionType = () => {
+    setShowSaveConfirmModal(true);
+  };
+  const handleSubmitProfileForm = (e: React.FormEvent): void => {
+    e.preventDefault();
+    handleOpenSaveConfirmModal();
+  };
+  const handleSubmitProfileFormData: VoidFunctionType = () => {
+    handleSubmitProfile();
+    handleCloseSaveConfirmModal();
+  };
   const renderNameInputElement: RenderNameInputElementType = (
     type,
     inputType

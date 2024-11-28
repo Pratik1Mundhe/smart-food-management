@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 
 import ConfirmModal from "../../components/modal/ConfirmModal";
 import FoodItemModel from "../../models/FoodItemModel";
-import { FoodItemsPropsType, ReactElementType } from "../../types";
+import {
+  FoodItemsPropsType,
+  ReactElementType,
+  VoidFunctionType,
+} from "../../types";
 import {
   foodItem,
   foodItemDeleteButton,
@@ -15,16 +19,24 @@ import {
 
 const FoodItems: React.FC<FoodItemsPropsType> = ({
   foodItems,
-  handleShowCreateFoodItemModal,
-  showDeleteConfirmModal,
-  handleCloseDeleteConfirmModal,
-  handleShowDeleteConfirmModal,
   handleDeleteFoodItem,
-  handleShowUpdateFoodItemData,
+  setShowCreateFoodItemModal,
+  setUpdateFoodItemData,
+  setDeleteFoodItemId,
+  setShowUpdateFoodItemModal,
 }) => {
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] =
+    useState<boolean>(false);
   const { t } = useTranslation();
   const tPath = "pages.foodItems";
 
+  const handleShowDeleteConfirmModal = (id: string) => {
+    setShowDeleteConfirmModal(true);
+    setDeleteFoodItemId(id);
+  };
+  const handleCloseDeleteConfirmModal: VoidFunctionType = () => {
+    setShowDeleteConfirmModal(false);
+  };
   const renderFoodItemsHeaders: ReactElementType = () => {
     return (
       <ul className={foodItemHeadersContainer}>
@@ -41,16 +53,21 @@ const FoodItems: React.FC<FoodItemsPropsType> = ({
       </ul>
     );
   };
-
-  const renderFoodItem = (item: FoodItemModel) => {
+  const handleShowUpdateFoodItemData = (foodItem: FoodItemModel) => {
+    setUpdateFoodItemData(foodItem);
+    setShowUpdateFoodItemModal(true);
+  };
+  const renderFoodItem = (item: FoodItemModel): React.ReactElement => {
     const { id, name, category, baseSizeUnit, servingSizeUnit } = item;
-    const handleClickDeleteFoodItem = () => {
+
+    const handleClickDeleteFoodItem: VoidFunctionType = () => {
       handleShowDeleteConfirmModal(id);
     };
 
-    const handleClickUpdateFoodItem = () => {
+    const handleClickUpdateFoodItem: VoidFunctionType = () => {
       handleShowUpdateFoodItemData(item);
     };
+
     return (
       <li
         key={id}
@@ -96,6 +113,10 @@ const FoodItems: React.FC<FoodItemsPropsType> = ({
       );
     }
     return <></>;
+  };
+
+  const handleShowCreateFoodItemModal: VoidFunctionType = () => {
+    setShowCreateFoodItemModal(true);
   };
 
   return (

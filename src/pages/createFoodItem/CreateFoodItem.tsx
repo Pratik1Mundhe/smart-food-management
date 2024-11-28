@@ -6,6 +6,7 @@ import {
   CreateFoodItemSelectFieldType,
   FoodItemActionEnum,
   ReactElementType,
+  VoidFunctionType,
 } from "../../types";
 import {
   BASE_SIZE_UNIT_OPTIONS,
@@ -23,7 +24,7 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
   errors,
   handleInputChange,
   handleSubmitFoodItem,
-  handleCloseFoodItemModal,
+  toggleModal,
 }) => {
   const { t } = useTranslation();
   const tPath = "pages.createFoodItem";
@@ -100,6 +101,10 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
     );
   };
 
+  const handleCloseCreateFoodItemModal: VoidFunctionType = () => {
+    toggleModal(false);
+  };
+
   const renderCreateFoodItemButtons: ReactElementType = () => {
     const buttonTypePath =
       actionType === FoodItemActionEnum.CREATE
@@ -108,7 +113,7 @@ const CreateFoodItem: React.FC<CreateFoodItemPropsType> = ({
     return (
       <div className="flex items-center self-end gap-4 mt-20">
         <button
-          onClick={handleCloseFoodItemModal}
+          onClick={handleCloseCreateFoodItemModal}
           type="button"
           className="rounded border-2 px-5 py-2 text-general bg-transparent hover:bg-slate-100"
         >

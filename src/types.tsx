@@ -294,23 +294,17 @@ export interface RegisterPropsType {
 
 export interface ProfilePropsType {
   profileFormData: ProfileFormDataType;
+  passwordStrength: PasswordStrengthEnum | null;
+  passwordFormData: ProfilePasswordFormDataType;
+  passwordErrors: ProfilePasswordErrorType;
+  errors: ProfileErrorsType;
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  handleSubmitProfileFormData: VoidFunctionType;
-  errors: ProfileErrorsType;
   handleFileInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCloseSaveConfirmModal: VoidFunctionType;
-  showSaveConfirmModal: boolean;
-  handleSubmitProfileForm: (e: React.FormEvent) => void;
   handlePasswordInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOpenChangePasswordModal: VoidFunctionType;
-  handleCloseChangePasswordModal: VoidFunctionType;
   handleSubmitUpdatedPassword: (e: React.FormEvent) => void;
-  passwordStrength: PasswordStrengthEnum | null;
-  showChangePasswordModal: boolean;
-  passwordErrors: ProfilePasswordErrorType;
-  passwordFormData: ProfilePasswordFormDataType;
+  handleSubmitProfile: VoidFunctionType;
 }
 
 export interface RenderNameInputElementType {
@@ -455,24 +449,25 @@ export interface CreateFoodItemPropsType {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   handleSubmitFoodItem: (e: React.FormEvent) => void;
-  handleCloseFoodItemModal: () => void;
+  toggleModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FoodItemsPropsType {
   foodItems: FoodItemModel[];
-  handleShowCreateFoodItemModal: () => void;
-  showDeleteConfirmModal: boolean;
-  handleShowDeleteConfirmModal: (id: string) => void;
-  handleCloseDeleteConfirmModal: VoidFunctionType;
+  setShowCreateFoodItemModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleDeleteFoodItem: VoidFunctionType;
-  handleShowUpdateFoodItemData: (foodItem: FoodItemModel) => void;
+  setShowUpdateFoodItemModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setDeleteFoodItemId: React.Dispatch<React.SetStateAction<string | null>>;
+  setUpdateFoodItemData: React.Dispatch<
+    React.SetStateAction<FoodItemModel | null>
+  >;
 }
 
 export interface CreateFoodItemControllerPropsType {
-  handleCloseFoodItemModal: () => void;
   foodItemAction: (foodItem: FoodItemType) => void;
   actionType: FoodItemActionEnum;
   initialFoodItemData: FoodItemType | null;
+  toggleModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ValidateUpdatedFoodItemFieldType {
@@ -534,4 +529,10 @@ export interface SelectInputPropsType {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   tPath: string;
+}
+
+export interface FoodItemsModalControllerPropsType {
+  handleShowFoodItemsModal: (value: boolean) => void;
+  currentMealTab: MealTypeEnum;
+  addFoodItem: (food: MealFoodItemModel) => void;
 }

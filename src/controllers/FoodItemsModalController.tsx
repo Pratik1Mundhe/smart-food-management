@@ -5,14 +5,8 @@ import toast from "react-hot-toast";
 import useFetchFoodItems from "../apis/queries/GetMealFoodItems/useFetchFoodItems";
 import FoodItemsModal from "../components/foodItemsModal/FoodItemsModal";
 import MealFoodItemModel from "../models/MealFoodItemModel";
-import { MealTypeEnum, VoidFunctionType } from "../types";
+import { FoodItemsModalControllerPropsType, VoidFunctionType } from "../types";
 import { FOOD_ITEMS_LIMIT, FOOD_ITEMS_OFFSET } from "../constants";
-
-interface FoodItemsModalControllerPropsType {
-  handleShowFoodItemsModal: (value: boolean) => void;
-  currentMealTab: MealTypeEnum;
-  addFoodItem: (food: MealFoodItemModel) => void;
-}
 
 const FoodItemsModalController: React.FC<FoodItemsModalControllerPropsType> = ({
   handleShowFoodItemsModal,
