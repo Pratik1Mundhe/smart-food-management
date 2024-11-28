@@ -57,6 +57,7 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
     return () => clearInterval(interval);
   }, []);
   const mealItems = scheduledMealStore.getMealDayData(date)[type];
+
   const handleRefetchMeal: VoidFunctionType = () => {
     fetchScheduleMealAPI.refetch({
       params: {

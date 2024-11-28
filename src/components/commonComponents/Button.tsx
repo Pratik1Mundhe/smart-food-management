@@ -1,6 +1,6 @@
 import React from "react";
 const outLine =
-  "text-sm px-5 py-2 border-2 border-gray-300  rounded hover:bg-gray-100  mt-4";
+  "text-sm px-5 py-2 border-2 border-gray-300  rounded-md hover:bg-gray-100  mt-4";
 interface ButtonProps {
   children: React.ReactNode;
   type?: "submit";

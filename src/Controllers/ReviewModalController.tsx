@@ -22,6 +22,9 @@ const ReviewModalController = ({ date }: ReviewModalControllerType) => {
       return { ...preState, [type]: content };
     });
   }
+  function handelCloseModal() {
+    ModalStore.closeReviewModalModal();
+  }
   const formattedReviewData = mealItems.map((each) => {
     return {
       id: each.id,
@@ -31,15 +34,20 @@ const ReviewModalController = ({ date }: ReviewModalControllerType) => {
     };
   });
   useEffect(() => {
-    ReviewStore.setReview(type, formattedReviewData);
-  }, [type]);
-  const reviewItems = ReviewStore.reviewsOfMealType[type];
+    if (ReviewStore.reviewsOfMealType[type].length === 0) {
+      ReviewStore.setReviewOnDate(date, type, formattedReviewData);
+    }
+  }, [type, formattedReviewData.length]);
+  if (!ReviewStore.getReviewMealsOnDate(date)) return;
+  const reviewItems = ReviewStore.getReviewMealsOnDate(date)[type];
+
   return (
     <>
       <ReviewModal
         items={reviewItems}
         review={textareaContent[type]}
         handleTextAreaContent={handleTextAreaContent}
+        handelCloseModal={handelCloseModal}
       />
     </>
   );

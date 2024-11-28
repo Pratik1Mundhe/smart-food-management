@@ -19,7 +19,7 @@ const renderTableHeader = () => {
 const tableMealRatingRow = (eachReview: ReviewModel) => {
   return (
     <tr className="flex flex-row gap-16 items-center">
-      <td className="text-[15px] w-[130px] text-gray-400">{eachReview.name}</td>
+      <td className="text-[14px] w-[130px] text-gray-400">{eachReview.name}</td>
       <ReviewStars
         rating={eachReview.quality}
         handleSetNewValue={eachReview.setQuality}

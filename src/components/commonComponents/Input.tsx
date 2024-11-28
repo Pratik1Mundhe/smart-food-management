@@ -2,18 +2,17 @@ import { ERROR_ICON } from "../../constants";
 import { errorIcon } from "./styles";
 
 interface InputProp {
-  label: string;
-  id: string;
+  label?: string;
+  id?: string;
   style: string;
   inputType: string;
-  value: string;
-  errorMsg: string | null;
-  onChange: (value: string) => void;
+  value: string | number;
+  errorMsg?: string | null;
+  onChange: (value: string | number) => void;
 }
 
 const Input: React.FC<InputProp> = (prop) => {
   const { label, id, style, inputType, value, errorMsg, onChange } = prop;
-
   if (errorMsg !== null && errorMsg !== "") {
     return (
       <div className="flex flex-col">

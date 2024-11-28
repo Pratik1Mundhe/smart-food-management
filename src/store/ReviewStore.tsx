@@ -16,6 +16,7 @@ interface ReviewTypes {
 }
 
 class _ReviewStore {
+  review = new Map();
   reviewsOfMealType: ReviewTypes;
   constructor() {
     this.reviewsOfMealType = {
@@ -29,6 +30,19 @@ class _ReviewStore {
     this.reviewsOfMealType[mealType] = reviewItems.map(
       (each) => new ReviewModel(each)
     );
+  }
+  setReviewOnDate(
+    date: string,
+    mealType: MealTypeEnum,
+    reviewItems: ReviewItems[]
+  ) {
+    this.reviewsOfMealType[mealType] = reviewItems.map(
+      (each) => new ReviewModel(each)
+    );
+    this.review.set(date, this.reviewsOfMealType);
+  }
+  getReviewMealsOnDate(date: string) {
+    return this.review.get(date);
   }
 }
 

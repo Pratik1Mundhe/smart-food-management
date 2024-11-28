@@ -12,10 +12,11 @@ interface ReviewModalType {
   items: ReviewModel[];
   review: string;
   handleTextAreaContent: (value: string) => void;
+  handelCloseModal: () => void;
 }
 
 const ReviewModal: React.FC<ReviewModalType> = (props) => {
-  const { items, review, handleTextAreaContent } = props;
+  const { items, review, handleTextAreaContent, handelCloseModal } = props;
   const { t } = useTranslation();
 
   const renderHeaderSection = () => {
@@ -32,7 +33,7 @@ const ReviewModal: React.FC<ReviewModalType> = (props) => {
           filled
           color="bg-green-600"
           hoverColor="hover:bg-green-700"
-          onClick={ModalStore.closeReviewModalModal}
+          onClick={handelCloseModal}
         >
           Done
         </Button>
@@ -45,7 +46,7 @@ const ReviewModal: React.FC<ReviewModalType> = (props) => {
       <div className={reviewContainer}>
         {renderHeaderSection()}
         <MealReviewTable items={items} />
-        <div className="w-[90%]  absolute bottom-5">
+        <div className="w-[90%]  absolute bottom-4">
           <TextArea
             rows={4}
             cols={60}

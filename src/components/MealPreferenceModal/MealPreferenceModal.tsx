@@ -19,7 +19,6 @@ import {
   mealTypeHeading,
   skipMealButton,
 } from "./styles";
-import ModalStore from "../../store/ModalStore";
 
 const MealPreferenceModal: React.FC<MealPreferenceModalPropsType> = (props) => {
   const { t } = useTranslation();
