@@ -17,8 +17,8 @@ import { PageRoutesEnum } from "./types";
 import LoginPage from "./pages/loginPage/LoginPage";
 import { TOASTER_POSITION } from "./constants";
 import { ACCESS_TOKEN, GRAPHQL_URL } from "./constants.ts";
-import FoodWastageLog from "./components/foodWastageLog/FoodWastageLog.tsx";
 import FoodWastageLogPage from "./pages/FoodWastagePage.tsx";
+import RatingAndReviewsPage from "./pages/RatingPage.tsx";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -90,6 +90,14 @@ const App: React.FC = () => {
             element={
               <AdminComponentWrapper>
                 <FoodWastageLogPage />
+              </AdminComponentWrapper>
+            }
+          />
+          <Route
+            path="/rating"
+            element={
+              <AdminComponentWrapper>
+                <RatingAndReviewsPage />
               </AdminComponentWrapper>
             }
           />

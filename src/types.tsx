@@ -1,6 +1,8 @@
 import FoodWastageItemModel from "./models/FoodWastageItemModel";
 import FoodWastageModel from "./models/FoodWastageModel";
 import MealFoodItemModel from "./models/MealFoodItemModel";
+import RatingModel from "./models/ratingModel";
+import ReviewModel from "./models/ReviewModel";
 import ScheduledMealModel from "./models/ScheduledMealModel";
 import UserPreferredMealModel from "./models/UserPreferredMealModel";
 export enum FoodItemCategoryEnum {
@@ -216,4 +218,48 @@ export interface FoodWastageModelType {
   totalFoodPrepared: number;
   totalFoodWasted: number;
   items: FoodWastageItemModel[];
+}
+
+export interface RatingModelTypes {
+  totalMembers: number;
+  fiveStarRating: number;
+  fourStarRating: number;
+  threeStarRating: number;
+  twoStarRating: number;
+  oneStarRating: number;
+}
+
+export interface ReviewModelType {
+  profilePic: string;
+  name: string;
+  review: string;
+}
+export interface MealRatingAndReviewModelType {
+  mealId: string;
+  mealName: string;
+  qualityRatings: RatingModel;
+  tasteRatings: RatingModel;
+  reviews: ReviewModel;
+}
+export interface Rating {
+  totalMembers: number;
+  fiveStarRating: number;
+  fourStarRating: number;
+  threeStarRating: number;
+  twoStarRating: number;
+  oneStarRating: number;
+}
+export interface MealRatingAndReviewModelType {
+  mealId: string;
+  mealName: string;
+  qualityRatings: RatingModel;
+  tasteRatings: RatingModel;
+  reviews: ReviewModelType;
+}
+export interface MealRatingAndReviewType {
+  mealId: string;
+  mealName: string;
+  qualityRatings: Rating;
+  tasteRatings: Rating;
+  reviews: ReviewModelType[];
 }

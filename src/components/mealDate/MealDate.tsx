@@ -49,9 +49,9 @@ const MealDate: React.FC<MealDatePropsType> = ({
   };
 
   const handlePreviousDate: VoidFunctionType = () => {
-    if (today) {
-      return;
-    }
+    // if (today) {
+    //   return;
+    // }
     const prevDate = new Date(currentDate);
     prevDate.setDate(currentDate.getDate() - 1);
     setCurrentDate(prevDate);
@@ -76,9 +76,7 @@ const MealDate: React.FC<MealDatePropsType> = ({
         onClick={handlePreviousDate}
         className={`p-3 border-2 border-r-0 rounded-l`}
       >
-        <FaChevronLeft
-          className={`h-3 w-3 ${today ? "opacity-50 pointer-events-none" : ""}`}
-        />
+        <FaChevronLeft className={`h-3 w-3`} />
       </button>
 
       <div className="relative py-2 border-2 w-[140px]">

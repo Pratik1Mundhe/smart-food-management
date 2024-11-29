@@ -19,17 +19,17 @@ const FoodItemTableRowData: React.FC<FoodItemTableRowDataType> = (props) => {
     }
   }
   return (
-    <tr className="flex flex-row gap-10 my-4">
-      <td className="text-[14px] text-gray-400 font-semibold w-[120px]">
+    <tr className="flex flex-row gap-20 my-4 mt-4 items-center">
+      <td className="text-[14px] text-gray-400 font-semibold w-[140px]">
         {itemName.name}
       </td>
-      <td className="w-[120px]">
+      <td className="w-[130px]">
         <FoodQuantityInput
           quantity={itemName.foodPrepared}
           onChange={handelFoodPrepared}
         />
       </td>
-      <td className="w-[120px]">
+      <td className="w-[130px]">
         <FoodQuantityInput
           quantity={itemName.foodWasted}
           onChange={handelFoodWasted}

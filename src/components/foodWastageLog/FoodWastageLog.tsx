@@ -42,9 +42,9 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
 
   const renderTotalMealWastageAndPrepared = () => {
     return (
-      <ul className="flex flex-col gap-10 mt-10">
-        <li className="flex flex-row gap-3 items-center">
-          <p className="text-blue-700 w-[150px] text-[16px] font-semibold">
+      <ul className="flex flex-col gap-7 mt-10">
+        <li className="flex flex-row gap-4 items-center">
+          <p className="text-blue-700 w-[160px] text-[16px] font-semibold">
             Food Prepared
           </p>
           <FoodQuantityInput
@@ -53,7 +53,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
           />
         </li>
         <li className="flex flex-row gap-3">
-          <p className="text-blue-700 w-[150px] text-[16px] font-semibold  ">
+          <p className="text-blue-700 w-[164px] text-[16px] font-semibold  ">
             Food Wasted
           </p>
           <FoodQuantityInput
@@ -95,7 +95,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
   };
 
   return (
-    <div className="w-[920px] h-[600px] bg-white shadow-lg p-10">
+    <div className="w-[920px] h-[650px] bg-white shadow-lg p-10">
       {renderHeaderSection()}
       {renderIsMealOrEmptyMsg()}
     </div>

@@ -13,7 +13,7 @@ const FoodQuantityInput: React.FC<FoodQuantityInputType> = ({
   return (
     <div className="flex flex-row items-end gap-2">
       <Input
-        style="h-[32px] text-center w-[52px] ml-10 p-2 border-2 border-grey-400 outline-none appearance-none"
+        style="h-[35px] text-center w-[80px]  text-[16px] ml-10 p-1 border-2 border-grey-400 outline-none appearance-none"
         inputType="number"
         errorMsg=""
         value={quantity}

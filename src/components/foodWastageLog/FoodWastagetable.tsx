@@ -10,14 +10,14 @@ const FoodWastageTable: React.FC<FoodWastageTableTypes> = ({ mealData }) => {
   const renderTableHeader = () => {
     return (
       <thead>
-        <tr className="flex flex-row gap-10">
-          <th className="text-[16px] w-[120px] text-blue-700 font-semibold text-left">
+        <tr className="flex flex-row gap-20 mt-8 mb-2">
+          <th className="text-[16px] w-[140px] text-blue-700 font-semibold text-left">
             Food Items
           </th>
-          <th className="text-[16px] w-[120px] text-blue-700 font-semibold ">
+          <th className="text-[16px] w-[140px] pl-5 text-blue-700 font-semibold ">
             Food Prepared
           </th>
-          <th className="text-[16px] w-[120px] text-blue-700 font-semibold">
+          <th className="text-[16px] w-[140px] text-blue-700 font-semibold">
             Food Left
           </th>
         </tr>
