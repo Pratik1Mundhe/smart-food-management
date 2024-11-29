@@ -36,6 +36,13 @@ export enum MealPreferenceEnum {
   SKIP = "skip",
 }
 
+export enum MealTypes {
+  ALL = "all",
+  BREAKFAST = "breakfast",
+  LUNCH = "lunch",
+  DINNER = "dinner",
+}
+
 export enum MealStatusEnum {
   NULL = "null",
   ATE = "ate",

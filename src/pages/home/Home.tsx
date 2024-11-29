@@ -16,9 +16,9 @@ import {
 import UserMealCardController from "../../Controllers/UserMealCardController";
 import UserMealStore from "../../store/UserMealStore";
 import { formatDate } from "../../utils/formatDate";
-import ReviewModal from "../../components/reviewModal/ReviewModal";
 import ModalStore from "../../store/ModalStore";
 import ReviewModalController from "../../Controllers/ReviewModalController";
+import BarChart from "../../components/foodGraphs/FoodGraphs";
 
 const Home: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -47,11 +47,14 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col py-4">
+    <div className="flex flex-col py-4 ">
       <div className="mx-auto mb-4">
         <MealDate setCurrentDate={setCurrentDate} currentDate={currentDate} />
       </div>
-      <div className="flex justify-center items-center gap-4">
+      <div className="flex flex-row justify-center">
+        <BarChart />
+      </div>
+      <div className="flex justify-center items-center gap-4 mt-4">
         <UserMealCardController
           date={date}
           type={MealTypeEnum.BREAKFAST}

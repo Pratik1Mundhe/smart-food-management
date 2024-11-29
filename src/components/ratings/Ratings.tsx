@@ -1,8 +1,6 @@
 import MealRatingAndReviewModel from "../../models/MealRatingAndReviewModel";
 import MealRating from "./MealRating";
 import { observer } from "mobx-react";
-import { mealTypeHeading } from "./Styles";
-import Review from "./Review";
 
 interface RatingType {
   activeMealTab: MealRatingAndReviewModel[];

@@ -139,7 +139,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       return <Loader color="blue" />;
     }
     return (
-      <p className=" absolute top-[360px] flex self-center gap-6">
+      <p className=" relative top-10 flex self-center gap-6">
         {/* <Button filled onClick={actions.ate.onClick} color="bg-blue-500">
           {t("iAte")}
         </Button>
@@ -162,7 +162,7 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
     if (showStatusButtons) {
       return renderMealStatusButtons();
     }
-    return <div className="absolute top-[360px]">{renderEditButton()}</div>;
+    return <div className="relative top-10">{renderEditButton()}</div>;
   };
 
   const renderSuccessView = () => (
