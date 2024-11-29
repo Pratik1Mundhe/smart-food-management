@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import ReviewModel from "../models/ReviewModel";
 import { MealTypeEnum } from "../types";
+import ReviewModel from "../models/ReviewModel";
 
 interface ReviewItems {
   id: string;

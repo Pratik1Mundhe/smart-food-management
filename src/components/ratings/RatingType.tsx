@@ -1,13 +1,21 @@
+import { observer } from "mobx-react";
 import RatingBar from "./Ratingbar";
+import RatingModel from "../../models/ratingModel";
 
-const RatingType = ({ type, ratings }) => {
+interface RatingTypes {
+  type: string;
+  ratings: RatingModel;
+}
+
+const RatingType: React.FC<RatingTypes> = (props) => {
+  const { type, ratings } = props;
   return (
     <div className="flex flex-row justify-between mr-28">
       <div className=" flex flex-row gap-4 ">
         <div className="text-center   px-10 mr-10">
           <p className="text-[16px] text-blue-700 font-bold mb-8">{type}</p>
-          <div className="w-[140px] h-[140px] rounded-full border-[6px] p-6 border-green-300">
-            <p className="text-black text-[32px]">4.7 </p>
+          <div className="w-[150px] h-[150px] rounded-full border-[6px] pt-8 border-green-300">
+            <p className="text-black text-[32px]">{ratings.totalRating} </p>
             <p className="text-slate-800 text-[12px] font-bold">
               TOTAL :- {ratings.totalMembers}
             </p>
@@ -50,4 +58,4 @@ const RatingType = ({ type, ratings }) => {
   );
 };
 
-export default RatingType;
+export default observer(RatingType);

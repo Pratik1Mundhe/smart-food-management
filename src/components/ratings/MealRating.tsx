@@ -1,6 +1,13 @@
+import { observer } from "mobx-react-lite";
 import RatingType from "./RatingType";
+import MealRatingAndReviewModel from "../../models/MealRatingAndReviewModel";
 
-const MealRating = ({ eachRating }) => {
+interface MealRatingType {
+  eachRating: MealRatingAndReviewModel;
+}
+
+const MealRating: React.FC<MealRatingType> = (props) => {
+  const { eachRating } = props;
   return (
     <div>
       <h1 className="text-[18px] text-black font-bold">
@@ -13,4 +20,4 @@ const MealRating = ({ eachRating }) => {
     </div>
   );
 };
-export default MealRating;
+export default observer(MealRating);

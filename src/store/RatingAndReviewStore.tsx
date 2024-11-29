@@ -4,15 +4,16 @@ import { MealRatingAndReviewType } from "../types";
 
 class _RatingAndReviewStore {
   date: string | null = null;
-  ratingAndReviewData: Map<string, MealRatingAndReviewModel> = new Map();
-  mealRatingAndReviewData: MealRatingAndReviewModel | null = null;
+  ratingAndReviewData: Map<string, MealRatingAndReviewModel[]> = new Map();
+  mealRatingAndReviewData: MealRatingAndReviewModel[] | null = null;
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
   }
-  setRatingData(date: string, data: MealRatingAndReviewType) {
+  setRatingData(date: string, data: MealRatingAndReviewType[]) {
     this.date = date;
-    console.log(data);
-    this.mealRatingAndReviewData = new MealRatingAndReviewModel(data);
+    this.mealRatingAndReviewData = data.map(
+      (eachData) => new MealRatingAndReviewModel(eachData)
+    );
     this.ratingAndReviewData.set(date, this.mealRatingAndReviewData);
   }
 }

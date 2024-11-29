@@ -1,6 +1,6 @@
 import { ReviewModelType } from "../types";
 
-class ReviewModal {
+class AdminReviewModal {
   profilePic: string;
   name: string;
   review: string;
@@ -11,4 +11,4 @@ class ReviewModal {
   }
 }
 
-export default ReviewModal;
+export default AdminReviewModal;

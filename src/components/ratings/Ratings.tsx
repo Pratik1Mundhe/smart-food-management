@@ -1,14 +1,24 @@
+import MealRatingAndReviewModel from "../../models/MealRatingAndReviewModel";
 import MealRating from "./MealRating";
-import dummyReviewData from "../../dummyReviewData";
+import { observer } from "mobx-react";
+import { mealTypeHeading } from "./Styles";
+import Review from "./Review";
 
-const Ratings = ({ activeMealTab }) => {
+interface RatingType {
+  activeMealTab: MealRatingAndReviewModel[];
+}
+
+const Ratings: React.FC<RatingType> = (props) => {
+  const { activeMealTab } = props;
   return (
-    <div className="flex flex-col gap-5">
-      {dummyReviewData[activeMealTab].map((eachrating) => (
-        <MealRating eachRating={eachrating} />
-      ))}
+    <div>
+      <div className="flex flex-col gap-5">
+        {activeMealTab.map((eachRating) => {
+          return <MealRating eachRating={eachRating} />;
+        })}
+      </div>
     </div>
   );
 };
 
-export default Ratings;
+export default observer(Ratings);

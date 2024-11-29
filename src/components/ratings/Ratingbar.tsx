@@ -1,6 +1,14 @@
+import { observer } from "mobx-react";
 import { LuUserCircle } from "react-icons/lu";
+interface RatingBarTypes {
+  rating: number;
+  ratingType: string;
+  color: string;
+  width: string;
+}
 
-const RatingBar = ({ rating, ratingType, color, width }) => {
+const RatingBar: React.FC<RatingBarTypes> = (props) => {
+  const { rating, ratingType, color, width } = props;
   return (
     <div>
       <div className="w-[300px] h-[6px] bg-slate-300 rounded-full flex flex-col gap-1">
@@ -16,4 +24,4 @@ const RatingBar = ({ rating, ratingType, color, width }) => {
     </div>
   );
 };
-export default RatingBar;
+export default observer(RatingBar);

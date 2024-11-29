@@ -3,6 +3,7 @@ import { RatingModelTypes } from "../types";
 
 class RatingModel {
   totalMembers: number;
+  totalRating: number;
   fiveStarRating: number;
   fourStarRating: number;
   threeStarRating: number;
@@ -10,6 +11,7 @@ class RatingModel {
   oneStarRating: number;
   constructor(rating: RatingModelTypes) {
     this.totalMembers = rating.totalMembers;
+    this.totalRating = rating.totalRating;
     this.fiveStarRating = rating.fiveStarRating;
     this.fourStarRating = rating.fourStarRating;
     this.threeStarRating = rating.threeStarRating;

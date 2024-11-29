@@ -222,6 +222,7 @@ export interface FoodWastageModelType {
 
 export interface RatingModelTypes {
   totalMembers: number;
+  totalRating: number;
   fiveStarRating: number;
   fourStarRating: number;
   threeStarRating: number;
@@ -254,7 +255,7 @@ export interface MealRatingAndReviewModelType {
   mealName: string;
   qualityRatings: RatingModel;
   tasteRatings: RatingModel;
-  reviews: ReviewModelType;
+  reviews: ReviewModel;
 }
 export interface MealRatingAndReviewType {
   mealId: string;

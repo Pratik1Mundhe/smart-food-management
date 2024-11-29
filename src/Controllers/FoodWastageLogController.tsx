@@ -19,6 +19,7 @@ const FoodWasteAgeLogController: React.FC = () => {
     );
   }
   const mealWastageData = FoodWastageStore.foodWastageOnDate.get(date);
+  console.log(mealWastageData);
 
   const handleTabChange = (meal: MealTypeEnum): void => {
     setCurrentMealTab(meal);
@@ -26,7 +27,6 @@ const FoodWasteAgeLogController: React.FC = () => {
 
   function handelFoodPrepared(value: number | string) {
     mealWastageData[currentMealTab].setTotalFoodPrepared(Number(value));
-    console.log(mealWastageData[currentMealTab].totalFoodPrepared);
   }
 
   function handelFoodWasted(value: number | string) {
