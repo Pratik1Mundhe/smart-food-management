@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
+import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import WeeklyMenu from "./pages/weeklyMenu/WeeklyMenu";
 import AdminHome from "./pages/adminHome/AdminHome";
@@ -12,7 +13,7 @@ import ProfileController from "./controllers/ProfileController";
 import FoodItemsControlller from "./controllers/FoodItemsController";
 import { TOASTER_POSITION } from "./constants";
 import { PageRoutesEnum } from "./types";
-import Home from "./pages/home/Home";
+import "react-calendar/dist/Calendar.css";
 
 export const ComponentWrapper: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -71,6 +72,14 @@ const App: React.FC = () => {
         />
         <Route
           path={PageRoutesEnum.PROFILE_PAGE}
+          element={
+            <ComponentWrapper>
+              <ProfileController />
+            </ComponentWrapper>
+          }
+        />
+        <Route
+          path={PageRoutesEnum.ADMIN_PROFILE}
           element={
             <AdminComponentWrapper>
               <ProfileController />

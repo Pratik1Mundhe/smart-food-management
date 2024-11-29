@@ -219,6 +219,22 @@
         "totalMeal": "Total Meal Head Count",
         "completedMeal": "Completed Meal Head Count"
       }
+    },
+    "home": {
+      "userMealCard": {
+        "empty": "Meal plan is empty",
+        "edit": "Edit",
+        "left": "Left",
+        "ateText": "I Ate It",
+        "skipText": "I Skipped",
+        "halfMeal": "Half Meal",
+        "skipMeal": "Skipped",
+        "fullMeal": "Full Meal",
+        "custom": "Custom",
+        "breakfast": "Breakfast",
+        "lunch": "lunch",
+        "dinner": "Dinner"
+      }
     }
   },
   "components": {

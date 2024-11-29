@@ -46,15 +46,20 @@ const Navbar: React.FC = () => {
     ModalStore.closeConfirmModal();
   };
 
+  const handleToggleLogout = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowLogout(!showLogout);
+  };
+
   const renderLogout: ReactElementType = () => {
     if (showLogout) {
       return (
         <>
           <FaChevronUp
             className="text-sm cursor-pointer"
-            onClick={() => setShowLogout((preVal) => !preVal)}
+            onClick={handleToggleLogout}
           />
-          <div className="absolute top-12 right-10">
+          <div className="absolute top-12 right-10 z-50">
             <button
               className={redButton}
               onClick={handleOpenLogoutConfirmModal}
@@ -68,14 +73,21 @@ const Navbar: React.FC = () => {
     return (
       <FaChevronDown
         className="text-sm cursor-pointer"
-        onClick={() => setShowLogout((preVal) => !preVal)}
+        onClick={handleToggleLogout}
       />
     );
   };
 
+  const navigateProfile: VoidFunctionType = () => {
+    navigate(PageRoutesEnum.PROFILE_PAGE);
+  };
+
   const renderUserProfile: ReactElementType = () => {
     return (
-      <li className="flex items-center gap-2">
+      <li
+        onClick={navigateProfile}
+        className="cursor-pointer flex items-center gap-2"
+      >
         <LuUserCircle className="h-5 w-5" />
         <h1 className="text-general text-sm font-medium">User</h1>
         {renderLogout()}

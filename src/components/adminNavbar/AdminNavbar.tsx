@@ -80,7 +80,7 @@ const AdminNavbar: React.FC = () => {
   };
 
   const navigateProfile = () => {
-    navigate(PageRoutesEnum.PROFILE_PAGE);
+    navigate(PageRoutesEnum.ADMIN_PROFILE);
   };
 
   const navigateFoodItems = () => {

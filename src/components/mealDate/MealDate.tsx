@@ -5,25 +5,31 @@ import Calendar, { CalendarProps } from "react-calendar";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import { DATE_FORMAT } from "../../constants";
-import { VoidFunctionType } from "../../types";
-import "react-calendar/dist/Calendar.css";
-
-interface MealDatePropsType {
-  currentDate: Date;
-  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
-}
+import {
+  MealDatePropsType,
+  ReactElementType,
+  VoidFunctionType,
+} from "../../types";
+import { failureToast } from "../../utils/toastUtils/failureToast";
 
 const MealDate: React.FC<MealDatePropsType> = ({
   currentDate,
   setCurrentDate,
 }) => {
-  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+  const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const { t } = useTranslation();
 
   const tPath = "pages.adminHome.scheduleMeal.mealDate";
   const today: boolean = currentDate.getDate() == new Date().getDate();
+  const nextTomorrowDateNumber: number = new Date().getDate() + 1;
+  const nextTomorrowDate = new Date();
+  nextTomorrowDate.setDate(nextTomorrowDateNumber);
 
   const handleNextDate: VoidFunctionType = () => {
+    if (currentDate >= nextTomorrowDate) {
+      failureToast("Meal can't be scheduled after 2 days");
+      return;
+    }
     const nextDate = new Date(currentDate);
     nextDate.setDate(currentDate.getDate() + 1);
     setCurrentDate(nextDate);
@@ -49,7 +55,7 @@ const MealDate: React.FC<MealDatePropsType> = ({
     }
   };
 
-  const handleDateClick = () => {
+  const handleDateClick: VoidFunctionType = () => {
     setIsCalendarVisible((prev) => !prev);
   };
 
@@ -59,8 +65,21 @@ const MealDate: React.FC<MealDatePropsType> = ({
     }
     setIsCalendarVisible(false);
   };
-  return (
-    <div className="flex items-center relative">
+
+  const renderChevronRight: ReactElementType = () => {
+    return (
+      <button
+        onClick={handleNextDate}
+        className={`p-3 border-2 border-l-0 rounded-r ${
+          currentDate >= nextTomorrowDate && "opacity-50 "
+        }`}
+      >
+        <FaChevronRight className="h-3 w-3" />
+      </button>
+    );
+  };
+  const renderChevronLeft: ReactElementType = () => {
+    return (
       <button
         onClick={handlePreviousDate}
         className={`p-3 border-2 border-r-0 rounded-l`}
@@ -69,26 +88,38 @@ const MealDate: React.FC<MealDatePropsType> = ({
           className={`h-3 w-3 ${today ? "opacity-50 pointer-events-none" : ""}`}
         />
       </button>
+    );
+  };
+  const renderDate: ReactElementType = () => {
+    return (
       <div
         onClick={handleDateClick}
         className="py-2 border-2 w-[140px] cursor-pointer"
       >
         <p className="text-sm text-secondary text-center">{renderDayText()}</p>
       </div>
-      <button
-        onClick={handleNextDate}
-        className="p-3 border-2 border-l-0 rounded-r"
-      >
-        <FaChevronRight className="h-3 w-3" />
-      </button>
+    );
+  };
 
-      {isCalendarVisible && (
+  const renderCalender: ReactElementType = () => {
+    if (isCalendarVisible) {
+      return (
         <Calendar
           className="rounded absolute top-10 text-xs shadow-lg"
           onChange={onDateChange}
           value={currentDate}
         />
-      )}
+      );
+    }
+    return <></>;
+  };
+
+  return (
+    <div className="flex items-center relative">
+      {renderChevronLeft()}
+      {renderDate()}
+      {renderChevronRight()}
+      {renderCalender()}
     </div>
   );
 };

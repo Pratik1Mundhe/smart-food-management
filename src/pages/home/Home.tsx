@@ -1,23 +1,53 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { PageRoutesEnum } from "../../types";
-import { getItemLocalStorage } from "../../utils/localStorageUtils/getItem";
-import { ACCESS_TOKEN_KEY, ADMIN_TOKEN } from "../../constants";
+import React, { useState } from "react";
+
 import Announcements from "../../components/announcements/Announcements";
+import MealDate from "../../components/mealDate/MealDate";
+import UserMealCard from "../../components/userMealCard/UserMealCard";
+import { BREAKFAST_TIME, DINNER_TIME, LUNCH_TIME } from "../../constants";
+import {
+  MealPreferenceEnum,
+  MealTypeEnum,
+  ReactElementType,
+} from "../../types";
 
 const Home: React.FC = () => {
-  const accessToken = getItemLocalStorage(ACCESS_TOKEN_KEY);
-  const isAdmin = getItemLocalStorage(ADMIN_TOKEN);
-  // if (accessToken === null) {
-  //   return <Navigate to={PageRoutesEnum.LOGIN_PAGE} replace />;
-  // }
-  // if (isAdmin) {
-  //   return <Navigate to={PageRoutesEnum.ADMIN_HOME_PAGE} replace />;
-  // }
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+
+  const renderMealCards: ReactElementType = () => {
+    return (
+      <div className="flex justify-center items-center gap-4">
+        <UserMealCard
+          currentDate={currentDate}
+          type={MealTypeEnum.BREAKFAST}
+          mealTime={BREAKFAST_TIME}
+          userPreference={MealPreferenceEnum.SKIP}
+        />
+        <UserMealCard
+          currentDate={currentDate}
+          type={MealTypeEnum.LUNCH}
+          mealTime={LUNCH_TIME}
+          userPreference={MealPreferenceEnum.FULL}
+        />
+        <UserMealCard
+          currentDate={currentDate}
+          type={MealTypeEnum.DINNER}
+          mealTime={DINNER_TIME}
+          userPreference={MealPreferenceEnum.CUSTOM}
+        />
+      </div>
+    );
+  };
+
   return (
-    <div className="">
+    <>
       <Announcements />
-    </div>
+      <div className="flex flex-col pb-8">
+        <div className="my-8 mx-auto">
+          <MealDate setCurrentDate={setCurrentDate} currentDate={currentDate} />
+        </div>
+        {renderMealCards()}
+      </div>
+    </>
   );
 };
 

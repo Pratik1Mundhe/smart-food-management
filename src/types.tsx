@@ -70,6 +70,7 @@ export enum PageRoutesEnum {
   PROFILE_PAGE = "/profile",
   FOOD_ITEMS = "/food-items",
   CREATE_FOOD_ITEM = "/create-food-item",
+  ADMIN_PROFILE = "/admin/profile",
 }
 
 export enum ProfileDepartmentsEnum {
@@ -183,6 +184,7 @@ export interface MealCardProps {
   type: MealTypeEnum;
   mealTime: string;
   currentDate: Date;
+  userPreference: MealPreferenceEnum;
 }
 
 export interface QuantityCounterPropsType {
@@ -535,4 +537,9 @@ export interface FoodItemsModalControllerPropsType {
   handleShowFoodItemsModal: (value: boolean) => void;
   currentMealTab: MealTypeEnum;
   addFoodItem: (food: MealFoodItemModel) => void;
+}
+
+export interface MealDatePropsType {
+  currentDate: Date;
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
 }
