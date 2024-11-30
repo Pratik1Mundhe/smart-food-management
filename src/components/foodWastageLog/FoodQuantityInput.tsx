@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import Input from "../commonComponents/Input";
+import { inputStyle } from "./Styles";
 
 interface FoodQuantityInputType {
   quantity: number;
@@ -13,7 +14,7 @@ const FoodQuantityInput: React.FC<FoodQuantityInputType> = ({
   return (
     <div className="flex flex-row items-end gap-2">
       <Input
-        style="h-[35px] text-center w-[80px]  text-[16px] ml-10 p-1 border-2 border-grey-400 outline-none appearance-none"
+        style={inputStyle}
         inputType="number"
         errorMsg=""
         value={quantity}

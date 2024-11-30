@@ -17,14 +17,7 @@ const ReviewModalController = ({ date }: ReviewModalControllerType) => {
     lunch: "",
     dinner: "",
   });
-  function handleTextAreaContent(content: string) {
-    setTextAreaContent((preState) => {
-      return { ...preState, [type]: content };
-    });
-  }
-  function handelCloseModal() {
-    ModalStore.closeReviewModalModal();
-  }
+
   const formattedReviewData = mealItems.map((each) => {
     return {
       id: each.id,
@@ -38,6 +31,17 @@ const ReviewModalController = ({ date }: ReviewModalControllerType) => {
       ReviewStore.setReviewOnDate(date, type, formattedReviewData);
     }
   }, [type, formattedReviewData.length]);
+
+  function handleTextAreaContent(content: string) {
+    setTextAreaContent((preState) => {
+      return { ...preState, [type]: content };
+    });
+  }
+
+  function handelCloseModal() {
+    ModalStore.closeReviewModalModal();
+  }
+
   if (!ReviewStore.getReviewMealsOnDate(date)) return;
   const reviewItems = ReviewStore.getReviewMealsOnDate(date)[type];
 

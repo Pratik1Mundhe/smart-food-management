@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { MealTypeEnum } from "../../types";
 import MealTabs from "../mealTabs/MealTabs";
 import MealDate from "../mealDate/MealDate";
-import { mealTypeHeading } from "./Styles";
+import { mealTypeHeading, ratingAndReviewContainer } from "./Styles";
 import Ratings from "./Ratings";
 import MealRatingAndReviewModel from "../../models/MealRatingAndReviewModel";
 import Review from "./Review";
@@ -70,7 +70,7 @@ const RatingsAndReview: React.FC<FoodWastageLogType> = (props) => {
     return <h1 className="text-3xl font-bold text-center mt-40">No Ratings</h1>;
   };
   return (
-    <div className="bg-[#FBFBFB] shadow-lg p-10 min-h-screen h-[100%]">
+    <div className={ratingAndReviewContainer}>
       {renderMealTabs()}
       {renderPageHeadingAndDate()}
       {renderRatingOrNoRatingMsg()}

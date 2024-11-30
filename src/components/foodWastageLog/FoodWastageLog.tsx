@@ -6,6 +6,7 @@ import MealDay from "../MealDay/MealDay";
 import FoodQuantityInput from "./FoodQuantityInput";
 import FoodWastageTable from "./FoodWastagetable";
 import Button from "../commonComponents/Button";
+import { foodPreparedStyle, foodWastedStyle, wastageCategory } from "./Styles";
 
 interface FoodWastageLogType {
   currentMealTab: MealTypeEnum;
@@ -43,19 +44,15 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
   const renderTotalMealWastageAndPrepared = () => {
     return (
       <ul className="flex flex-col gap-7 mt-10">
-        <li className="flex flex-row gap-4 items-center">
-          <p className="text-blue-700 w-[160px] text-[16px] font-semibold">
-            Food Prepared
-          </p>
+        <li className={wastageCategory}>
+          <p className={foodPreparedStyle}>Food Prepared</p>
           <FoodQuantityInput
             quantity={mealWastageData[currentMealTab]!.totalFoodPrepared}
             onChange={handelFoodPrepared}
           />
         </li>
-        <li className="flex flex-row gap-3">
-          <p className="text-blue-700 w-[164px] text-[16px] font-semibold  ">
-            Food Wasted
-          </p>
+        <li className={wastageCategory}>
+          <p className={foodWastedStyle}>Food Wasted</p>
           <FoodQuantityInput
             quantity={mealWastageData[currentMealTab]!.totalFoodWasted}
             onChange={handelFoodWasted}
@@ -77,7 +74,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
     );
   };
 
-  const renderIsMealOrEmptyMsg = () => {
+  const renderMealOrEmptyMsg = () => {
     if (!mealWastageData) {
       return (
         <h1 className="text-center mt-40 text-2xl text-black font-bold">
@@ -97,7 +94,7 @@ const FoodWastageLog: React.FC<FoodWastageLogType> = (props) => {
   return (
     <div className="w-[920px] h-[650px] bg-white shadow-lg p-10">
       {renderHeaderSection()}
-      {renderIsMealOrEmptyMsg()}
+      {renderMealOrEmptyMsg()}
     </div>
   );
 };

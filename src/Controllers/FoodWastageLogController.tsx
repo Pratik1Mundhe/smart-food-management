@@ -10,16 +10,17 @@ import FoodWastageStore from "../store/FoodWastageStore";
 const FoodWasteAgeLogController: React.FC = () => {
   const [currentMealTab, setCurrentMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const date = formatDate(currentDate);
+  const date = formatDate(currentDate).split(" ")[0];
+
   if (FoodWastageStore.foodWastageOnMealType[currentMealTab] === null) {
     FoodWastageStore.setFoodWastageOnMealType(
       wastageData[currentMealTab],
       currentMealTab,
-      date
+      wastageData.date
     );
   }
+
   const mealWastageData = FoodWastageStore.foodWastageOnDate.get(date);
-  console.log(mealWastageData);
 
   const handleTabChange = (meal: MealTypeEnum): void => {
     setCurrentMealTab(meal);

@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import ReviewModel from "../../models/ReviewModel";
 import ReviewStars from "./ReviewStars";
+import { tableHeadStyle } from "./Styles";
 
 interface MealReviewTableType {
   items: ReviewModel[];
@@ -9,8 +10,8 @@ const renderTableHeader = () => {
   return (
     <thead>
       <tr className="flex ml-52 flex-row gap-28 items-center mt-5 mb-4">
-        <th className="text-[18px] font-normal ml-1">Quality</th>
-        <th className="text-[18px] font-normal ml-1">Taste</th>
+        <th className={tableHeadStyle}>Quality</th>
+        <th className={tableHeadStyle}>Taste</th>
       </tr>
     </thead>
   );

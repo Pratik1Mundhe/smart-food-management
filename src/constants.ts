@@ -2,6 +2,7 @@ import { MealTypeEnum } from "./types";
 
 export const PORTAL_RENDER_ID = "modal";
 export const ERROR_ICON = "ErrorIcon.png";
+export const REVIEW_IMG = "image.png";
 export const USERNAME_INITIAL_VALUE = "";
 export const PASSWORD_INITIAL_VALUE = "";
 export const USERNAME = "username";
@@ -13,6 +14,12 @@ export const GLOBAL_LOGO_URL = "GlobalLogo.png";
 export const GLOBAL_LOGO_ALT = "LOGO";
 export const FOOD_URL = "foodPreparing.png";
 export const DATE_FORMAT = "DD MMM, YYYY";
+
+export const FIVE_STAR = "Five Star Review";
+export const FOUR_STAR = "Four Star Review";
+export const THREE_STAR = "Three Star Review";
+export const TWO_STAR = "Two Star Review";
+export const ONE_STAR = "One Star Review";
 
 export const LOGIN_METHOD = "POST";
 export const INVALID_USERNAME_RESPONSE = "INVALID_USERNAME";

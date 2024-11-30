@@ -1,4 +1,5 @@
 const wastageData = {
+  date: "2024-11-29",
   breakfast: {
     totalFoodPrepared: 10,
     totalFoodWasted: 2,
@@ -90,5 +91,4 @@ const wastageData = {
     ],
   },
 };
-
 export default wastageData;
