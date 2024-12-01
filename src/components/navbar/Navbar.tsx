@@ -139,7 +139,7 @@ const Navbar: React.FC = () => {
         >
           {t("home")}
         </li>
-        <li
+        {/* <li
           onClick={() => navigate(PageRoutesEnum.WEEKLY_MENU_PAGE)}
           className={`${headerMenuOption} ${
             path === PageRoutesEnum.WEEKLY_MENU_PAGE
@@ -148,6 +148,22 @@ const Navbar: React.FC = () => {
           }`}
         >
           {t("weeklyMenu")}
+        </li> */}
+        <li
+          onClick={() => navigate("/rating")}
+          className={`${headerMenuOption} ${
+            path === "/rating" ? "text-primary" : "text-general"
+          }`}
+        >
+          {t("Ratings")}
+        </li>
+        <li
+          onClick={() => navigate("/food_wastage_log")}
+          className={`${headerMenuOption} ${
+            path === "/food_wastage_log" ? "text-primary" : "text-general"
+          }`}
+        >
+          WastageLog
         </li>
         {changeLanguageButtons()}
         {renderUserProfile()}

@@ -18,7 +18,7 @@ import UserMealStore from "../../store/UserMealStore";
 import { formatDate } from "../../utils/formatDate";
 import ModalStore from "../../store/ModalStore";
 import ReviewModalController from "../../Controllers/ReviewModalController";
-import BarChart from "../../components/foodGraphs/FoodGraphs";
+import FoodWastageGraph from "../../components/foodGraphs/FoodGraphs";
 
 const Home: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
         <MealDate setCurrentDate={setCurrentDate} currentDate={currentDate} />
       </div>
       <div className="flex flex-row justify-center">
-        <BarChart />
+        <FoodWastageGraph />
       </div>
       <div className="flex justify-center items-center gap-4 mt-4">
         <UserMealCardController
@@ -70,7 +70,8 @@ const Home: React.FC = () => {
           type={MealTypeEnum.DINNER}
           mealTime={DINNER_TIME}
         />
-        {modalFunction()}
+        {/* {modalFunction()} */}
+        <ReviewModalController date={date} />{" "}
       </div>
     </div>
   );

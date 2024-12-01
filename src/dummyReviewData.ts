@@ -1,5 +1,5 @@
 const dummyReviewData = {
-  date: "2024-11-29",
+  date: "2024-11-30",
   breakfast: [
     {
       mealId: "1",
@@ -22,14 +22,6 @@ const dummyReviewData = {
         twoStarRating: 15,
         oneStarRating: 5,
       },
-      reviews: [
-        {
-          profilePic: "https://example.com/user1.jpg",
-          name: "John Doe",
-          review:
-            "The food was absolutely wonderful, from preparation to presentation, very pleasing.The food was fresh, properly prepared and a great value for the price. We highly recommend it. The breakfast buffet on Sunday was equally as good.",
-        },
-      ],
     },
     {
       mealId: "2",
@@ -52,14 +44,6 @@ const dummyReviewData = {
         twoStarRating: 15,
         oneStarRating: 5,
       },
-      reviews: [
-        {
-          profilePic: "https://example.com/user1.jpg",
-          name: "John Doe",
-          review:
-            "The food was absolutely wonderful, from preparation to presentation, very pleasing.The food was fresh, properly prepared and a great value for the price. We highly recommend it. The breakfast buffet on Sunday was equally as good.",
-        },
-      ],
     },
     {
       mealId: "3",
@@ -82,14 +66,6 @@ const dummyReviewData = {
         twoStarRating: 15,
         oneStarRating: 5,
       },
-      reviews: [
-        {
-          profilePic: "https://example.com/user1.jpg",
-          name: "John Doe",
-          review:
-            "The food was absolutely wonderful, from preparation to presentation, very pleasing.The food was fresh, properly prepared and a great value for the price. We highly recommend it. The breakfast buffet on Sunday was equally as good.",
-        },
-      ],
     },
     {
       mealId: "4",
@@ -112,13 +88,6 @@ const dummyReviewData = {
         twoStarRating: 15,
         oneStarRating: 5,
       },
-      reviews: [
-        {
-          profilePic: "https://example.com/user1.jpg",
-          name: "John Doe",
-          review: "Delicious pancakes, perfectly fluffy.",
-        },
-      ],
     },
   ],
   lunch: [
@@ -143,13 +112,6 @@ const dummyReviewData = {
         twoStarRating: 10,
         oneStarRating: 5,
       },
-      reviews: [
-        {
-          profilePic: "https://example.com/user1.jpg",
-          name: "John Doe",
-          review: "Delicious pancakes, perfectly fluffy.",
-        },
-      ],
     },
   ],
   dinner: [
@@ -174,13 +136,6 @@ const dummyReviewData = {
         twoStarRating: 10,
         oneStarRating: 5,
       },
-      reviews: [
-        {
-          profilePic: "https://example.com/user1.jpg",
-          name: "John Doe",
-          review: "Delicious pancakes, perfectly fluffy.",
-        },
-      ],
     },
   ],
 };

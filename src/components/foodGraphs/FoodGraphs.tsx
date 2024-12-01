@@ -25,18 +25,20 @@ const FoodWastageGraph = () => {
     return (
       <div className="flex flex-row justify-around">
         <p className="text-[28px] flex flex-col">
-          <p className="flex flex-row items-center gap-2">
+          <p className="flex flex-row items-center gap-2 mr-4">
             {dummyWastageData[activeTab].total}{" "}
             <span className="text-[16px]">Kgs</span>
           </p>
-          <span className="text-sm text-gray-400">foodWasted</span>
+          <span className="text-sm text-gray-400">Food Wasted</span>
         </p>
         <p className="text-[28px] flex flex-col">
-          <p className="flex flex-row items-center gap-2">
-            {dummyWastageData[activeTab].served}
+          <p className="flex flex-row items-center gap-2 truncate hover:text-clip">
+            <span className="truncate hover:text-clip">
+              {dummyWastageData[activeTab].served}
+            </span>
             <span className="text-[16px]">Peoples</span>
           </p>
-          <span className="text-sm text-gray-400">can be Served</span>
+          <span className="text-sm text-gray-400">Can be Served</span>
         </p>
       </div>
     );
@@ -53,9 +55,9 @@ const FoodWastageGraph = () => {
 
   const renderWastageDetailsContainer = () => {
     return (
-      <div className="flex flex-row justify-evenly w-[1200px] h-[450px] border-2 border-[#D7DFE9]">
+      <div className="flex flex-row justify-around  w-[1200px] h-[450px] border-2 border-[#D7DFE9]">
         <BarChart wastageData={dummyWastageData[activeTab].wastageData} />
-        <div className="h-[200px] p-4 w-[300px] border-2 border-[#D7DFE9] rounded-sm mt-20">
+        <div className="h-[200px] p-4 min-w-[300px] border-2 border-[#D7DFE9] rounded-sm mt-20">
           {renderFoodWastageDetails()}
           <hr className="border-grey-200 border-t-2 mt-8" />
           {renderWastagePercentage()}

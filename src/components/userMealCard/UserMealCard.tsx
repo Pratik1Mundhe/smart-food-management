@@ -84,12 +84,14 @@ const UserMealCard: React.FC<MealCardProps> = (props) => {
       <>
         {mealItems.map((item, index) => {
           const { id, name } = item;
-          const mealNameAlignment =
-            index % 2 !== 0 ? "text-right" : "text-left";
+          const mealNameAlignment = index % 2 !== 0 ? "pl-10" : "text-left";
           return (
-            <li key={id} className={`${mealItem} ${mealNameAlignment}`}>
-              {name}
-            </li>
+            <div className="tooltip">
+              <span className="tooltiptext">{name}</span>
+              <li key={id} className={`${mealItem} ${mealNameAlignment} `}>
+                {name}
+              </li>
+            </div>
           );
         })}
       </>

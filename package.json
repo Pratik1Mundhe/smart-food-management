@@ -33,6 +33,7 @@
     "react-loader-spinner": "^6.1.6",
     "react-mobx": "^0.0.4",
     "react-router-dom": "^6.28.0",
+    "recharts": "^2.13.3",
     "uuid": "^11.0.3"
   },
   "devDependencies": {

@@ -238,6 +238,7 @@ export interface RatingModelTypes {
 }
 
 export interface ReviewModelType {
+  id: string;
   profilePic: string;
   name: string;
   review: string;
@@ -251,6 +252,7 @@ export interface MealRatingAndReviewModelType {
 }
 export interface Rating {
   totalMembers: number;
+  totalRating: number;
   fiveStarRating: number;
   fourStarRating: number;
   threeStarRating: number;
@@ -262,12 +264,10 @@ export interface MealRatingAndReviewModelType {
   mealName: string;
   qualityRatings: RatingModel;
   tasteRatings: RatingModel;
-  reviews: ReviewModel;
 }
 export interface MealRatingAndReviewType {
   mealId: string;
   mealName: string;
   qualityRatings: Rating;
   tasteRatings: Rating;
-  reviews: ReviewModelType[];
 }

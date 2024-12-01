@@ -8,6 +8,7 @@ import Ratings from "./Ratings";
 import MealRatingAndReviewModel from "../../models/MealRatingAndReviewModel";
 import Review from "./Review";
 import reviews from "../../dummyReviewsData";
+import AdminReviewStore from "../../store/AdminReviewStore";
 
 interface FoodWastageLogType {
   activeMealTab: MealTypeEnum;
@@ -42,8 +43,8 @@ const RatingsAndReview: React.FC<FoodWastageLogType> = (props) => {
         <div className="flex flex-row justify-between my-10">
           <h1 className={mealTypeHeading}> Ratings</h1>
         </div>
-        <div className="flex flex-row flex-wrap justify-around">
-          {reviews[activeMealTab].map((each) => (
+        <div className="flex flex-row flex-wrap justify-between">
+          {AdminReviewStore.adminReviewData[activeMealTab].map((each) => (
             <Review each={each} />
           ))}
         </div>

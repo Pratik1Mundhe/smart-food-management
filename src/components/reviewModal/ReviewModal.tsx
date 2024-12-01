@@ -13,12 +13,13 @@ interface ReviewModalType {
   review: string;
   handleTextAreaContent: (value: string) => void;
   handelCloseModal: () => void;
+  errorMsg: string;
 }
 
 const ReviewModal: React.FC<ReviewModalType> = (props) => {
-  const { items, review, handleTextAreaContent, handelCloseModal } = props;
+  const { items, review, handleTextAreaContent, handelCloseModal, errorMsg } =
+    props;
   const { t } = useTranslation();
-
   const renderHeaderSection = () => {
     return (
       <div className={headerContainer}>
@@ -29,14 +30,24 @@ const ReviewModal: React.FC<ReviewModalType> = (props) => {
   const renderButtonContainer = () => {
     return (
       <div className="flex flex-row justify-center">
-        <Button
-          filled
-          color="bg-green-600"
-          hoverColor="hover:bg-green-700"
-          onClick={handelCloseModal}
-        >
-          Done
-        </Button>
+        <div className="flex flex-row gap-3">
+          <Button
+            filled
+            color="bg-green-600"
+            hoverColor="hover:bg-green-700"
+            onClick={handelCloseModal}
+          >
+            Done
+          </Button>
+          <Button
+            filled
+            color="bg-red-500"
+            hoverColor="hover:bg-red-600"
+            onClick={ModalStore.closeReviewModalModal}
+          >
+            Close
+          </Button>
+        </div>
       </div>
     );
   };
@@ -54,6 +65,7 @@ const ReviewModal: React.FC<ReviewModalType> = (props) => {
             onChange={handleTextAreaContent}
             value={review}
           />
+          <p className="text-sm text-red-600">{errorMsg}</p>
           {renderButtonContainer()}
         </div>
       </div>

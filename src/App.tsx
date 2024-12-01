@@ -86,7 +86,7 @@ const App: React.FC = () => {
             }
           />
           <Route
-            path="/foodWastageLog"
+            path="/food_wastage_log"
             element={
               <AdminComponentWrapper>
                 <FoodWastageLogPage />

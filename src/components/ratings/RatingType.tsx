@@ -23,8 +23,11 @@ const RatingType: React.FC<RatingTypes> = (props) => {
         <p className={reviewType}>{type}</p>
         <div className={reviewCircle}>
           <p className="text-black text-[32px]">{ratings.totalRating} </p>
-          <p className="text-slate-800 text-[12px] font-bold">
-            TOTAL :- {ratings.totalMembers}
+          <p className="text-slate-800 text-[12px] text-center px-2 mr-2 font-bold w-[140px] truncate hover:text-clip">
+            TOTAL :-{" "}
+            <span className="truncate hover:text-clip">
+              {ratings.totalMembers}
+            </span>
           </p>
         </div>
       </div>

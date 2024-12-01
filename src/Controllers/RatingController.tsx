@@ -5,11 +5,15 @@ import RatingsAndReview from "../components/ratings/RatingsAndReviews";
 import RatingAndReviewStore from "../store/RatingAndReviewStore";
 import dummyReviewData from "../dummyReviewData";
 import { observer } from "mobx-react";
+import AdminReviewStore from "../store/AdminReviewStore";
 
 const RatingAndReviewsController = () => {
   const [activeMealTab, setActiveMealTab] = useState(MealTypeEnum.BREAKFAST);
   const [activeDate, setActiveDate] = useState<Date>(new Date());
+
+  //Use the date utils
   const date = formatDate(activeDate).split(" ")[0];
+
   useEffect(() => {
     RatingAndReviewStore.setRatingData(
       dummyReviewData.date,

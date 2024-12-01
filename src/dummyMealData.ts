@@ -6,7 +6,12 @@ const dummyMealData = [
     mealId: "1",
     mealType: MealTypeEnum.BREAKFAST, // Enum or string
     items: [
-      { id: "1", name: "Pancakes", fullMealQuantity: 3, halfMealQuantity: 1 },
+      {
+        id: "1",
+        name: "PancakesPancakesPancakesPancakesPancakesPancakes",
+        fullMealQuantity: 3,
+        halfMealQuantity: 1,
+      },
       {
         id: "2",
         name: "Scrambled Eggs",

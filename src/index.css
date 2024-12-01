@@ -23,6 +23,28 @@ input::-webkit-inner-spin-button {
 .modal::backdrop {
   background-color: rgba(0, 0, 0, 0.3);
 }
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: rgba(110, 110, 110, 0.717);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 12px;
+
+  position: absolute;
+  z-index: 1;
+  top: -25px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 @keyframes spin {
   0% {

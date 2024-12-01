@@ -20,9 +20,12 @@ const FoodItemTableRowData: React.FC<FoodItemTableRowDataType> = (props) => {
   }
   return (
     <tr className="flex flex-row gap-20 my-4 mt-4 items-center">
-      <td className="text-[14px] text-gray-400 font-semibold w-[140px]">
-        {itemName.name}
-      </td>
+      <div className="tooltip">
+        <span className="tooltiptext">{itemName.name}</span>
+        <td className="text-[14px] text-gray-400 font-semibold w-[140px] truncate hover:text-clip">
+          {itemName.name}
+        </td>
+      </div>
       <td className="w-[130px]">
         <FoodQuantityInput
           quantity={itemName.foodPrepared}

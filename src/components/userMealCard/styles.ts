@@ -15,7 +15,7 @@ export const disableEditButton =
   "bg-gray-300 h-[35px] w-[300px] rounded-sm text-white font-normal cursor-not-allowed mt-8";
 export const buttonContent = "flex flex-row items-center justify-center gap-2";
 export const mealItem =
-  "w-[50%] text-gray-400 text-[14px] my-1 first-letter:capitalize";
+  "w-[150px] text-gray-400 text-[14px] my-1  truncate  first-letter:capitalize";
 export const mealButtonsContainer =
   "h-[100%] w-[100%]  flex flex-row justify-center items-center";
 export const mealErrorMsgContainer =
