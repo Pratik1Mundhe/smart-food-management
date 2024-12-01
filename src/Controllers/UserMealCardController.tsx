@@ -1,7 +1,7 @@
 import UserMealCard from "../components/userMealCard/UserMealCard";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 import useFetchScheduledMeal from "../apis/queries/getScheduledMeal/useFetchScheduledMeal";
 import useSaveMealStatus from "../apis/mutations/saveMealStatus/useSaveMealStatus";
@@ -9,16 +9,16 @@ import UserMealStore from "../store/UserMealStore";
 import ModalStore from "../store/ModalStore";
 import { MealTypeEnum, MealStatusEnum, PreferenceTypeAction } from "../types";
 import Loader from "../components/loader/Loader";
-import { VoidFunctionType } from "../types";
+// import { VoidFunctionType } from "../types";
 import calculateCutoffTime from "../utils/calculateCutoffTime";
 import calculateMealCompleteTime from "../utils/calculateMealCompletedTime";
 import scheduledMealStore from "../store/ScheduledMealStore";
 import { MEAL_DAY_KEY_FORMAT } from "../constants";
-import { ReactElementType } from "../types";
-import {
-  mealErrorMsgContainer,
-  retryButton,
-} from "../components/userMealCard/styles";
+// import { ReactElementType } from "../types";
+// import {
+//   mealErrorMsgContainer,
+//   retryButton,
+// } from "../components/userMealCard/styles";
 import { observer } from "mobx-react";
 
 interface UserMealCardControllerType {
@@ -36,7 +36,7 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
   const [isEditable, setIsEditable] = useState(true);
   const [isMealAteStatus, setIsMealStatus] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const fetchScheduleMealAPI = useFetchScheduledMeal(date, type.toUpperCase());
   const saveMealStatusAPI = useSaveMealStatus();
@@ -58,24 +58,24 @@ const UserMealCardController: React.FC<UserMealCardControllerType> = (
   }, []);
   const mealItems = scheduledMealStore.getMealDayData(date)[type];
 
-  const handleRefetchMeal: VoidFunctionType = () => {
-    fetchScheduleMealAPI.refetch({
-      params: {
-        date: date,
-        mealType: type.toUpperCase(),
-      },
-    });
-  };
-  const mealErrorMessage: ReactElementType = () => {
-    return (
-      <div className={mealErrorMsgContainer}>
-        <h1 className="text-xl font-semibold ">{t("somethingWentWrong")}</h1>
-        <button onClick={handleRefetchMeal} className={retryButton}>
-          {t("retry")}
-        </button>
-      </div>
-    );
-  };
+  // const handleRefetchMeal: VoidFunctionType = () => {
+  //   fetchScheduleMealAPI.refetch({
+  //     params: {
+  //       date: date,
+  //       mealType: type.toUpperCase(),
+  //     },
+  //   });
+  // };
+  // const mealErrorMessage: ReactElementType = () => {
+  //   return (
+  //     <div className={mealErrorMsgContainer}>
+  //       <h1 className="text-xl font-semibold ">{t("somethingWentWrong")}</h1>
+  //       <button onClick={handleRefetchMeal} className={retryButton}>
+  //         {t("retry")}
+  //       </button>
+  //     </div>
+  //   );
+  // };
   const fetchScheduleMealStatus = (renderSuccessView: () => JSX.Element) => {
     const loadingState =
       fetchScheduleMealAPI.mealsLoading ||

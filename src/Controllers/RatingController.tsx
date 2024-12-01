@@ -5,7 +5,6 @@ import RatingsAndReview from "../components/ratings/RatingsAndReviews";
 import RatingAndReviewStore from "../store/RatingAndReviewStore";
 import dummyReviewData from "../dummyReviewData";
 import { observer } from "mobx-react";
-import AdminReviewStore from "../store/AdminReviewStore";
 
 const RatingAndReviewsController = () => {
   const [activeMealTab, setActiveMealTab] = useState(MealTypeEnum.BREAKFAST);

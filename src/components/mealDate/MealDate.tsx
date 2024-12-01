@@ -17,7 +17,6 @@ const MealDate: React.FC<MealDatePropsType> = ({
   currentDate,
   setCurrentDate,
 }) => {
-  const today: boolean = currentDate.getDate() == new Date().getDate();
   const { t } = useTranslation();
   const [showCalender, setShowCalender] = useState(false);
 

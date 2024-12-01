@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import RatingModel from "./ratingModel";
+import RatingModel from "./RatingModel";
 import { MealRatingAndReviewType } from "../types";
 
 class MealRatingAndReviewModel {

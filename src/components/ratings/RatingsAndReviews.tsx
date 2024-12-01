@@ -7,7 +7,6 @@ import { mealTypeHeading, ratingAndReviewContainer } from "./Styles";
 import Ratings from "./Ratings";
 import MealRatingAndReviewModel from "../../models/MealRatingAndReviewModel";
 import Review from "./Review";
-import reviews from "../../dummyReviewsData";
 import AdminReviewStore from "../../store/AdminReviewStore";
 
 interface FoodWastageLogType {

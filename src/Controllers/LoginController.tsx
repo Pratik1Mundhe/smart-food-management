@@ -9,14 +9,14 @@ import useLoginApi from "../utils/loginApi";
 import { observer } from "mobx-react";
 
 const LoginController = () => {
-  const [username, setUsername] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null | number>(null);
+  const [password, setPassword] = useState<string | null | number>(null);
   const [userNameError, setUsernameError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const { triggerLogin, loading } = useLoginApi();
 
-  function handleUsername(value: string) {
-    let newValue = value.trim();
+  function handleUsername(value: string | number) {
+    let newValue = value;
     setUsername(newValue);
     if (newValue === "") {
       setUsernameError(EMPTY_USERNAME_ERROR_MSG);
@@ -24,8 +24,8 @@ const LoginController = () => {
       setUsernameError("");
     }
   }
-  function handelPassword(value: string) {
-    let newValue = value.trim();
+  function handelPassword(value: string | number) {
+    let newValue = value;
     setPassword(newValue);
     if (newValue === "") {
       setPasswordError(EMPTY_PASSWORD_ERROR_MSG);

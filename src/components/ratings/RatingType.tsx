@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import RatingBar from "./Ratingbar";
-import RatingModel from "../../models/ratingModel";
+import RatingModel from "../../models/RatingModel";
 import { reviewCircle, reviewType } from "./Styles";
 import {
   FIVE_STAR,

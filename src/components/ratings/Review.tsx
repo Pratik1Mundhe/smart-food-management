@@ -1,5 +1,5 @@
 import { REVIEW_IMG } from "../../constants";
-import { ReviewModelType, ReviewTypes } from "../../types";
+import { ReviewModelType } from "../../types";
 import { reviewContainer } from "./Styles";
 
 interface Review {

@@ -22,7 +22,7 @@ function useLoginApi() {
   const [loading, setLoading] = useState(false);
 
   async function triggerLogin(
-    data: { username: string; password: string },
+    data: { username: string | number; password: string | number },
     setUsernameError: React.Dispatch<React.SetStateAction<string | null>>,
     setPasswordError: React.Dispatch<React.SetStateAction<string | null>>
   ) {

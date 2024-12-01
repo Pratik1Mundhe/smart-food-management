@@ -24,11 +24,11 @@ import React from "react";
 
 interface LoginTypes {
   userNameError: string | null;
-  username: string | null;
-  handleUsername: (value: string) => void;
+  username: string | null | number;
+  handleUsername: (value: string | number) => void;
   passwordError: string | null;
-  password: string | null;
-  handelPassword: (value: string) => void;
+  password: string | null | number;
+  handelPassword: (value: string | number) => void;
   handleLogin: (event: React.FormEvent<HTMLFormElement>) => void;
   loginLoading: boolean;
 }

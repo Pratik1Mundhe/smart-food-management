@@ -70,8 +70,7 @@ const Home: React.FC = () => {
           type={MealTypeEnum.DINNER}
           mealTime={DINNER_TIME}
         />
-        {/* {modalFunction()} */}
-        <ReviewModalController date={date} />{" "}
+        {modalFunction()}
       </div>
     </div>
   );
